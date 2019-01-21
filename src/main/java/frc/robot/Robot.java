@@ -107,12 +107,17 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Test Turn Right 90", new TestTurnRight90(this));
     SmartDashboard.putData("Test Fwd 48", new TestMoveFwd48(this));
     SmartDashboard.putData("Test back 48", new TestMoveBack48(this));
+<<<<<<< HEAD
     SmartDashboard.putData("Rotate 0", new Turn(this, 0));
     SmartDashboard.putData("Rotate 30", new Turn(this, 30 / 360));
     SmartDashboard.putData("Rotate 60", new Turn(this, 60 / 360));
     SmartDashboard.putData("Rotate 90", new Turn(this, 90 / 360));
     SmartDashboard.putData("Manual Arm", new ManualArm(this));
 
+=======
+    SmartDashboard.putData("Rotate 1", new Turn(this, 1));
+    SmartDashboard.putData("DriveAlign", new DriveAlign(this));
+>>>>>>> 163f3b6c5374bbbcc75a3c229133e541df9c4a05
     
     m_chooser.addObject("Drive Fwd 24 inches", new DriveDistanceAndDirection(this, 24, 0));
     m_chooser.addObject("Drive dog leg right", new DogLegRight(this));
