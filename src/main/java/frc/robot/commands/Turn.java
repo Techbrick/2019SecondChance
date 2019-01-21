@@ -16,6 +16,7 @@ package frc.robot.commands;
 
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.*;
 import frc.robot.RobotMap;
@@ -36,7 +37,7 @@ public class Turn extends Command {
     robot = r;
     requires(Robot.arm_subsystem);
     arm = Robot.arm_subsystem;
-    degrees = 360 * rev;
+    degrees = 360.0 * rev;
   }
 
 
@@ -46,6 +47,7 @@ public class Turn extends Command {
   @Override
 
   protected void initialize() { // Begins motion magic
+      SmartDashboard.putString("Status", "Target is " + degrees);
       arm.turns(degrees);
   }
 

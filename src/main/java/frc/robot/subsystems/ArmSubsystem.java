@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -91,6 +92,7 @@ public class ArmSubsystem extends Subsystem {
 
   public void turns(double degrees) { // Turns a certain number of degrees
     mc_arm.set(ControlMode.MotionMagic, degrees / RobotMap.ArmTicksToDeg);
+    SmartDashboard.putNumber("target arm enc", degrees/RobotMap.ArmTicksToDeg);
   }
 
   public boolean isTurnComplete(double degrees) { // Determines if degrees of current and target match

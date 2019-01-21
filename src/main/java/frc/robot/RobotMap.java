@@ -61,7 +61,7 @@ public class RobotMap {
   public  double KpDistanceFollower = .8;
 
   public  static final int mc_arm_CANID = 2;
-  public  static final double ArmTicksToDeg = 360 / 4096;
+  public  static final double ArmTicksToDeg = 360.0 / 4096.0;
   
   public RobotMap()
   {

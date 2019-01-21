@@ -23,13 +23,13 @@ public class DriveAlign extends Command{
     double x;
 
     public DriveAlign(Robot robot){
-        requires(_robot.driveTrain);
         _robot = robot;
+        requires(_robot.driveTrain);
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         tx = table.getEntry("tx");
         ta = table.getEntry("ta");
         x = tx.getDouble(0.0);
-        turn = 90 - Math.atan(1/Math.tan(x));
+        turn = 90 - Math.atan(1/2/Math.tan(x));
         //read values periodically
         double area = ta.getDouble(0.0);
         //post to smart dashboard periodically

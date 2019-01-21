@@ -107,10 +107,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Test Turn Right 90", new TestTurnRight90(this));
     SmartDashboard.putData("Test Fwd 48", new TestMoveFwd48(this));
     SmartDashboard.putData("Test back 48", new TestMoveBack48(this));
-    SmartDashboard.putData("Rotate 0", new Turn(this, 0));
-    SmartDashboard.putData("Rotate 30", new Turn(this, 30 / 360));
-    SmartDashboard.putData("Rotate 60", new Turn(this, 60 / 360));
-    SmartDashboard.putData("Rotate 90", new Turn(this, 90 / 360));
+    SmartDashboard.putData("Rotate 0", new Turn(this, 0.0));
+    SmartDashboard.putData("Rotate 30", new Turn(this, 30.0 / 360.0));
+    SmartDashboard.putData("Rotate 60", new Turn(this, 60.0 / 360.0));
+    SmartDashboard.putData("Rotate 90", new Turn(this, 90.0 / 360.0));
     SmartDashboard.putData("Manual Arm", new ManualArm(this));
 
     SmartDashboard.putData("Rotate 1", new Turn(this, 1));
