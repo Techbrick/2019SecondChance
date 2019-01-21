@@ -59,6 +59,9 @@ public class RobotMap {
   public  double trackWidth = 24;
   public  int averageCounterAccel = 0;
   public  double KpDistanceFollower = .8;
+
+  public  static final int mc_arm_CANID = 2;
+  public  static final double ArmTicksToDeg = 360 / 4096;
   
   public RobotMap()
   {

@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 
 
@@ -69,6 +70,7 @@ public class Robot extends TimedRobot {
   // public TalonSRX rightMaster;
   // private TalonSRX rightFollower;
   public  DriveSubsystem driveTrain;
+  public static ArmSubsystem arm_subsystem;
   public AHRS navX;
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
@@ -92,6 +94,7 @@ public class Robot extends TimedRobot {
     navX = new AHRS(SPI.Port.kMXP );
     
     driveTrain = new DriveSubsystem(this);
+    arm_subsystem = new ArmSubsystem(this);
     SmartDashboard.putData(driveTrain);
     SmartDashboard.putData("Drive Encoder Cal", new DriveEncoderCal(this));
     SmartDashboard.putData("Manual Drive", new ManualDrive(this));
@@ -103,6 +106,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Test Turn Right 90", new TestTurnRight90(this));
     SmartDashboard.putData("Test Fwd 48", new TestMoveFwd48(this));
     SmartDashboard.putData("Test back 48", new TestMoveBack48(this));
+    SmartDashboard.putData("Rotate 1", new Turn(this, 1));
 
 		
     
