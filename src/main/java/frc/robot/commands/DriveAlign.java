@@ -55,10 +55,8 @@ public class DriveAlign extends Command{
 
         if (power + turnPower == 0){
             stoppedCounter ++;
-           
         }else{
             stoppedCounter = 0;
-            
         }
         if (stoppedCounter > 5){
             testCompleted = true;
