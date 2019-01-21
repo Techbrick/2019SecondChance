@@ -7,13 +7,41 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.commands.*;
+import frc.robot.subsystems.DriveSubsystem;
+
+
+import java.util.function.Supplier;
+import com.ctre.phoenix.*;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
+
+//import org.omg.CORBA.PRIVATE_MEMBER;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,11 +51,27 @@ import frc.robot.subsystems.ExampleSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+  
   public static OI m_oi;
-
+  public RobotMap robotMap = new RobotMap();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+  
+  public 
+  NetworkTableEntry autoSpeedEntry = NetworkTableInstance.getDefault().getEntry("/robot/autospeed");
+  NetworkTableEntry telemetryEntry = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
+  
+  public Joystick stick;
+	public  double encoderConstant;
+	
+  // public TalonSRX leftMaster;
+  // private TalonSRX leftFollower;
+  // public TalonSRX rightMaster;
+  // private TalonSRX rightFollower;
+  public  DriveSubsystem driveTrain;
+  public AHRS navX;
+  double priorAutospeed = 0;
+	Number[] numberArray = new Number[9];
 
   /**
    * This function is run when the robot is first started up and should be
@@ -35,11 +79,67 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_oi = new OI();
-    m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
-    // chooser.addOption("My Auto", new MyAutoCommand());
+    
+   
+    SmartDashboard.putString("Instructions", "");
+    SmartDashboard.putString("Status", "");
+    stick = new Joystick(0);
+    robotMap.verbose = true;
+		
+		//
+		// Configure drivetrain movement
+    //
+    navX = new AHRS(SPI.Port.kMXP );
+    
+    driveTrain = new DriveSubsystem(this);
+    SmartDashboard.putData(driveTrain);
+    SmartDashboard.putData("Drive Encoder Cal", new DriveEncoderCal(this));
+    SmartDashboard.putData("Manual Drive", new ManualDrive(this));
+    SmartDashboard.putData("Min Turn Power", new FindMinTurnPower(this));
+    SmartDashboard.putData("Min Drive Power", new FindMinDrivePower(this));
+    SmartDashboard.putData("Tune Turn Pid", new TuneTurnPid(this));
+    SmartDashboard.putData("Tune Distance Pid", new TuneDistancePid(this));
+    SmartDashboard.putData("Turn left 90", new TestTurnLeft90(this));
+    SmartDashboard.putData("Test Turn Right 90", new TestTurnRight90(this));
+    SmartDashboard.putData("Test Fwd 48", new TestMoveFwd48(this));
+    SmartDashboard.putData("Test back 48", new TestMoveBack48(this));
+
+		
+    
+
+    
+		
+    
+    m_chooser.addObject("Drive Fwd 24 inches", new DriveDistanceAndDirection(this, 24, 0));
+    m_chooser.addObject("Drive dog leg right", new DogLegRight(this));
+    m_chooser.addObject("Drive dog leg left", new DogLegLeft(this));
     SmartDashboard.putData("Auto mode", m_chooser);
-  }
+		
+    NetworkTableInstance.getDefault().setUpdateRate(0.020);
+    
+    m_oi = new OI();
+    double initYaw = navX.getYaw();
+    SmartDashboard.putNumber("intYaw", initYaw);
+    //navX.reset();
+    navX.zeroYaw();
+    // new Thread(() -> {
+    //   UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    //   camera.setResolution(640, 480);
+      
+    //   CvSink cvSink = CameraServer.getInstance().getVideo();
+    //   CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
+      
+    //   Mat source = new Mat();
+    //   Mat output = new Mat();
+      
+    //   while(!Thread.interrupted()) {
+    //       cvSink.grabFrame(source);
+    //       Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+    //       outputStream.putFrame(output);
+    //   }
+  // }).start();
+
+   }
 
   /**
    * This function is called every robot packet, no matter the mode. Use
@@ -51,6 +151,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    
+    Logger();
   }
 
   /**
@@ -60,6 +162,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    driveTrain.Move(0,0);
   }
 
   @Override
@@ -82,12 +185,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
 
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
+    
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -101,6 +199,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
+    Logger();
   }
 
   @Override
@@ -117,15 +216,57 @@ public class Robot extends TimedRobot {
   /**
    * This function is called periodically during operator control.
    */
+  
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    double power =  stick.getY();
+    double twist = stick.getTwist();
+    //driveTrain.ArcadeDrive(power, twist);
   }
 
   /**
    * This function is called periodically during test mode.
    */
   @Override
-  public void testPeriodic() {
+  public void testInit() {
+    super.testInit();
+    // 
+    robotMap.verbose = true;
   }
+
+  @Override
+  public void testPeriodic() {
+    Scheduler.getInstance().run();
+    Logger();
+    
+
+
+  }
+  //   this function is needed for commands to read position;
+
+  
+  private void Logger(){
+    if(robotMap.verbose){
+      SmartDashboard.putNumber("l_encoder_pos", Math.round(driveTrain.GetLeftEncoderPosition()));
+      // SmartDashboard.putNumber("l_encoder_rate", Math.round(leftEncoderRate.get()));
+      SmartDashboard.putNumber("r_encoder_pos", Math.round(driveTrain.GetRightEncoderPosition()));
+      // SmartDashboard.putNumber("r_encoder_rate", Math.round(rightEncoderRate.get()));
+      SmartDashboard.putNumber("navx pitch", Math.round(navX.getPitch()));
+      SmartDashboard.putNumber("navx Heading", navX.getCompassHeading());
+      SmartDashboard.putNumber("navx Angle", Math.round(navX.getRawMagX()));
+      SmartDashboard.putNumber("avgEncoderRate", driveTrain.GetAverageEncoderRate());
+    }
+    
+    double yaw = navX.getYaw();
+    boolean navxAlive = navX.isConnected();
+    SmartDashboard.putBoolean("navXConnected", navxAlive);
+    SmartDashboard.putNumber("navX yaw", Math.round(driveTrain.getRobotYaw()));
+    SmartDashboard.putNumber("Raw yaw", Math.round(yaw));
+    //SmartDashboard.putBoolean("joystick buttom", stick.getRawButton(1));
+    double fps = driveTrain.GetAverageEncoderRate()*12;
+    SmartDashboard.putNumber("fps", fps);
+    
+  }
+
 }

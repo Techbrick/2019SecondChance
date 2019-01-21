@@ -14,13 +14,56 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
-  // For example to map the left and right motors, you could define the
-  // following variables to use with your drivetrain subsystem.
-  // public static int leftMotor = 1;
-  // public static int rightMotor = 2;
 
-  // If you are using multiple modules, make sure to define both the port
-  // number and the module. For example you with a rangefinder:
-  // public static int rangefinderPort = 1;
-  // public static int rangefinderModule = 1;
+  public  final int driveStick = 0;
+  public  final int opStick = 1;
+  public double timingInterval = .02;
+  public  final int leftMaster = 12;
+  public  final int leftFollower = 13;
+  public  final int rightMaster = 14;
+  public  final int rightFollower = 15;
+  public  boolean twoSpeedDrive = false;
+  public  boolean hasCompressor = false;
+  public  int leftShiftChannel = 0;
+  public  int rightShiftChannel = 0;
+
+  public   double kAngleSetpoint = 0.0;
+  public   double kp_Angle = 0.02; // propotional turning constant WAS .04
+  public   double ki_Angle = 0.00;
+  public   double kd_Angle = 0.00;
+  public   double joystickDeadband = .05;
+  public  double driveEncoderTicksPerInch = 437.42;
+  public  double pidTurnDeadband = 1;
+
+  public   double WHEEL_DIAMETER = 6;
+  public   double ENCODER_PULSE_PER_REV = 4096; //WAS 2048
+
+  public   double distanceSetpoint = 0.0;
+  public   double kp_distance = 0.025; 
+  public   double ki_distance = 0.00; 
+  public   double kd_distance = 0.00; 
+  public  double pidDistDeadband = .2;
+
+  public  double encoderMovementThreshold = 200;
+  public  int shiftChannel = 0;
+
+  public  double minTurnPower = .1; //WAS .24
+  public  double minDrivePower = .12;
+  public  double maxPidPower = .5;
+  public  boolean verbose = true;
+  public  double maxVelocity = 10;
+  public  double maxAccel = 15;
+  public  double fpsPerVolt = .8;
+  public  double accelPerVolt = 15.0/12.0;
+  public  int averageCounterVel = 0;
+  public  double trackWidth = 24;
+  public  int averageCounterAccel = 0;
+  public  double KpDistanceFollower = .8;
+  
+  public RobotMap()
+  {
+    
+  }
+
+
 }
