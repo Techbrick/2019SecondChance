@@ -49,17 +49,20 @@ public class DriveAlign extends Command{
     }
 
     protected void execute(){
-        double power = _distancePid.GetDistancePidOutput();
-        double turnPower = _turnPid.GetAnglePidOutput(_robot.navX.getYaw());
-        _robot.driveTrain.Move(power - turnPower, power + turnPower); 
+        if(_robot.stick.getRawButton(0))
+        {
+            double power = _distancePid.GetDistancePidOutput();
+            double turnPower = _turnPid.GetAnglePidOutput(_robot.navX.getYaw());
+            _robot.driveTrain.Move(power - turnPower, power + turnPower); 
 
-        if (power + turnPower == 0){
-            stoppedCounter ++;
-        }else{
-            stoppedCounter = 0;
-        }
-        if (stoppedCounter > 5){
-            testCompleted = true;
+            if (power + turnPower == 0){
+                stoppedCounter ++;
+            }else{
+                stoppedCounter = 0;
+            }
+            if (stoppedCounter > 5){
+                testCompleted = true;
+            }
         }
     }
 
