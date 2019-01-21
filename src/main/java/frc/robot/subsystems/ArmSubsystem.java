@@ -61,10 +61,11 @@ public class ArmSubsystem extends Subsystem {
 
 		/* Set acceleration and vcruise velocity - see documentation */
 		mc_arm.configMotionCruiseVelocity(/*15000*/ 250, 20);
-		mc_arm.configMotionAcceleration(/*6000*/ 100, 20);
+		mc_arm.configMotionAcceleration(/*6000*/ 200, 20);
 
 		/* Zero the sensor */
-		mc_arm.setSelectedSensorPosition(0, kPIDLoopIdx, 20);
+    mc_arm.setSelectedSensorPosition(0, kPIDLoopIdx, 20);
+    resetZero();
   }
   @Override
   public void initDefaultCommand() {
@@ -82,6 +83,10 @@ public class ArmSubsystem extends Subsystem {
 
   public void move(int currAngle, int dPos) { // Changes height of arm based on current angle and desired change
     mc_arm.set(ControlMode.MotionMagic, 4096 * 25 * (-currAngle+Math.acos(dPos / -length - Math.cos(currAngle))) / 360);
+  }
+
+  public void rotate(int dir) {
+    mc_arm.set(ControlMode.PercentOutput, 0.15 * dir);
   }
 
   public void turns(double degrees) { // Turns a certain number of degrees
