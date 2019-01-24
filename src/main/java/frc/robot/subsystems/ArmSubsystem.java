@@ -61,9 +61,9 @@ public class ArmSubsystem extends Subsystem {
 		mc_arm.config_kD(kSlotIdx, kGains.kD, 20);
 
 		/* Set acceleration and vcruise velocity - see documentation */
-		mc_arm.configMotionCruiseVelocity(/*15000*/ 250, 20);
-		mc_arm.configMotionAcceleration(/*6000*/ 200, 20);
-
+		mc_arm.configMotionCruiseVelocity(/*15000*/ 350, 20);
+		mc_arm.configMotionAcceleration(/*6000*/ 400, 20);
+    mc_arm.configAllowableClosedloopError(0, 50, 20);
 		/* Zero the sensor */
     mc_arm.setSelectedSensorPosition(0, kPIDLoopIdx, 20);
     resetZero();
@@ -87,8 +87,11 @@ public class ArmSubsystem extends Subsystem {
   }
 
   public void rotate(int dir) {
-    mc_arm.set(ControlMode.PercentOutput, 0.15 * dir);
-  }
+    if(dir < 0)
+      mc_arm.set(ControlMode.PercentOutput, 0.10 * dir);// WAS .15
+    else  
+      mc_arm.set(ControlMode.PercentOutput, 0.15 * dir);// WAS .15
+    }
 
   public void turns(double degrees) { // Turns a certain number of degrees
     mc_arm.set(ControlMode.MotionMagic, degrees / RobotMap.ArmTicksToDeg);

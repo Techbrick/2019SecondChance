@@ -63,6 +63,9 @@ public class RobotMap {
   public  static final int mc_arm_CANID = 2;
   public  static final double ArmTicksToDeg = 360.0 / 4096.0;
   
+  public static int [] heights = {0, 13, 26};
+  
+  public static final int armLength = 38;
   public RobotMap()
   {
     
