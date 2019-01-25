@@ -19,7 +19,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 import frc.robot.Robot;
-
+import frc.robot.RobotMap;
 import frc.robot.subsystems.*;
 
 /**
@@ -34,12 +34,14 @@ public class MoveToHeight extends Command {
   private Robot robot;
   public int currentencoder;
   public int targetencoder = 0;
+  public int position; 
 
   public MoveToHeight(Robot r, int pos) {
   // Use requires() here to declare subsystem dependencies
   requires(Robot.arm_subsystem);
   arm = Robot.arm_subsystem;
   targetencoder = arm.getEncoderTicks();
+  position = pos;
 
   }
 
@@ -70,12 +72,13 @@ public class MoveToHeight extends Command {
     //   arm.moveUp();
     // }
     // currentencoder = arm.getEncoderTicks();
+    arm.moveToHeightPreset(position);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return currentencoder==targetencoder;
+    return arm.isTurnComplete(Math.asin(position / RobotMap.armLength));
   }
 
   // Called once after isFinished returns true

@@ -94,11 +94,21 @@ public class ArmSubsystem extends Subsystem {
     }
 
   public void turns(double degrees) { // Turns a certain number of degrees
-    mc_arm.set(ControlMode.MotionMagic, degrees / RobotMap.ArmTicksToDeg);
+    mc_arm.set(ControlMode.Position, degrees / RobotMap.ArmTicksToDeg);
     SmartDashboard.putNumber("target arm enc", degrees/RobotMap.ArmTicksToDeg);
   }
 
   public boolean isTurnComplete(double degrees) { // Determines if degrees of current and target match
     return (getEncoderTicks() == (degrees / RobotMap.ArmTicksToDeg));
+  }
+  public void moveToHeight(double height)
+  {
+    turns(Math.asin(height / RobotMap.armLength));
+  }
+  public void moveToHeightPreset(int pos) 
+  {
+    if(pos < RobotMap.heights.length && pos > 0)  
+      moveToHeight(RobotMap.heights[pos]);
+
   }
 }

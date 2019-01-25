@@ -115,7 +115,12 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Dog Left", new DogLegLeft(this) );
     SmartDashboard.putData("Rotate 1", new Turn(this, 1));
     SmartDashboard.putData("DriveAlign", new DriveAlign(this));
+
+    SmartDashboard.putData("Move to height 0", new MoveToHeight(this, 0));
+    SmartDashboard.putData("Move to height 13", new MoveToHeight(this, 1));
+    SmartDashboard.putData("Move to height 26", new MoveToHeight(this, 2));
     
+    Shuffleboard.getTab("Camera").add("Compression slider", )
     m_chooser.addObject("Drive Fwd 24 inches", new DriveDistanceAndDirection(this, 24, 0));
     m_chooser.addObject("Drive dog leg right", new DogLegRight(this));
     m_chooser.addObject("Drive dog leg left", new DogLegLeft(this));

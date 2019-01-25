@@ -64,8 +64,8 @@ public class RobotMap {
   public  static final double ArmTicksToDeg = 360.0 / 4096.0;
   
   public static int [] heights = {0, 13, 26};
-  
-  public static final int armLength = 38;
+
+  public static final int armLength = 26; //real one is 38, 26 is for testbot
   public RobotMap()
   {
     
