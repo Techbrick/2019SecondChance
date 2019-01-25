@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-
+import frc.robot.subsystems.RealDriveTrain;
 
 import java.util.function.Supplier;
 import com.ctre.phoenix.*;
@@ -69,7 +69,8 @@ public class Robot extends TimedRobot {
   // private TalonSRX leftFollower;
   // public TalonSRX rightMaster;
   // private TalonSRX rightFollower;
-  public  DriveSubsystem driveTrain;
+  // public  DriveSubsystem driveTrain;
+  public RealDriveTrain driveTrain;
   public static ArmSubsystem arm_subsystem;
   public AHRS navX;
   double priorAutospeed = 0;
@@ -93,7 +94,7 @@ public class Robot extends TimedRobot {
     //
     navX = new AHRS(SPI.Port.kMXP );
     
-    driveTrain = new DriveSubsystem(this);
+    driveTrain = new RealDriveTrain(this);
     arm_subsystem = new ArmSubsystem(this);
     SmartDashboard.putData(driveTrain);
     SmartDashboard.putData(arm_subsystem);
