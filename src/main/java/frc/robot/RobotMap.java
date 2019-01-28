@@ -28,6 +28,10 @@ public class RobotMap {
   public final int rightMaster = 1;
   public final int rightFollower1 = 2;
   public final int rightFollower2 = 3;
+  public final int armMasterLeft1 = 7;
+  public final int armFollowerRight1 = 8;
+  public final int wristMotor1 = 9;
+  public final int intakeMotor1 = 10;
   public  boolean twoSpeedDrive = false;
   public  boolean hasCompressor = false;
   public  int leftShiftChannel = 0;

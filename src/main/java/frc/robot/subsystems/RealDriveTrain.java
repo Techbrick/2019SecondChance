@@ -91,8 +91,8 @@ public class RealDriveTrain extends Subsystem {
     double turnPower = turn;
     SmartDashboard.putNumber("dg raw power", power);
     SmartDashboard.putNumber("dg raw twist", turn);
-    _leftMaster.set(ControlMode.PercentOutput, power + turnPower);
-    _rightMaster.set(ControlMode.PercentOutput, -power+ turnPower);
+    _leftMaster.set(ControlMode.PercentOutput, Math.pow(power + turnPower,3));
+    _rightMaster.set(ControlMode.PercentOutput, Math.pow(-power+ turnPower,3));
     SmartDashboard.putString("DriveTrainStatus", "ArcadeDrive power: "+ Double.toString(power));
     SmartDashboard.putString("DriveTrainTurn", "TurnPower: " + Double.toString(turnPower));
   }

@@ -34,9 +34,9 @@ public class DriveSubsystem extends Subsystem {
   public DriveSubsystem (Robot robot){
     _robot = robot;
     _leftMaster = new TalonSRX(robot.robotMap.leftMaster);
-    _leftFollower = new TalonSRX(robot.robotMap.leftFollower);
+    _leftFollower = new TalonSRX(robot.robotMap.leftFollower1);
     _rightMaster = new TalonSRX(robot.robotMap.rightMaster);
-    _rightFollower  = new TalonSRX(robot.robotMap.rightFollower);
+    _rightFollower  = new TalonSRX(robot.robotMap.rightFollower1);
     _leftFollower.setInverted(false);
     _leftMaster.setInverted(false);
     _rightMaster.setInverted(false);
