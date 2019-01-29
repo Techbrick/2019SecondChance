@@ -19,8 +19,8 @@ public class DriveAlign extends Command{
     public static DriveDistanceAndDirection goTo;
 
     public DriveAlign(Robot robot){
-        requires(_robot.driveTrain);
         _robot = robot;
+        requires(_robot.driveTrain);
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         tx = table.getEntry("tx");
         ta = table.getEntry("ta");
@@ -37,7 +37,6 @@ public class DriveAlign extends Command{
     }
 
     protected void execute(){
-
     }
 
     protected void end(){

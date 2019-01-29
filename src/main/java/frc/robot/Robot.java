@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-
+import frc.robot.subsystems.RealDriveTrain;
 
 import java.util.function.Supplier;
 import com.ctre.phoenix.*;
@@ -69,7 +69,8 @@ public class Robot extends TimedRobot {
   // private TalonSRX leftFollower;
   // public TalonSRX rightMaster;
   // private TalonSRX rightFollower;
-  public  DriveSubsystem driveTrain;
+  // public  DriveSubsystem driveTrain;
+  public RealDriveTrain driveTrain;
   public static ArmSubsystem arm_subsystem;
   public AHRS navX;
   double priorAutospeed = 0;
@@ -93,9 +94,10 @@ public class Robot extends TimedRobot {
     //
     navX = new AHRS(SPI.Port.kMXP );
     
-    driveTrain = new DriveSubsystem(this);
+    driveTrain = new RealDriveTrain(this);
     arm_subsystem = new ArmSubsystem(this);
     SmartDashboard.putData(driveTrain);
+    SmartDashboard.putData(arm_subsystem);
     SmartDashboard.putData("Drive Encoder Cal", new DriveEncoderCal(this));
     SmartDashboard.putData("Manual Drive", new ManualDrive(this));
     SmartDashboard.putData("Min Turn Power", new FindMinTurnPower(this));
@@ -106,9 +108,20 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Test Turn Right 90", new TestTurnRight90(this));
     SmartDashboard.putData("Test Fwd 48", new TestMoveFwd48(this));
     SmartDashboard.putData("Test back 48", new TestMoveBack48(this));
+    SmartDashboard.putData("Rotate 0", new Turn(this, 0.0));
+    SmartDashboard.putData("Rotate 30", new Turn(this, 30.0 / 360.0));
+    SmartDashboard.putData("Rotate 60", new Turn(this, 60.0 / 360.0));
+    SmartDashboard.putData("Rotate 90", new Turn(this, 90.0 / 360.0));
+    SmartDashboard.putData("Manual Arm", new ManualArm(this));
+    SmartDashboard.putData("Dog Left", new DogLegLeft(this) );
     SmartDashboard.putData("Rotate 1", new Turn(this, 1));
     SmartDashboard.putData("DriveAlign", new DriveAlign(this));
+
+    SmartDashboard.putData("Move to height 0", new MoveToHeight(this, 0));
+    SmartDashboard.putData("Move to height 13", new MoveToHeight(this, 1));
+    SmartDashboard.putData("Move to height 26", new MoveToHeight(this, 2));
     
+    // Shuffleboard.getTab("Camera").add("Compression slider", );
     m_chooser.addObject("Drive Fwd 24 inches", new DriveDistanceAndDirection(this, 24, 0));
     m_chooser.addObject("Drive dog leg right", new DogLegRight(this));
     m_chooser.addObject("Drive dog leg left", new DogLegLeft(this));
@@ -255,6 +268,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("navx Heading", navX.getCompassHeading());
       SmartDashboard.putNumber("navx Angle", Math.round(navX.getRawMagX()));
       SmartDashboard.putNumber("avgEncoderRate", driveTrain.GetAverageEncoderRate());
+      SmartDashboard.putNumber("Arm Encoder", arm_subsystem.getEncoderTicks());
     }
     
     double yaw = navX.getYaw();

@@ -18,10 +18,20 @@ public class RobotMap {
   public  final int driveStick = 0;
   public  final int opStick = 1;
   public double timingInterval = .02;
-  public  final int leftMaster = 12;
-  public  final int leftFollower = 13;
-  public  final int rightMaster = 14;
-  public  final int rightFollower = 15;
+  // public  final int leftMaster = 12;
+  // public  final int leftFollower = 13;
+  // public  final int rightMaster = 14;
+  // public  final int rightFollower = 15;
+  public final int leftMaster = 4;
+  public final int leftFollower1 = 5;
+  public final int leftFollower2 = 6;
+  public final int rightMaster = 1;
+  public final int rightFollower1 = 2;
+  public final int rightFollower2 = 3;
+  public final int armMasterLeft1 = 7;
+  public final int armFollowerRight1 = 8;
+  public final int wristMotor1 = 9;
+  public final int intakeMotor1 = 10;
   public  boolean twoSpeedDrive = false;
   public  boolean hasCompressor = false;
   public  int leftShiftChannel = 0;
@@ -61,8 +71,11 @@ public class RobotMap {
   public  double KpDistanceFollower = .8;
 
   public  static final int mc_arm_CANID = 2;
-  public  static final double ArmTicksToDeg = 360 / 4096;
+  public  static final double ArmTicksToDeg = 360.0 / 4096.0;
   
+  public static int [] heights = {0, 13, 26};
+
+  public static final int armLength = 26; //real one is 38, 26 is for testbot
   public RobotMap()
   {
     

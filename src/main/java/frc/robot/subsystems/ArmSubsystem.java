@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -60,11 +61,12 @@ public class ArmSubsystem extends Subsystem {
 		mc_arm.config_kD(kSlotIdx, kGains.kD, 20);
 
 		/* Set acceleration and vcruise velocity - see documentation */
-		mc_arm.configMotionCruiseVelocity(/*15000*/ 250, 20);
-		mc_arm.configMotionAcceleration(/*6000*/ 100, 20);
-
+		mc_arm.configMotionCruiseVelocity(/*15000*/ 350, 20);
+		mc_arm.configMotionAcceleration(/*6000*/ 400, 20);
+    mc_arm.configAllowableClosedloopError(0, 50, 20);
 		/* Zero the sensor */
-		mc_arm.setSelectedSensorPosition(0, kPIDLoopIdx, 20);
+    mc_arm.setSelectedSensorPosition(0, kPIDLoopIdx, 20);
+    resetZero();
   }
   @Override
   public void initDefaultCommand() {
@@ -84,11 +86,29 @@ public class ArmSubsystem extends Subsystem {
     mc_arm.set(ControlMode.MotionMagic, 4096 * 25 * (-currAngle+Math.acos(dPos / -length - Math.cos(currAngle))) / 360);
   }
 
+  public void rotate(int dir) {
+    if(dir < 0)
+      mc_arm.set(ControlMode.PercentOutput, 0.10 * dir);// WAS .15
+    else  
+      mc_arm.set(ControlMode.PercentOutput, 0.15 * dir);// WAS .15
+    }
+
   public void turns(double degrees) { // Turns a certain number of degrees
-    mc_arm.set(ControlMode.MotionMagic, degrees / RobotMap.ArmTicksToDeg);
+    mc_arm.set(ControlMode.Position, degrees / RobotMap.ArmTicksToDeg);
+    SmartDashboard.putNumber("target arm enc", degrees/RobotMap.ArmTicksToDeg);
   }
 
   public boolean isTurnComplete(double degrees) { // Determines if degrees of current and target match
     return (getEncoderTicks() == (degrees / RobotMap.ArmTicksToDeg));
+  }
+  public void moveToHeight(double height)
+  {
+    turns(Math.asin(height / RobotMap.armLength));
+  }
+  public void moveToHeightPreset(int pos) 
+  {
+    if(pos < RobotMap.heights.length && pos > 0)  
+      moveToHeight(RobotMap.heights[pos]);
+
   }
 }
