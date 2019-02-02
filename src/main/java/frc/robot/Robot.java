@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.RealDriveTrain;
 
@@ -72,6 +73,7 @@ public class Robot extends TimedRobot {
   // public  DriveSubsystem driveTrain;
   public RealDriveTrain driveTrain;
   public static ArmSubsystem arm_subsystem;
+  public static CompressorSubsystem comp_subsystem;
   public AHRS navX;
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
@@ -96,6 +98,7 @@ public class Robot extends TimedRobot {
     
     driveTrain = new RealDriveTrain(this);
     arm_subsystem = new ArmSubsystem(this);
+    comp_subsystem = new CompressorSubsystem(this);
     SmartDashboard.putData(driveTrain);
     SmartDashboard.putData(arm_subsystem);
     SmartDashboard.putData("Drive Encoder Cal", new DriveEncoderCal(this));
