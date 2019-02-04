@@ -9,44 +9,30 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.ArmSubsystem;
 
-public class ManualArm extends Command {
-  Robot _robot;
-  public ManualArm(Robot r) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    _robot = r;
-    requires(_robot.arm_subsystem);
+public class ShiftGear extends Command {
+  private Robot _robot;
+  public ShiftGear(Robot robot) {
+    _robot = robot;
+    requires(_robot.comp_subsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-
+    _robot.comp_subsystem.checkPressure();  //Starts compressor
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(_robot.stick.getRawButton(5)) {
-      _robot.arm_subsystem.rotate(-1);
-    } else if(_robot.stick.getRawButton(6)) {
-      _robot.arm_subsystem.rotate(1);
-    } else {
-      _robot.arm_subsystem.rotate(0);
-    }
-
-    if(_robot.stick.getRawButton(3)) {
-      _robot.arm_subsystem.rotateWrist(-1);
-    }
-    else if(_robot.stick.getRawButton(4)) {
-      _robot.arm_subsystem.rotateWrist(1);
+    if(_robot.stick.getRawButton(2) && !_robot.comp_subsystem.pressure()) {
+      _robot.comp_subsystem.actuateCylinder();  //Shifts to High Gear
     }
     else {
-      _robot.arm_subsystem.rotateWrist(0);
+      _robot.comp_subsystem.retractCylinder();
+      _robot.comp_subsystem.checkPressure();
     }
-    
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -58,8 +44,6 @@ public class ManualArm extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    _robot.arm_subsystem.rotate(0);
-    _robot.arm_subsystem.rotateWrist(0);
   }
 
   // Called when another command which requires one or more of the same

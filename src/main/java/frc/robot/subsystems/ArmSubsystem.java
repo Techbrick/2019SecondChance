@@ -27,6 +27,9 @@ public class ArmSubsystem extends Subsystem {
   // here. Call these from Commands.
   public Robot _robot;
   private TalonSRX mc_arm;
+  private TalonSRX mc_armFollower;
+  private TalonSRX mc_intake;
+  private TalonSRX mc_wrist;
 
   // Constants
   private static final int kSlotIdx = 0;
@@ -36,12 +39,16 @@ public class ArmSubsystem extends Subsystem {
   
   public ArmSubsystem(Robot r) {  // Initialize the motion magic constants
     _robot = r;
-    mc_arm = new TalonSRX(RobotMap.mc_arm_CANID);
-
+    mc_arm = new TalonSRX(RobotMap.armMasterLeft1);
+    mc_armFollower = new TalonSRX(RobotMap.armFollowerRight1);
+    mc_intake = new TalonSRX(RobotMap.intakeMotor1);
+    mc_wrist = new TalonSRX(RobotMap.wristMotor1);
     mc_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 20);
 
     mc_arm.setSensorPhase(true);
-		mc_arm.setInverted(false);
+    mc_arm.setInverted(false);
+    mc_armFollower.setInverted(true);
+    mc_armFollower.follow(mc_arm);
 
 		// /* Set relevant frame periods to be at least as fast as periodic rate */
 		// mc_arm.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 20);
@@ -109,6 +116,11 @@ public class ArmSubsystem extends Subsystem {
   {
     if(pos < RobotMap.heights.length && pos > 0)  
       moveToHeight(RobotMap.heights[pos]);
-
+  }
+  public void intakeBall(int dir) {
+    mc_intake.set(ControlMode.PercentOutput, 0.15 * dir);
+  }
+  public void rotateWrist(int dir) {
+    mc_wrist.set(ControlMode.PercentOutput, 0.15 * dir);
   }
 }
