@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
+import frc.robot.subsystems.AccelerometerSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -74,6 +75,7 @@ public class Robot extends TimedRobot {
   public RealDriveTrain driveTrain;
   public static ArmSubsystem arm_subsystem;
   public static CompressorSubsystem comp_subsystem;
+  public static AccelerometerSubsystem accelerometer_subsystem;
   public AHRS navX;
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
@@ -99,6 +101,7 @@ public class Robot extends TimedRobot {
     driveTrain = new RealDriveTrain(this);
     arm_subsystem = new ArmSubsystem(this);
     comp_subsystem = new CompressorSubsystem(this);
+    accelerometer_subsystem = new AccelerometerSubsystem(this);
     SmartDashboard.putData(driveTrain);
     SmartDashboard.putData(arm_subsystem);
     SmartDashboard.putData("Drive Encoder Cal", new DriveEncoderCal(this));
@@ -123,6 +126,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Move to height 0", new MoveToHeight(this, 0));
     SmartDashboard.putData("Move to height 13", new MoveToHeight(this, 1));
     SmartDashboard.putData("Move to height 26", new MoveToHeight(this, 2));
+
+    SmartDashboard.putData("Accelerometer Angle", new AccelerometerAngle(this));
     
     // Shuffleboard.getTab("Camera").add("Compression slider", );
     m_chooser.addObject("Drive Fwd 24 inches", new DriveDistanceAndDirection(this, 24, 0));

@@ -94,26 +94,31 @@ public class ArmSubsystem extends Subsystem {
   }
 
   public void rotate(int dir) {
-    if(dir < 0)
-      mc_arm.set(ControlMode.PercentOutput, 0.10 * dir);// WAS .15
-    else  
-      mc_arm.set(ControlMode.PercentOutput, 0.15 * dir);// WAS .15
+    if(dir < 0) {
+      mc_arm.set(ControlMode.PercentOutput, 0.10 * dir); // WAS .15
+      mc_wrist.set(ControlMode.PercentOutput, 0.10 * dir);
     }
+    else {  
+      mc_arm.set(ControlMode.PercentOutput, 0.15 * dir); // WAS .15
+      mc_wrist.set(ControlMode.PercentOutput, 0.15*dir);
+    }
+    
+  }
 
   public void turns(double degrees) { // Turns a certain number of degrees
     mc_arm.set(ControlMode.Position, degrees / RobotMap.ArmTicksToDeg);
+    mc_wrist.set(ControlMode.Position, -degrees / RobotMap.ArmTicksToDeg);    // TODO: Get the right coefficient
     SmartDashboard.putNumber("target arm enc", degrees/RobotMap.ArmTicksToDeg);
   }
 
   public boolean isTurnComplete(double degrees) { // Determines if degrees of current and target match
     return (getEncoderTicks() == (degrees / RobotMap.ArmTicksToDeg));
   }
-  public void moveToHeight(double height)
-  {
+  public void moveToHeight(double height) {
     turns(Math.asin(height / RobotMap.armLength));
+    
   }
-  public void moveToHeightPreset(int pos) 
-  {
+  public void moveToHeightPreset(int pos) {
     if(pos < RobotMap.heights.length && pos > 0)  
       moveToHeight(RobotMap.heights[pos]);
   }
