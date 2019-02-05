@@ -102,6 +102,7 @@ public class ArmSubsystem extends Subsystem {
       mc_arm.set(ControlMode.PercentOutput, 0.15 * dir); // WAS .15
       mc_wrist.set(ControlMode.PercentOutput, 0.15*dir);
     }
+    
   }
 
   public void turns(double degrees) { // Turns a certain number of degrees
