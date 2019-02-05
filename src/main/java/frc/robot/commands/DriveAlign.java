@@ -27,7 +27,7 @@ public class DriveAlign extends Command{
         x = tx.getDouble(0.0);
         turn = 90 - Math.atan(1/Math.tan(x));
         double area = ta.getDouble(0.0);
-        distance = area*5;
+        distance = area*32;
         drive = distance / Math.cos(x);
     }
 
