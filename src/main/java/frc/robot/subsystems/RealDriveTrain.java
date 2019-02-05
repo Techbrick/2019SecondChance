@@ -46,9 +46,9 @@ public class RealDriveTrain extends Subsystem {
     _rightMaster = new TalonSRX(robot.robotMap.rightMaster);
     _rightFollower1 = new VictorSPX(robot.robotMap.rightFollower1);
     _rightFollower2 = new VictorSPX(robot.robotMap.rightFollower2);
-    _leftFollower1.setInverted(false);
-    _leftFollower2.setInverted(false);
-    _leftMaster.setInverted(false);
+    _leftFollower1.setInverted(true);
+    _leftFollower2.setInverted(true);
+    _leftMaster.setInverted(true);
     _rightMaster.setInverted(false);
     _rightFollower1.setInverted(false);
     _rightFollower2.setInverted(false);
