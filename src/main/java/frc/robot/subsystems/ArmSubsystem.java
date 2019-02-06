@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
@@ -27,7 +28,7 @@ public class ArmSubsystem extends Subsystem {
   // here. Call these from Commands.
   public Robot _robot;
   private TalonSRX mc_arm;
-  private TalonSRX mc_armFollower;
+  private VictorSPX mc_armFollower;
   private TalonSRX mc_intake;
   private TalonSRX mc_wrist;
 
@@ -40,7 +41,7 @@ public class ArmSubsystem extends Subsystem {
   public ArmSubsystem(Robot r) {  // Initialize the motion magic constants
     _robot = r;
     mc_arm = new TalonSRX(RobotMap.armMasterLeft1);
-    mc_armFollower = new TalonSRX(RobotMap.armFollowerRight1);
+    mc_armFollower = new VictorSPX(RobotMap.armFollowerRight1);
     mc_intake = new TalonSRX(RobotMap.intakeMotor1);
     mc_wrist = new TalonSRX(RobotMap.wristMotor1);
     mc_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 20);
@@ -95,8 +96,8 @@ public class ArmSubsystem extends Subsystem {
 
   public void rotate(int dir) {
     if(dir < 0) {
-      mc_arm.set(ControlMode.PercentOutput, 0.10 * dir); // WAS .15
-      mc_wrist.set(ControlMode.PercentOutput, 0.10 * dir);
+      mc_arm.set(ControlMode.PercentOutput, 0.30 * dir); // WAS .15
+      mc_wrist.set(ControlMode.PercentOutput, 0.30 * dir);
     }
     else {  
       mc_arm.set(ControlMode.PercentOutput, 0.15 * dir); // WAS .15
