@@ -46,9 +46,9 @@ public class RealDriveTrain extends Subsystem {
     _rightMaster = new TalonSRX(robot.robotMap.rightMaster);
     _rightFollower1 = new VictorSPX(robot.robotMap.rightFollower1);
     _rightFollower2 = new VictorSPX(robot.robotMap.rightFollower2);
-    _leftFollower1.setInverted(true);
-    _leftFollower2.setInverted(true);
-    _leftMaster.setInverted(true);
+    _leftFollower1.setInverted(false);
+    _leftFollower2.setInverted(false);
+    _leftMaster.setInverted(false);
     _rightMaster.setInverted(false);
     _rightFollower1.setInverted(false);
     _rightFollower2.setInverted(false);
@@ -69,13 +69,13 @@ public class RealDriveTrain extends Subsystem {
     _leftFollower2.setNeutralMode(NeutralMode.Brake);
     _rightFollower1.setNeutralMode(NeutralMode.Brake);
     _rightFollower2.setNeutralMode(NeutralMode.Brake);
-    _leftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0, 10);
+    _leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,0, 10);
     _leftMaster.setSelectedSensorPosition(0, 0, 10);
     _leftMaster.setSensorPhase(true);
 		leftEncoderPosition = () -> _leftMaster.getSelectedSensorPosition(0) * encoderConstant;
 		leftEncoderRate = () -> _leftMaster.getSelectedSensorVelocity(0) * encoderConstant * 0.1;
 		
-    _rightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+    _rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
     
     _rightMaster.setSelectedSensorPosition(0, 0, 10);
 		rightEncoderPosition = () -> _rightMaster.getSelectedSensorPosition(0) * encoderConstant;
@@ -84,25 +84,37 @@ public class RealDriveTrain extends Subsystem {
 
   public void Move(double leftpower, double rightpower){
     _leftMaster.set(ControlMode.PercentOutput, leftpower);
-    _rightMaster.set(ControlMode.PercentOutput, -rightpower);
+    _rightMaster.set(ControlMode.PercentOutput, rightpower);
     SmartDashboard.putString("DriveTrainStatus", "Move power: "+ Double.toString(leftpower) + ", " + Double.toString(rightpower));
   }
   public void ArcadeDrive(double power, double turn){
-    double turnPower = turn;
-    SmartDashboard.putNumber("dg raw power", power);
-    SmartDashboard.putNumber("dg raw twist", turn);
-    _leftMaster.set(ControlMode.PercentOutput, manageDeadband(power + turnPower));
-    _rightMaster.set(ControlMode.PercentOutput, manageDeadband(-power + turnPower));
-    SmartDashboard.putString("DriveTrainStatus", "ArcadeDrive power: "+ Double.toString(power));
-    SmartDashboard.putString("DriveTrainTurn", "TurnPower: " + Double.toString(turnPower));
+    // double turnPower = turn;
+    // SmartDashboard.putNumber("dg raw power", power);
+    // SmartDashboard.putNumber("dg raw twist", turn);
+    // _leftMaster.set(ControlMode.PercentOutput, manageDeadband(-power - turnPower));
+    // _rightMaster.set(ControlMode.PercentOutput, manageDeadband(power - turnPower));
+    // // SmartDashboard.putNumbers
+    // SmartDashboard.putString("DriveTrainStatus", "ArcadeDrive power: "+ Double.toString(power));
+    // SmartDashboard.putString("DriveTrainTurn", "TurnPower: " + Double.toString(turnPower));
+    SmartDashboard.putNumber("Raw power", power);
+    SmartDashboard.putNumber("Raw turn", turn);
+    double x = -power;
+    double y = -turn;
+    double v = (100.0 - Math.abs(x)) * (y / 100.0) + y;
+    double w = (100.0 - Math.abs(y)) * (x / 100.0) + x;
+    double r = (v + w) / 2.0;
+    double l = (v-w) / 2.0;
+    _leftMaster.set(ControlMode.PercentOutput, manageDeadband(l));
+    _rightMaster.set(ControlMode.PercentOutput, manageDeadband(r));
+    SmartDashboard.putNumber("Left Input", l);
+    SmartDashboard.putNumber("Right Input", r);
   }
 
   public double manageDeadband(double power) {
-    double adjustedPower = Math.pow(power, 3);
-    if(adjustedPower <= 0.05)
-      return 0;
-    else
-      return adjustedPower;
+    double adjustedPower = power;
+    if(Math.abs(adjustedPower) <= 0.1)
+      adjustedPower = 0;
+    return Math.pow(adjustedPower, 3);
   }
   public double getRobotYaw()
   {

@@ -41,7 +41,7 @@ public class RobotMap {
   public   double kp_Angle = 0.02; // propotional turning constant WAS .04
   public   double ki_Angle = 0.00;
   public   double kd_Angle = 0.00;
-  public   double joystickDeadband = .05;
+  public   double joystickDeadband = 0.05;
   public  double driveEncoderTicksPerInch = 437.42;
   public  double pidTurnDeadband = 1;
 

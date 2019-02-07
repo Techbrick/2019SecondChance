@@ -46,6 +46,8 @@ public class ManualArm extends Command {
     else {
       _robot.arm_subsystem.rotateWrist(0);
     }
+
+    
     
   }
 

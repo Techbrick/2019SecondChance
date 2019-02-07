@@ -44,9 +44,14 @@ public class ArmSubsystem extends Subsystem {
     mc_armFollower = new VictorSPX(RobotMap.armFollowerRight1);
     mc_intake = new TalonSRX(RobotMap.intakeMotor1);
     mc_wrist = new TalonSRX(RobotMap.wristMotor1);
-    mc_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 20);
 
-    mc_arm.setSensorPhase(true);
+    mc_wrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,0, 10);
+    mc_wrist.setSelectedSensorPosition(0, 0, 10);
+    mc_wrist.setSensorPhase(true);
+
+    mc_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 20);
+    mc_arm.setSelectedSensorPosition(0, 0, 10);
+    mc_arm.setSensorPhase(false);
     mc_arm.setInverted(false);
     mc_armFollower.setInverted(true);
     mc_armFollower.follow(mc_arm);
@@ -97,13 +102,12 @@ public class ArmSubsystem extends Subsystem {
   public void rotate(int dir) {
     if(dir < 0) {
       mc_arm.set(ControlMode.PercentOutput, 0.30 * dir); // WAS .15
-      mc_wrist.set(ControlMode.PercentOutput, 0.30 * dir);
     }
     else {  
       mc_arm.set(ControlMode.PercentOutput, 0.15 * dir); // WAS .15
-      mc_wrist.set(ControlMode.PercentOutput, 0.15*dir);
     }
     
+    SmartDashboard.putNumber("Arm Enc Pos", mc_arm.getSelectedSensorPosition(0));
   }
 
   public void turns(double degrees) { // Turns a certain number of degrees
@@ -128,5 +132,6 @@ public class ArmSubsystem extends Subsystem {
   }
   public void rotateWrist(int dir) {
     mc_wrist.set(ControlMode.PercentOutput, 0.15 * dir);
+    SmartDashboard.putNumber("Wrist Enc Pos", mc_wrist.getSelectedSensorPosition(0));
   }
 }
