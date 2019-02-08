@@ -76,6 +76,8 @@ public class RobotMap {
   public static int [] heights = {0, 13, 26};
 
   public static final int armLength = 26; //real one is 38, 26 is for testbot
+
+  public static final int wristHatchSolenoidID = 9;
   public RobotMap()
   {
     

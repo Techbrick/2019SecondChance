@@ -65,6 +65,7 @@ public class Robot extends TimedRobot {
   NetworkTableEntry telemetryEntry = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
   
   public Joystick stick;
+  public Joystick operatorStick;
 	public  double encoderConstant;
 	
   // public TalonSRX leftMaster;
@@ -91,6 +92,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("Instructions", "");
     SmartDashboard.putString("Status", "");
     stick = new Joystick(0);
+    operatorStick = new Joystick(1);
     robotMap.verbose = true;
 		
 		//
@@ -126,8 +128,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Move to height 0", new MoveToHeight(this, 0));
     SmartDashboard.putData("Move to height 13", new MoveToHeight(this, 1));
     SmartDashboard.putData("Move to height 26", new MoveToHeight(this, 2));
-
     SmartDashboard.putData("Accelerometer Angle", new AccelerometerAngle(this));
+
+
     
     // Shuffleboard.getTab("Camera").add("Compression slider", );
     m_chooser.addObject("Drive Fwd 24 inches", new DriveDistanceAndDirection(this, 24, 0));
@@ -137,7 +140,7 @@ public class Robot extends TimedRobot {
 		
     NetworkTableInstance.getDefault().setUpdateRate(0.020);
     
-    m_oi = new OI();
+    m_oi = new OI(this);
     double initYaw = navX.getYaw();
     SmartDashboard.putNumber("intYaw", initYaw);
     //navX.reset();
@@ -276,7 +279,12 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("navx Heading", navX.getCompassHeading());
       SmartDashboard.putNumber("navx Angle", Math.round(navX.getRawMagX()));
       SmartDashboard.putNumber("avgEncoderRate", driveTrain.GetAverageEncoderRate());
-      SmartDashboard.putNumber("Arm Encoder", arm_subsystem.getEncoderTicks());
+      SmartDashboard.putNumber("Arm Encoder Ticks", arm_subsystem.getArmEncoderTicks());
+      //Ticks * 4096/360 turns ticks into angles, / 25 to get past the reduction. 
+      SmartDashboard.putNumber("Arm Encoder Angle", arm_subsystem.getArmEncoderTicks() * 4096 / (360 * 25));
+      SmartDashboard.putNumber("Wrist Encoder Ticks", arm_subsystem.getWristEncoderTicks());
+
+      SmartDashboard.putNumber("Wrist Encoder Angle", arm_subsystem.getWristEncoderTicks());
     }
     
     double yaw = navX.getYaw();

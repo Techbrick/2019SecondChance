@@ -7,6 +7,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.IntakeBall;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -17,9 +22,13 @@ public class OI {
   //// joystick.
   // You create one by telling it which joystick it's on and which button
   // number it is.
-  // Joystick stick = new Joystick(port);
-  // Button button = new JoystickButton(stick, buttonNumber);
-
+  Joystick stick = new Joystick(1);
+  Button intakeButton = new JoystickButton(stick, 6);
+  Button ejectButton = new JoystickButton(stick, 5);
+  public OI(Robot robot){
+    intakeButton.whenPressed(new IntakeBall(robot, true, intakeButton));
+    intakeButton.whenPressed(new IntakeBall(robot, false, intakeButton));
+  }
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to
   // commands the same as any other Button.

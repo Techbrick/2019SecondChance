@@ -9,13 +9,22 @@ package frc.robot.commands;
 
 import javax.lang.model.util.ElementScanner6;
 
+import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.ArmSubsystem;
 
 public class IntakeBall extends Command {
   private Robot _robot;
-  public IntakeBall(Robot robot) {
+  private static ArmSubsystem arm;
+
+  private double intakeSpeed;
+  private Button button;
+  boolean pullIn;
+  public IntakeBall(Robot robot, boolean willIntake, Button parButton) {
     _robot = robot;
+    pullIn = willIntake;
+    button = parButton;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(_robot.arm_subsystem);
@@ -24,26 +33,20 @@ public class IntakeBall extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    arm = _robot.arm_subsystem;
+    intakeSpeed = 1.0D;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(_robot.stick.getRawButton(11)) {
-      _robot.arm_subsystem.intakeBall(-1);
-    }
-    else if(_robot.stick.getRawButton(12)) {
-      _robot.arm_subsystem.intakeBall(1);
-    }
-    else {
-      _robot.arm_subsystem.intakeBall(0);
-    }
+    _robot.arm_subsystem.setIntakeSpeed(intakeSpeed * (pullIn ? -1 : 1));
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return !button.get();
   }
 
   // Called once after isFinished returns true

@@ -12,12 +12,15 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.commands.ManualArm;
 
 
 /**
@@ -31,6 +34,7 @@ public class ArmSubsystem extends Subsystem {
   private VictorSPX mc_armFollower;
   private TalonSRX mc_intake;
   private TalonSRX mc_wrist;
+  private DoubleSolenoid pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate;
 
   // Constants
   private static final int kSlotIdx = 0;
@@ -55,6 +59,8 @@ public class ArmSubsystem extends Subsystem {
     mc_arm.setInverted(false);
     mc_armFollower.setInverted(true);
     mc_armFollower.follow(mc_arm);
+
+    pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate = new DoubleSolenoid(4,5);
 
 		// /* Set relevant frame periods to be at least as fast as periodic rate */
 		// mc_arm.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 20);
@@ -84,15 +90,20 @@ public class ArmSubsystem extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new ManualArm(_robot));
   }
 
   public void resetZero() { // Resets the encoder
     mc_arm.setSelectedSensorPosition(0, 0, 20);
   }
 
-  public int getEncoderTicks() {  // Returns the ticks on the encoder
+  public int getArmEncoderTicks() {  // Returns the ticks on the encoder
     return mc_arm.getSensorCollection().getPulseWidthPosition();
+  }
+
+  public int getWristEncoderTicks()
+  {
+    return mc_wrist.getSensorCollection().getPulseWidthPosition();
   }
 
   public void move(int currAngle, int dPos) { // Changes height of arm based on current angle and desired change
@@ -117,7 +128,7 @@ public class ArmSubsystem extends Subsystem {
   }
 
   public boolean isTurnComplete(double degrees) { // Determines if degrees of current and target match
-    return (getEncoderTicks() == (degrees / RobotMap.ArmTicksToDeg));
+    return (getArmEncoderTicks() == (degrees / RobotMap.ArmTicksToDeg));
   }
   public void moveToHeight(double height) {
     turns(Math.asin(height / RobotMap.armLength));
@@ -127,11 +138,28 @@ public class ArmSubsystem extends Subsystem {
     if(pos < RobotMap.heights.length && pos > 0)  
       moveToHeight(RobotMap.heights[pos]);
   }
-  public void intakeBall(int dir) {
-    mc_intake.set(ControlMode.PercentOutput, 0.15 * dir);
+  public void setIntakeSpeed(double percentSpeed)
+  {
+      mc_intake.set(ControlMode.PercentOutput, percentSpeed);
+  }
+
+  public void setArmSpeed(double percentSpeed)
+  {
+    mc_arm.set(ControlMode.PercentOutput, percentSpeed);
+  }
+
+  public void setWristSpeed(double percentSpeed)
+  {
+    mc_wrist.set(ControlMode.PercentOutput, percentSpeed);
+  }
+
+  public void hatchEjector(boolean isOpen)
+  {
+      //pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate.set(isOpen);
   }
   public void rotateWrist(int dir) {
     mc_wrist.set(ControlMode.PercentOutput, 0.15 * dir);
     SmartDashboard.putNumber("Wrist Enc Pos", mc_wrist.getSelectedSensorPosition(0));
   }
+
 }

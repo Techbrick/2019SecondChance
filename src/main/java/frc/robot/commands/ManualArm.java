@@ -47,6 +47,8 @@ public class ManualArm extends Command {
       _robot.arm_subsystem.rotateWrist(0);
     }
 
+    _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(2) / 2);
+    _robot.arm_subsystem.setArmSpeed(_robot.operatorStick.getRawAxis(0) / 2);
     
     
   }
