@@ -24,10 +24,10 @@ public class AccelerometerSubsystem extends Subsystem {
     private double accX;
     private double accY;
     private double accZ;
-    private Robot _robort;
+    private Robot _robot;
     public AccelerometerSubsystem(Robot r) {
       accel = new ADXL345_I2C(Port.kOnboard, Accelerometer.Range.k4G); // change later
-      _robort = r;
+      _robot = r;
     }
 
     public double getX() 

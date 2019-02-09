@@ -244,7 +244,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     double power =  stick.getY();
-    double twist = stick.getTwist();
+    double twist = stick.getX();
     //driveTrain.ArcadeDrive(power, twist);
   }
 
