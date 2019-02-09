@@ -64,6 +64,7 @@ public class ArmSubsystem extends Subsystem {
     mc_wrist.setSensorPhase(true);
     mc_wrist.configContinuousCurrentLimit(20, 10);
     mc_wrist.enableCurrentLimit(true);
+    mc_wrist.setInverted(true);
 
     mc_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     mc_arm.setSelectedSensorPosition(0, 0, 10);
