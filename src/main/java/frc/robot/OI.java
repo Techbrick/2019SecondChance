@@ -29,7 +29,8 @@ public class OI {
   public OI(Robot robot){
 
     intakeButton.whileHeld(new IntakeBall(robot, true));
-    intakeButton.whileHeld(new IntakeBall(robot, false));
+    ejectButton.whileHeld(new IntakeBall(robot, false));
+    
   }
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to
