@@ -29,26 +29,25 @@ public class ManualArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(_robot.stick.getRawButton(5)) {
-      _robot.arm_subsystem.rotate(-1);
-    } else if(_robot.stick.getRawButton(6)) {
-      _robot.arm_subsystem.rotate(1);
-    } else {
-      _robot.arm_subsystem.rotate(0);
-    }
+    // if(_robot.stick.getRawButton(5)) {
+    //   _robot.arm_subsystem.rotate(-1);
+    // } else if(_robot.stick.getRawButton(6)) {
+    //   _robot.arm_subsystem.rotate(1);
+    // } else {
+    //   _robot.arm_subsystem.rotate(0);
+    // }
 
-    if(_robot.stick.getRawButton(3)) {
-      _robot.arm_subsystem.rotateWrist(-1);
-    }
-    else if(_robot.stick.getRawButton(4)) {
-      _robot.arm_subsystem.rotateWrist(1);
-    }
-    else {
-      _robot.arm_subsystem.rotateWrist(0);
-    }
-
-    _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(2) / 2);
-    _robot.arm_subsystem.setArmSpeed(_robot.operatorStick.getRawAxis(0) / 2);
+    // if(_robot.stick.getRawButton(3)) {
+    //   _robot.arm_subsystem.rotateWrist(-1);
+    // }
+    // else if(_robot.stick.getRawButton(4)) {
+    //   _robot.arm_subsystem.rotateWrist(1);
+    // }
+    // else {
+    //   _robot.arm_subsystem.rotateWrist(0);
+    // }
+    _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(2));
+    _robot.arm_subsystem.setArmSpeed(_robot.operatorStick.getRawAxis(0));
     
     
   }

@@ -15,13 +15,13 @@ package frc.robot;
  */
 public class RobotMap {
 
-  public  final int driveStick = 0;
-  public  final int opStick = 1;
+  public final int driveStick = 0;
+  public final int opStick = 1;
   public double timingInterval = .02;
-  // public  final int leftMaster = 12;
-  // public  final int leftFollower = 13;
-  // public  final int rightMaster = 14;
-  // public  final int rightFollower = 15;
+  // public final int leftMaster = 12;
+  // public final int leftFollower = 13;
+  // public final int rightMaster = 14;
+  // public final int rightFollower = 15;
   public final int leftMaster = 4;
   public final int leftFollower1 = 5;
   public final int leftFollower2 = 6;
@@ -32,48 +32,49 @@ public class RobotMap {
   public static final int armFollowerRight1 = 8;
   public static final int wristMotor1 = 9;
   public static final int intakeMotor1 = 10;
-  public  boolean twoSpeedDrive = false;
-  public  boolean hasCompressor = false;
-  public  int leftShiftChannel = 0;
-  public  int rightShiftChannel = 0;
+  public boolean twoSpeedDrive = false;
+  public boolean hasCompressor = false;
+  public int leftShiftChannel = 0;
+  public int rightShiftChannel = 0;
 
-  public   double kAngleSetpoint = 0.0;
-  public   double kp_Angle = 0.02; // propotional turning constant WAS .04
-  public   double ki_Angle = 0.00;
-  public   double kd_Angle = 0.00;
-  public   double joystickDeadband = 0.05;
-  public  double driveEncoderTicksPerInch = 437.42;
-  public  double pidTurnDeadband = 1;
+  public double kAngleSetpoint = 0.0;
+  public double kp_Angle = 0.02; // propotional turning constant WAS .04
+  public double ki_Angle = 0.00;
+  public double kd_Angle = 0.00;
+  public double joystickDeadband = 0.05;
+  public double driveEncoderTicksPerInch = 437.42;
+  public double pidTurnDeadband = 1;
 
-  public   double WHEEL_DIAMETER = 6;
-  public   double ENCODER_PULSE_PER_REV = 4096; //WAS 2048
+  public double WHEEL_DIAMETER = 6;
+  public static final double ENCODER_PULSE_PER_REV = 4096.0; //WAS 2048
 
-  public   double distanceSetpoint = 0.0;
-  public   double kp_distance = 0.025; 
-  public   double ki_distance = 0.00; 
-  public   double kd_distance = 0.00; 
-  public  double pidDistDeadband = .2;
+  public double distanceSetpoint = 0.0;
+  public double kp_distance = 0.025; 
+  public double ki_distance = 0.00; 
+  public double kd_distance = 0.00; 
+  public double pidDistDeadband = .2;
 
-  public  double encoderMovementThreshold = 200;
-  public  int shiftChannel = 0;
+  public double encoderMovementThreshold = 200;
+  public int shiftChannel = 0;
 
-  public  double minTurnPower = .1; //WAS .24
-  public  double minDrivePower = .12;
-  public  double maxPidPower = .5;
-  public  boolean verbose = true;
-  public  double maxVelocity = 10;
-  public  double maxAccel = 15;
-  public  double fpsPerVolt = .8;
-  public  double accelPerVolt = 15.0/12.0;
-  public  int averageCounterVel = 0;
-  public  double trackWidth = 24;
-  public  int averageCounterAccel = 0;
-  public  double KpDistanceFollower = .8;
+  public double minTurnPower = .1; //WAS .24
+  public double minDrivePower = .12;
+  public double maxPidPower = .5;
+  public boolean verbose = true;
+  public double maxVelocity = 10;
+  public double maxAccel = 15;
+  public double fpsPerVolt = .8;
+  public double accelPerVolt = 15.0/12.0;
+  public int averageCounterVel = 0;
+  public double trackWidth = 24;
+  public int averageCounterAccel = 0;
+  public double KpDistanceFollower = .8;
 
-  public  static final int mc_arm_CANID = 2;
-  public  static final double ArmTicksToDeg = 360.0 / 4096.0;
+  public static final int mc_arm_CANID = 2;
+  public static final double ArmTicksToDeg = 360.0 / ENCODER_PULSE_PER_REV / 25.0; // TODO: Change the / to * potentially
   
-  public static int [] heights = {0, 13, 26};
+  public static int [][] heights = {{3910, 3910, 3910, 18235, 30235, 10115, 15713, 27284, 35009},
+                                        {-5, 49720, 22544, 39680, 57366, 85306, 72854, 91064, 85889}};
 
   public static final int armLength = 26; //real one is 38, 26 is for testbot
 
