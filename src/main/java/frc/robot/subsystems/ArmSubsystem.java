@@ -39,6 +39,7 @@ public class ArmSubsystem extends Subsystem {
   private TalonSRX mc_wrist;
   private Solenoid ejectorSolenoidIn;
   private Solenoid ejectorSolenoidOut;
+  private double[] zeros;
 
   // Constants
   private static final int kSlotIdx = 0;
@@ -98,8 +99,12 @@ public class ArmSubsystem extends Subsystem {
 		mc_arm.configMotionAcceleration(/*6000*/ 400, 20);
     mc_arm.configAllowableClosedloopError(0, 50, 20);
 		/* Zero the sensor */
-    mc_arm.setSelectedSensorPosition(0, kPIDLoopIdx, 20);
+    // mc_arm.setSelectedSensorPosition(0, kPIDLoopIdx, 20);
     resetZero();
+
+    zeros = new double[2];
+    zeros[0] = getArmEncoderTicks() - RobotMap.heights[0][0];
+    zeros[1] = getArmEncoderTicks() - RobotMap.heights[1][0];
   }
   @Override
   public void initDefaultCommand() {
@@ -161,8 +166,8 @@ public class ArmSubsystem extends Subsystem {
     // if(pos < RobotMap.heights.length && pos > 0)  
     //   moveToHeight(RobotMap.heights[pos]);
 
-    mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos]);
-    mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
+    mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos] + zeros[0]);
+    mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos] + zeros[1]);
   }
   public void setIntakeSpeed(double percentSpeed)
   {
