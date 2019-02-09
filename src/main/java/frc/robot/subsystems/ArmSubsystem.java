@@ -50,12 +50,12 @@ public class ArmSubsystem extends Subsystem {
     mc_intake = new TalonSRX(RobotMap.intakeMotor1);
     mc_wrist = new TalonSRX(RobotMap.wristMotor1);
 
-    mc_wrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,0, 10);
     mc_wrist.setSelectedSensorPosition(0, 0, 10);
+    mc_wrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,0, 10);
     mc_wrist.setSensorPhase(true);
 
-    mc_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 20);
     mc_arm.setSelectedSensorPosition(0, 0, 10);
+    mc_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 20);
     mc_arm.setSensorPhase(false);
     mc_arm.setInverted(false);
     mc_armFollower.setInverted(true);
