@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Helpers;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ManualArm;
@@ -31,6 +32,7 @@ public class ArmSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public Robot _robot;
+  public RobotMap robotMap;
   private TalonSRX mc_arm;
   private VictorSPX mc_armFollower;
   private TalonSRX mc_intake;
@@ -43,9 +45,14 @@ public class ArmSubsystem extends Subsystem {
   private static final int kPIDLoopIdx = 0;
   private static final Gains kGains = new Gains((.5*1023)/(4096.0/12), 0.0, 0.0, 0.2, 0, 1.0);
   private static final int length = 5;
+  private static final int wristUpperLimit;
+  private static final int wristLowerLimit;
+  private static final int armUpperLimit;
+  private static final int armLowerLimit;
   
   public ArmSubsystem(Robot r) {  // Initialize the motion magic constants
     _robot = r;
+    robotMap = new RobotMap();
     mc_arm = new TalonSRX(RobotMap.armMasterLeft1);
     mc_armFollower = new VictorSPX(RobotMap.armFollowerRight1);
     mc_intake = new TalonSRX(RobotMap.intakeMotor1);
@@ -54,6 +61,8 @@ public class ArmSubsystem extends Subsystem {
     mc_wrist.setSelectedSensorPosition(0, 0, 10);
     mc_wrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,0, 10);
     mc_wrist.setSensorPhase(true);
+    mc_wrist.configContinuousCurrentLimit(20, 10);
+    mc_wrist.enableCurrentLimit(true);
 
     mc_arm.setSelectedSensorPosition(0, 0, 10);
     mc_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 20);
@@ -111,6 +120,14 @@ public class ArmSubsystem extends Subsystem {
     return mc_wrist.getSensorCollection().getPulseWidthPosition();
   }
 
+  public void extensionLimit()
+  {
+    if((getWristEncoderTicks() >= wristUpperLimit) && (getWristEncoderTicks() <= wristLowerLimit))
+    {
+      
+    }
+  }
+
   public void move(int currAngle, int dPos) { // Changes height of arm based on current angle and desired change
     mc_arm.set(ControlMode.MotionMagic, 4096 * 25 * (-currAngle+Math.acos(dPos / -length - Math.cos(currAngle))) / 360);
   }
@@ -140,8 +157,11 @@ public class ArmSubsystem extends Subsystem {
     
   }
   public void moveToHeightPreset(int pos) {
-    if(pos < RobotMap.heights.length && pos > 0)  
-      moveToHeight(RobotMap.heights[pos]);
+    // if(pos < RobotMap.heights.length && pos > 0)  
+    //   moveToHeight(RobotMap.heights[pos]);
+
+    mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos]);
+    mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
   }
   public void setIntakeSpeed(double percentSpeed)
   {
@@ -155,12 +175,12 @@ public class ArmSubsystem extends Subsystem {
 
   public void setArmSpeed(double percentSpeed)
   {
-    mc_arm.set(ControlMode.PercentOutput, percentSpeed);
+    mc_arm.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
   }
 
   public void setWristSpeed(double percentSpeed)
   {
-    mc_wrist.set(ControlMode.PercentOutput, percentSpeed);
+    mc_wrist.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
   }
 
   public void setHatchEjector(boolean isOpen)
