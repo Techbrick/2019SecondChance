@@ -35,7 +35,8 @@ public class ArmSubsystem extends Subsystem {
   private VictorSPX mc_armFollower;
   private TalonSRX mc_intake;
   private TalonSRX mc_wrist;
-  private DoubleSolenoid pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate;
+  private Solenoid ejectorSolenoidIn;
+  private Solenoid ejectorSolenoidOut;
 
   // Constants
   private static final int kSlotIdx = 0;
@@ -61,8 +62,10 @@ public class ArmSubsystem extends Subsystem {
     mc_armFollower.setInverted(true);
     mc_armFollower.follow(mc_arm);
 
-    pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate = new DoubleSolenoid(4,5);
-    pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate.set(Value.kOff);
+
+    ejectorSolenoidIn = new Solenoid(4);
+    ejectorSolenoidOut = new Solenoid(5);
+    setHatchEjector(true);
 
 		// /* Set relevant frame periods to be at least as fast as periodic rate */
 		// mc_arm.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 20);
@@ -162,12 +165,13 @@ public class ArmSubsystem extends Subsystem {
 
   public void setHatchEjector(boolean isOpen)
   {
-      pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate.set(isOpen ? Value.kForward : Value.kReverse);
+      ejectorSolenoidIn.set(isOpen);
+      ejectorSolenoidOut.set(!isOpen);
   }
 
-  public Value getHatchEjectorValue()
+  public boolean getHatchEjectorValue()
   {
-     return pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate.get();
+     return ejectorSolenoidIn.get();
   }
 
   public void rotateWrist(int dir) {
