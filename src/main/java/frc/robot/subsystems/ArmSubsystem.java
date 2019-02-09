@@ -68,8 +68,8 @@ public class ArmSubsystem extends Subsystem {
     mc_arm.setSelectedSensorPosition(0, 0, 10);
     mc_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 20);
     mc_arm.setSensorPhase(false);
-    mc_arm.setInverted(false);
-    mc_armFollower.setInverted(true);
+    mc_arm.setInverted(true);
+    mc_armFollower.setInverted(false);
     mc_armFollower.follow(mc_arm);
 
 
