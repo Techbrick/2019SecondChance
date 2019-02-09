@@ -104,6 +104,9 @@ public class Robot extends TimedRobot {
     arm_subsystem = new ArmSubsystem(this);
     comp_subsystem = new CompressorSubsystem(this);
     accelerometer_subsystem = new AccelerometerSubsystem(this);
+
+    arm_subsystem.resetZero();
+    
     SmartDashboard.putData(driveTrain);
     SmartDashboard.putData(arm_subsystem);
     SmartDashboard.putData("Drive Encoder Cal", new DriveEncoderCal(this));

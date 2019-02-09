@@ -109,6 +109,7 @@ public class ArmSubsystem extends Subsystem {
 
   public void resetZero() { // Resets the encoder
     mc_arm.setSelectedSensorPosition(0, 0, 20);
+    mc_wrist.setSelectedSensorPosition(0, 0, 20);
   }
 
   public int getArmEncoderTicks() {  // Returns the ticks on the encoder
