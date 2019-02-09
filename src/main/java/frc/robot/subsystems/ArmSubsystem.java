@@ -37,12 +37,13 @@ public class ArmSubsystem extends Subsystem {
   private VictorSPX mc_armFollower;
   private TalonSRX mc_intake;
   private TalonSRX mc_wrist;
-  private DoubleSolenoid pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate;
+  private Solenoid ejectorSolenoidIn;
+  private Solenoid ejectorSolenoidOut;
 
   // Constants
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
-  private static final Gains kGains = new Gains(0.2, 0.0, 0.0, 0.2, 0, 1.0);
+  private static final Gains kGains = new Gains((.5*1023)/(4096.0/12), 0.0, 0.0, 0.2, 0, 1.0);
   private static final int length = 5;
   private static final int wristUpperLimit;
   private static final int wristLowerLimit;
@@ -57,21 +58,23 @@ public class ArmSubsystem extends Subsystem {
     mc_intake = new TalonSRX(RobotMap.intakeMotor1);
     mc_wrist = new TalonSRX(RobotMap.wristMotor1);
 
-    mc_wrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,0, 10);
     mc_wrist.setSelectedSensorPosition(0, 0, 10);
+    mc_wrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,0, 10);
     mc_wrist.setSensorPhase(true);
     mc_wrist.configContinuousCurrentLimit(20, 10);
     mc_wrist.enableCurrentLimit(true);
 
-    mc_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 20);
     mc_arm.setSelectedSensorPosition(0, 0, 10);
+    mc_arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 20);
     mc_arm.setSensorPhase(false);
     mc_arm.setInverted(false);
     mc_armFollower.setInverted(true);
     mc_armFollower.follow(mc_arm);
 
-    pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate = new DoubleSolenoid(4,5);
-    pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate.set(Value.kOff);
+
+    ejectorSolenoidIn = new Solenoid(4);
+    ejectorSolenoidOut = new Solenoid(5);
+    setHatchEjector(true);
 
 		// /* Set relevant frame periods to be at least as fast as periodic rate */
 		// mc_arm.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 20);
@@ -182,12 +185,13 @@ public class ArmSubsystem extends Subsystem {
 
   public void setHatchEjector(boolean isOpen)
   {
-      pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate.set(isOpen ? Value.kForward : Value.kReverse);
+      ejectorSolenoidIn.set(isOpen);
+      ejectorSolenoidOut.set(!isOpen);
   }
 
-  public Value getHatchEjectorValue()
+  public boolean getHatchEjectorValue()
   {
-     return pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate.get();
+     return ejectorSolenoidIn.get();
   }
 
   public void rotateWrist(int dir) {

@@ -7,28 +7,32 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 
-public class ShiftGear extends Command {
-  private Robot _robot;
-  public ShiftGear(Robot robot) {
-    _robot = robot;
-    requires(_robot.driveTrain);
+public class HatchEjector extends InstantCommand {
+
+  private boolean shouldEject;
+  private Robot robot;
+
+  public HatchEjector(Robot parRobot, Boolean parEject) {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    robot = parRobot;
+    shouldEject = parEject;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    _robot.comp_subsystem.checkPressure();  //Starts compressor
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-      _robot.driveTrain.setShifterSolenoid(true); //Shifts to High Gear
-    }
-  
+    robot.arm_subsystem.setHatchEjector(shouldEject);
+  }
+
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
@@ -44,6 +48,5 @@ public class ShiftGear extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    _robot.driveTrain.setShifterSolenoid(false);
   }
 }
