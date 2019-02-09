@@ -74,9 +74,9 @@ public class Robot extends TimedRobot {
   // private TalonSRX rightFollower;
   // public  DriveSubsystem driveTrain;
   public RealDriveTrain driveTrain;
-  public static ArmSubsystem arm_subsystem;
-  public static CompressorSubsystem comp_subsystem;
-  public static AccelerometerSubsystem accelerometer_subsystem;
+  public ArmSubsystem arm_subsystem;
+  public CompressorSubsystem comp_subsystem;
+  public AccelerometerSubsystem accelerometer_subsystem;
   public AHRS navX;
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];

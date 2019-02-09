@@ -19,12 +19,10 @@ public class IntakeBall extends Command {
   private static ArmSubsystem arm;
 
   private double intakeSpeed;
-  private Button button;
   boolean pullIn;
-  public IntakeBall(Robot robot, boolean willIntake, Button parButton) {
+  public IntakeBall(Robot robot, boolean willIntake) {
     _robot = robot;
     pullIn = willIntake;
-    button = parButton;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(_robot.arm_subsystem);
@@ -40,13 +38,13 @@ public class IntakeBall extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    _robot.arm_subsystem.setIntakeSpeed(intakeSpeed * (pullIn ? -1 : 1));
+    _robot.arm_subsystem.setIntakeSpeed(_robot.arm_subsystem.getIntakeSpeed() + intakeSpeed * (pullIn ? -1 : 1));
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return !button.get();
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -58,5 +56,6 @@ public class IntakeBall extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    _robot.arm_subsystem.setIntakeSpeed(0.0D);
   }
 }

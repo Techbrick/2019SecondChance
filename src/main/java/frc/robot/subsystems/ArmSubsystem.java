@@ -143,6 +143,11 @@ public class ArmSubsystem extends Subsystem {
       mc_intake.set(ControlMode.PercentOutput, percentSpeed);
   }
 
+  public double getIntakeSpeed()
+  {
+      return mc_intake.getMotorOutputPercent();
+  }
+
   public void setArmSpeed(double percentSpeed)
   {
     mc_arm.set(ControlMode.PercentOutput, percentSpeed);

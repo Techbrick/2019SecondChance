@@ -26,8 +26,9 @@ public class OI {
   Button intakeButton = new JoystickButton(stick, 6);
   Button ejectButton = new JoystickButton(stick, 5);
   public OI(Robot robot){
-    intakeButton.whenPressed(new IntakeBall(robot, true, intakeButton));
-    intakeButton.whenPressed(new IntakeBall(robot, false, intakeButton));
+
+    intakeButton.whileHeld(new IntakeBall(robot, true));
+    intakeButton.whileHeld(new IntakeBall(robot, false));
   }
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to

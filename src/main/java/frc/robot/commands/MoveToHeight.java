@@ -38,8 +38,9 @@ public class MoveToHeight extends Command {
 
   public MoveToHeight(Robot r, int pos) {
   // Use requires() here to declare subsystem dependencies
-  requires(Robot.arm_subsystem);
-  arm = Robot.arm_subsystem;
+  robot = r;
+  requires(robot.arm_subsystem);
+  arm = robot.arm_subsystem;
   targetencoder = arm.getArmEncoderTicks();
   position = pos;
 
