@@ -43,7 +43,7 @@ public class DriveAlign extends Command{
         goTo.start();
         area = ta.getDouble(0.0);
         distance = area;
-        goTo1 = new DriveDistanceAndDirection(_robot, distance, target);
+        //goTo1 = new DriveDistanceAndDirection(_robot, distance, target);
         goTo1.start();
         completed = true;
     }

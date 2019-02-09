@@ -123,7 +123,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Manual Arm", new ManualArm(this));
     SmartDashboard.putData("Dog Left", new DogLegLeft(this) );
     SmartDashboard.putData("Rotate 1", new Turn(this, 1));
-    SmartDashboard.putData("DriveAlign", new DriveAlign(this));
+    SmartDashboard.putData("Move to Height Russell", new MoveToHeight(this, 2));
+    //SmartDashboard.putData("DriveAlign", new DriveAlign(this));
 
     SmartDashboard.putData("Move to height 0", new MoveToHeight(this, 0));
     SmartDashboard.putData("Move to height 13", new MoveToHeight(this, 1));
