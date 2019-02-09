@@ -9,6 +9,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -29,6 +31,7 @@ public class DriveSubsystem extends Subsystem {
 	Supplier<Double> leftEncoderRate;
 	Supplier<Double> rightEncoderPosition;
   Supplier<Double> rightEncoderRate;
+  private DoubleSolenoid shifterSolenoid;
 
 
   public DriveSubsystem (Robot robot){
@@ -62,7 +65,11 @@ public class DriveSubsystem extends Subsystem {
     
     _rightMaster.setSelectedSensorPosition(0, 0, 10);
 		rightEncoderPosition = () -> _rightMaster.getSelectedSensorPosition(0) * encoderConstant;
-		rightEncoderRate = () -> _rightMaster.getSelectedSensorVelocity(0) * encoderConstant * 0.1;
+    rightEncoderRate = () -> _rightMaster.getSelectedSensorVelocity(0) * encoderConstant * 0.1;
+    
+    shifterSolenoid = new DoubleSolenoid(0,1);
+    shifterSolenoid.set(Value.kOff);
+
   }
   public void Move(double leftpower, double rightpower){
     _leftMaster.set(ControlMode.PercentOutput, leftpower);
@@ -131,6 +138,12 @@ public class DriveSubsystem extends Subsystem {
     return _rightMaster.getMotorOutputVoltage();
 
   }
+
+  public void setShifterSolenoid(boolean isOpen)
+  {
+    shifterSolenoid.set(isOpen ? Value.kForward : Value.kReverse);
+  }
+
   @Override
   public void initDefaultCommand() {
   

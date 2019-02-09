@@ -14,7 +14,7 @@ public class ShiftGear extends Command {
   private Robot _robot;
   public ShiftGear(Robot robot) {
     _robot = robot;
-    requires(_robot.comp_subsystem);
+    requires(_robot.driveTrain);
   }
 
   // Called just before this Command runs the first time
@@ -26,7 +26,7 @@ public class ShiftGear extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-      _robot.comp_subsystem.actuateCylinder();  //Shifts to High Gear
+      _robot.driveTrain.setShifterSolenoid(true); //Shifts to High Gear
 
      
     }
@@ -47,7 +47,6 @@ public class ShiftGear extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    _robot.comp_subsystem.retractCylinder();
-    _robot.comp_subsystem.checkPressure();
+    _robot.driveTrain.setShifterSolenoid(false);
   }
 }
