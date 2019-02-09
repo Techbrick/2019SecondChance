@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.HatchEjector;
 import frc.robot.commands.HatchEjectorToggle;
 import frc.robot.commands.IntakeBall;
+import frc.robot.commands.ShiftGear;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -27,12 +28,15 @@ public class OI {
   Joystick stick = new Joystick(1);
   Button intakeButton = new JoystickButton(stick, 6);
   Button ejectButton = new JoystickButton(stick, 5);
-  Button hatchEjectButton = new JoystickButton(stick, 0);
+  Button hatchEjectButton = new JoystickButton(stick, 1);
+  Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
 
     intakeButton.whileHeld(new IntakeBall(robot, true));
     ejectButton.whileHeld(new IntakeBall(robot, false));
     hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot, true), new HatchEjector(robot, false), robot)); 
+    ShiftGearButton.whileHeld(new ShiftGear(robot));
+    // hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot,true),new HatchEjector(robot,false),robot));
     
   }
   // There are a few additional built in buttons you can use. Additionally,

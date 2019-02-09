@@ -26,14 +26,11 @@ public class ShiftGear extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(_robot.stick.getRawButton(2) && !_robot.comp_subsystem.pressure()) {
       _robot.comp_subsystem.actuateCylinder();  //Shifts to High Gear
+
+     
     }
-    else {
-      _robot.comp_subsystem.retractCylinder();
-      _robot.comp_subsystem.checkPressure();
-    }
-  }
+  
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -50,5 +47,7 @@ public class ShiftGear extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    _robot.comp_subsystem.retractCylinder();
+    _robot.comp_subsystem.checkPressure();
   }
 }

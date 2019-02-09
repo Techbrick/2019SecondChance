@@ -45,8 +45,8 @@ public class ManualDrive extends Command {
   protected void execute() {
     double power = Helpers.DeadbandJoystick(_robot.stick.getRawAxis(1), _robot.robotMap);
     // reduced the power because the robot is too tubby
-    double twist =Helpers.DeadbandJoystick( _robot.stick.getRawAxis(2), _robot.robotMap) / 2;
-    _robot.driveTrain.ArcadeDrive(power, twist);   
+    double twist =Helpers.DeadbandJoystick( _robot.stick.getRawAxis(2), _robot.robotMap);
+    _robot.driveTrain.ArcadeDrive(power, twist / 2);   
 
     double leftDrivePower = _robot.driveTrain.GetLeftOutputVoltage();
     double rightDrivePower = _robot.driveTrain.GetRightOutputVoltage();
