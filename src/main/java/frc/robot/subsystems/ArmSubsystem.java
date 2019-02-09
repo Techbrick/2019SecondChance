@@ -45,10 +45,10 @@ public class ArmSubsystem extends Subsystem {
   private static final int kPIDLoopIdx = 0;
   private static final Gains kGains = new Gains((.5*1023)/(4096.0/12), 0.0, 0.0, 0.2, 0, 1.0);
   private static final int length = 5;
-  private static final int wristUpperLimit;
-  private static final int wristLowerLimit;
-  private static final int armUpperLimit;
-  private static final int armLowerLimit;
+  // private static final int wristUpperLimit;
+  // private static final int wristLowerLimit;
+  // private static final int armUpperLimit;
+  // private static final int armLowerLimit;
   
   public ArmSubsystem(Robot r) {  // Initialize the motion magic constants
     _robot = r;
@@ -121,13 +121,13 @@ public class ArmSubsystem extends Subsystem {
     return mc_wrist.getSensorCollection().getPulseWidthPosition();
   }
 
-  public void extensionLimit()
-  {
-    if((getWristEncoderTicks() >= wristUpperLimit) && (getWristEncoderTicks() <= wristLowerLimit))
-    {
+  // public void extensionLimit()
+  // {
+  //   if((getWristEncoderTicks() >= wristUpperLimit) && (getWristEncoderTicks() <= wristLowerLimit))
+  //   {
       
-    }
-  }
+  //   }
+  // }
 
   public void move(int currAngle, int dPos) { // Changes height of arm based on current angle and desired change
     mc_arm.set(ControlMode.MotionMagic, 4096 * 25 * (-currAngle+Math.acos(dPos / -length - Math.cos(currAngle))) / 360);
