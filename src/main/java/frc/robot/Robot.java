@@ -120,19 +120,20 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Test Turn Right 90", new TestTurnRight90(this));
     SmartDashboard.putData("Test Fwd 48", new TestMoveFwd48(this));
     SmartDashboard.putData("Test back 48", new TestMoveBack48(this));
-    SmartDashboard.putData("Rotate 0", new Turn(this, 0.0));
-    SmartDashboard.putData("Rotate 30", new Turn(this, 30.0 / 360.0));
-    SmartDashboard.putData("Rotate 60", new Turn(this, 60.0 / 360.0));
-    SmartDashboard.putData("Rotate 90", new Turn(this, 90.0 / 360.0));
     SmartDashboard.putData("Manual Arm", new ManualArm(this));
     SmartDashboard.putData("Dog Left", new DogLegLeft(this) );
     SmartDashboard.putData("Rotate 1", new Turn(this, 1));
-    SmartDashboard.putData("Move to Height Russell", new MoveToHeight(this, 2));
     //SmartDashboard.putData("DriveAlign", new DriveAlign(this));
 
-    SmartDashboard.putData("Move to height 0", new MoveToHeight(this, 0));
-    SmartDashboard.putData("Move to height 13", new MoveToHeight(this, 1));
-    SmartDashboard.putData("Move to height 26", new MoveToHeight(this, 2));
+    SmartDashboard.putData("Height 0", new MoveToHeight(this, 0));
+    SmartDashboard.putData("Height 1", new MoveToHeight(this, 1));
+    SmartDashboard.putData("Height 2", new MoveToHeight(this, 2));
+    SmartDashboard.putData("Height 3", new MoveToHeight(this, 3));
+    SmartDashboard.putData("Height 4", new MoveToHeight(this, 4));
+    SmartDashboard.putData("Height 5", new MoveToHeight(this, 5));
+    SmartDashboard.putData("Height 6", new MoveToHeight(this, 6));
+    SmartDashboard.putData("Height 7", new MoveToHeight(this, 7));
+    SmartDashboard.putData("Height 8", new MoveToHeight(this, 8));
     // SmartDashboard.putData("Accelerometer Angle", new AccelerometerAngle(this));
 
 
@@ -180,7 +181,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     
-    Logger();
+    // Logger();
   }
 
   /**
