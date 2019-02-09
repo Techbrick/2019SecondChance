@@ -34,7 +34,7 @@ public class OI {
 
     intakeButton.whileHeld(new IntakeBall(robot, true));
     ejectButton.whileHeld(new IntakeBall(robot, false));
-    hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot, true), new HatchEjector(robot, false), robot)); 
+    hatchEjectButton.whenPressed(new HatchEjector(robot, !robot.arm_subsystem.getHatchEjectorValue())); 
     ShiftGearButton.whileHeld(new ShiftGear(robot));
     // hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot,true),new HatchEjector(robot,false),robot));
     
