@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
@@ -76,7 +77,7 @@ public class Robot extends TimedRobot {
   public RealDriveTrain driveTrain;
   public ArmSubsystem arm_subsystem;
   public CompressorSubsystem comp_subsystem;
-  public AccelerometerSubsystem accelerometer_subsystem;
+  // public AccelerometerSubsystem accelerometer_subsystem;
   public AHRS navX;
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
@@ -103,7 +104,7 @@ public class Robot extends TimedRobot {
     driveTrain = new RealDriveTrain(this);
     arm_subsystem = new ArmSubsystem(this);
     comp_subsystem = new CompressorSubsystem(this);
-    accelerometer_subsystem = new AccelerometerSubsystem(this);
+    // accelerometer_subsystem = new AccelerometerSubsystem(this);
 
     arm_subsystem.resetZero();
     
@@ -132,7 +133,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Move to height 0", new MoveToHeight(this, 0));
     SmartDashboard.putData("Move to height 13", new MoveToHeight(this, 1));
     SmartDashboard.putData("Move to height 26", new MoveToHeight(this, 2));
-    SmartDashboard.putData("Accelerometer Angle", new AccelerometerAngle(this));
+    // SmartDashboard.putData("Accelerometer Angle", new AccelerometerAngle(this));
 
 
     
