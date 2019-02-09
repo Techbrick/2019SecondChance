@@ -27,8 +27,6 @@ public class ShiftGear extends Command {
   @Override
   protected void execute() {
       _robot.driveTrain.setShifterSolenoid(true); //Shifts to High Gear
-
-     
     }
   
 
