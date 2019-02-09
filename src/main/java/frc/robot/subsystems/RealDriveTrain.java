@@ -184,7 +184,7 @@ public class RealDriveTrain extends Subsystem {
   @Override
   public void initDefaultCommand() {
   
-    //setDefaultCommand(new frc.robot.commands.ManualDrive(_robot));
+    setDefaultCommand(new frc.robot.commands.ManualDrive(_robot));
   }
 }
  
