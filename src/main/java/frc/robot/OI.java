@@ -25,6 +25,7 @@ public class OI {
   Joystick stick = new Joystick(1);
   Button intakeButton = new JoystickButton(stick, 6);
   Button ejectButton = new JoystickButton(stick, 5);
+  Button hatchEjectButton = new JoystickButton(stick, 0);
   public OI(Robot robot){
 
     intakeButton.whileHeld(new IntakeBall(robot, true));

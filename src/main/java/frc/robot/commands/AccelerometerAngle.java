@@ -18,9 +18,9 @@ public class AccelerometerAngle extends InstantCommand {
   public AccelerometerAngle(Robot r) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.accelerometer_subsystem);
     _robot = r;
-    acc = Robot.accelerometer_subsystem;
+    requires(_robot.accelerometer_subsystem);
+    acc = _robot.accelerometer_subsystem;
 
   }
 

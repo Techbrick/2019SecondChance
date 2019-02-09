@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -61,6 +62,7 @@ public class ArmSubsystem extends Subsystem {
     mc_armFollower.follow(mc_arm);
 
     pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate = new DoubleSolenoid(4,5);
+    pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate.set(Value.kOff);
 
 		// /* Set relevant frame periods to be at least as fast as periodic rate */
 		// mc_arm.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 20);
@@ -158,10 +160,16 @@ public class ArmSubsystem extends Subsystem {
     mc_wrist.set(ControlMode.PercentOutput, percentSpeed);
   }
 
-  public void hatchEjector(boolean isOpen)
+  public void setHatchEjector(boolean isOpen)
   {
-      //pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate.set(isOpen);
+      pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate.set(isOpen ? Value.kForward : Value.kReverse);
   }
+
+  public Value getHatchEjectorValue()
+  {
+     return pancakePneumaticSolenoidControllerJustTypeSetDotTrueOrFalseToActivate.get();
+  }
+
   public void rotateWrist(int dir) {
     mc_wrist.set(ControlMode.PercentOutput, 0.15 * dir);
     SmartDashboard.putNumber("Wrist Enc Pos", mc_wrist.getSelectedSensorPosition(0));
