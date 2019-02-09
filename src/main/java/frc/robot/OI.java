@@ -10,6 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.HatchEjector;
+import frc.robot.commands.HatchEjectorToggle;
 import frc.robot.commands.IntakeBall;
 
 /**
@@ -30,6 +32,7 @@ public class OI {
 
     intakeButton.whileHeld(new IntakeBall(robot, true));
     ejectButton.whileHeld(new IntakeBall(robot, false));
+    hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot, true), new HatchEjector(robot, false), robot)); 
     
   }
   // There are a few additional built in buttons you can use. Additionally,
