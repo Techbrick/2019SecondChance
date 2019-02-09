@@ -170,6 +170,8 @@ public class ArmSubsystem extends Subsystem {
     mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos] + zeros[0]);
     mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos] + zeros[1]);
     
+    SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
+    SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
   }
   public void setIntakeSpeed(double percentSpeed)
   {
