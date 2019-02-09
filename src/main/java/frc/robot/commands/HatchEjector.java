@@ -7,50 +7,30 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
-import frc.robot.subsystems.ArmSubsystem;
 
-public class ManualArm extends Command {
-  Robot _robot;
-  public ManualArm(Robot r) {
+public class HatchEjector extends InstantCommand {
+
+  private boolean shouldEject;
+  private Robot robot;
+
+  public HatchEjector(Robot parRobot, Boolean parEject) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    _robot = r;
-    requires(_robot.arm_subsystem);
+    robot = parRobot;
+    shouldEject = parEject;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(_robot.stick.getRawButton(5)) {
-      _robot.arm_subsystem.rotate(-1);
-    } else if(_robot.stick.getRawButton(6)) {
-      _robot.arm_subsystem.rotate(1);
-    } else {
-      _robot.arm_subsystem.rotate(0);
-    }
-
-    if(_robot.stick.getRawButton(3)) {
-      _robot.arm_subsystem.rotateWrist(-1);
-    }
-    else if(_robot.stick.getRawButton(4)) {
-      _robot.arm_subsystem.rotateWrist(1);
-    }
-    else {
-      _robot.arm_subsystem.rotateWrist(0);
-    }
-
-    _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(2));
-    _robot.arm_subsystem.setArmSpeed(_robot.operatorStick.getRawAxis(0));
-    
-    
+    robot.arm_subsystem.setHatchEjector(shouldEject);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -62,8 +42,6 @@ public class ManualArm extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    _robot.arm_subsystem.rotate(0);
-    _robot.arm_subsystem.rotateWrist(0);
   }
 
   // Called when another command which requires one or more of the same

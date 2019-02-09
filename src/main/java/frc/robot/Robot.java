@@ -280,11 +280,11 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("navx Angle", Math.round(navX.getRawMagX()));
       SmartDashboard.putNumber("avgEncoderRate", driveTrain.GetAverageEncoderRate());
       SmartDashboard.putNumber("Arm Encoder Ticks", arm_subsystem.getArmEncoderTicks());
-      //Ticks * 4096/360 turns ticks into angles, / 25 to get past the reduction. 
-      SmartDashboard.putNumber("Arm Encoder Angle", arm_subsystem.getArmEncoderTicks() * 4096 / (360 * 25));
+      //Ticks * bleh turns ticks into angles, / 25 to get past the reduction. 
+      SmartDashboard.putNumber("Arm Encoder Angle", arm_subsystem.getArmEncoderTicks() * 360 / (4096 * 25));
       SmartDashboard.putNumber("Wrist Encoder Ticks", arm_subsystem.getWristEncoderTicks());
 
-      SmartDashboard.putNumber("Wrist Encoder Angle", arm_subsystem.getWristEncoderTicks());
+      SmartDashboard.putNumber("Wrist Encoder Angle", arm_subsystem.getWristEncoderTicks() * 360 / (4096 * 25));
     }
     
     double yaw = navX.getYaw();
