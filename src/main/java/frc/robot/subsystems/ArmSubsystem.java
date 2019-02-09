@@ -41,7 +41,7 @@ public class ArmSubsystem extends Subsystem {
   // Constants
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
-  private static final Gains kGains = new Gains(0.2, 0.0, 0.0, 0.2, 0, 1.0);
+  private static final Gains kGains = new Gains((.5*1023)/(4096.0/12), 0.0, 0.0, 0.2, 0, 1.0);
   private static final int length = 5;
   
   public ArmSubsystem(Robot r) {  // Initialize the motion magic constants

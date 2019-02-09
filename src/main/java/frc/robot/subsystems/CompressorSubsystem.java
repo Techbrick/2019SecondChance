@@ -17,11 +17,9 @@ import frc.robot.Robot;
  */
 public class CompressorSubsystem extends Subsystem {
     private final Compressor compressor;
-    private Solenoid solenoid;
     public CompressorSubsystem(Robot robot){
         compressor = new Compressor();
         compressor.setClosedLoopControl(true);
-        solenoid = new Solenoid(0);
     }
 
     public void checkPressure() {
@@ -34,14 +32,6 @@ public class CompressorSubsystem extends Subsystem {
 
     public boolean pressure() {
         return compressor.getPressureSwitchValue();
-    }
-    
-    public void actuateCylinder() {
-        solenoid.set(true);
-    }
-
-    public void retractCylinder() {
-        solenoid.set(false);
     }
 
     @Override
