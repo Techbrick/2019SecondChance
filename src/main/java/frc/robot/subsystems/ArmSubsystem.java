@@ -168,6 +168,7 @@ public class ArmSubsystem extends Subsystem {
 
     mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos] + zeros[0]);
     mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos] + zeros[1]);
+    
   }
   public void setIntakeSpeed(double percentSpeed)
   {
@@ -182,11 +183,13 @@ public class ArmSubsystem extends Subsystem {
   public void setArmSpeed(double percentSpeed)
   {
     mc_arm.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
+    SmartDashboard.putNumber("Arm Enc Adj", getArmEncoderTicks() - RobotMap.heights[0][0] - zeros[0]);
   }
 
   public void setWristSpeed(double percentSpeed)
   {
     mc_wrist.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
+    SmartDashboard.putNumber("Wrist Enc Adj", getWristEncoderTicks() - RobotMap.heights[1][0] - zeros[1]);
   }
 
   public void setHatchEjector(boolean isOpen)

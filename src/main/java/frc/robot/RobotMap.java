@@ -73,6 +73,7 @@ public class RobotMap {
   public static final int mc_arm_CANID = 2;
   public static final double ArmTicksToDeg = 360.0 / ENCODER_PULSE_PER_REV / 25.0; // TODO: Change the / to * potentially
   
+                                  // stow, hpu,  h1,   h2,    h3,    cpu,   c1,    c2,    c3
   public static int [][] heights = {{3910, 3910, 3910, 18235, 30235, 10115, 15713, 27284, 35009},
                                         {-5, 49720, 22544, 39680, 57366, 85306, 72854, 91064, 85889}};
 
