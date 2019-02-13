@@ -25,6 +25,8 @@ public class ManualDriveDirection extends Command {
   Button ShiftGearButton;
   private int direction;
   TurnPid _turnPid;
+  private int stoppedCounter = 0;
+  private boolean testCompleted = false;
   
 
   public ManualDriveDirection(Robot robot) {
@@ -46,7 +48,17 @@ public class ManualDriveDirection extends Command {
   @Override
   protected void execute() {
     double turnPower = _turnPid.GetAnglePidOutput(_robot.navX.getYaw());
-    _robot.driveTrain.Move(-turnPower, turnPower); 
+    _robot.driveTrain.Move(-turnPower, turnPower);
+    if (turnPower == 0){
+      stoppedCounter ++;
+     
+  }else{
+      stoppedCounter = 0;
+      
+  }
+  if (stoppedCounter > 5){
+      testCompleted = true;
+  }
 
   }
 
@@ -54,13 +66,12 @@ public class ManualDriveDirection extends Command {
   @Override
   protected boolean isFinished() {
     
-    return false;
+    return testCompleted;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    SmartDashboard.putString("Instructions", "DONE With sample auto");
   }
 
   // Called when another command which requires one or more of the same

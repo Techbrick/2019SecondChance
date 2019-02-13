@@ -56,8 +56,6 @@ public class ArmSubsystem extends Subsystem {
   public ArmSubsystem(Robot r) {  // Initialize the motion magic constants
     _robot = r;
     robotMap = new RobotMap();
-    DigitalOutput pin = new DigitalOutput(1);
-    SmartDashboard.putNumber("DigitalOutput", pin.get()?1.0:0.0);
     mc_arm = new TalonSRX(RobotMap.armMasterLeft1);
     mc_armFollower = new VictorSPX(RobotMap.armFollowerRight1);
     mc_intake = new TalonSRX(RobotMap.intakeMotor1);

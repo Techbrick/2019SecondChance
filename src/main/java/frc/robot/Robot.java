@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
@@ -67,6 +68,7 @@ public class Robot extends TimedRobot {
   NetworkTableEntry telemetryEntry = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
   
   public Joystick stick;
+  public Joystick operatorStick;
 	public  double encoderConstant;
 	
   // public TalonSRX leftMaster;
@@ -81,6 +83,7 @@ public class Robot extends TimedRobot {
   public AHRS navX;
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
+  DigitalInput pin1 = new DigitalInput(1);
 
   /**
    * This function is run when the robot is first started up and should be
@@ -93,6 +96,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("Instructions", "");
     SmartDashboard.putString("Status", "");
     stick = new Joystick(0);
+    operatorStick= new Joystick(1);
     robotMap.verbose = true;
 	
 		//
@@ -290,6 +294,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Wrist Encoder Ticks", arm_subsystem.getWristEncoderTicks());
 
       SmartDashboard.putNumber("Wrist Encoder Angle", arm_subsystem.getWristEncoderTicks() * 360 / (4096 * 25));
+      SmartDashboard.putBoolean("Ball in", pin1.get());
     }
     
     double yaw = navX.getYaw();

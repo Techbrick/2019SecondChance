@@ -9,8 +9,11 @@ package frc.robot.commands;
 
 import javax.lang.model.util.ElementScanner6;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.ArmSubsystem;
 
@@ -38,6 +41,7 @@ public class IntakeBall extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    //SmartDashboard.putNumber("DigitalOutput", pin1.get()?1.0:0.0);
     _robot.arm_subsystem.setIntakeSpeed(_robot.arm_subsystem.getIntakeSpeed() + intakeSpeed * (pullIn ? -1 : 1));
   }
 
