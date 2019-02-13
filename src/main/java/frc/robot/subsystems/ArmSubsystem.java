@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -45,6 +46,7 @@ public class ArmSubsystem extends Subsystem {
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
   private static final Gains kGains = new Gains((.5*1023)/(4096.0/12), 0.0, 0.0, 0.2, 0, 1.0);
+  private static final Gains kGainsw = new Gains((.5*1023)/(4096.0/12)/10, 0.0, 0.0, 0.2, 0, 1.0);
   private static final int length = 5;
   // private static final int wristUpperLimit;
   // private static final int wristLowerLimit;
@@ -54,6 +56,8 @@ public class ArmSubsystem extends Subsystem {
   public ArmSubsystem(Robot r) {  // Initialize the motion magic constants
     _robot = r;
     robotMap = new RobotMap();
+    DigitalOutput pin = new DigitalOutput(1);
+    SmartDashboard.putNumber("DigitalOutput", pin.get()?1.0:0.0);
     mc_arm = new TalonSRX(RobotMap.armMasterLeft1);
     mc_armFollower = new VictorSPX(RobotMap.armFollowerRight1);
     mc_intake = new TalonSRX(RobotMap.intakeMotor1);
@@ -83,24 +87,38 @@ public class ArmSubsystem extends Subsystem {
 		// mc_arm.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 20);
 
 		/* Set the peak and nominal outputs */
-		mc_arm.configNominalOutputForward(0, 20);
-		mc_arm.configNominalOutputReverse(0, 20);
-		mc_arm.configPeakOutputForward(1, 20);
-		mc_arm.configPeakOutputReverse(-1, 20);
+		mc_arm.configNominalOutputForward(0, 0);
+		mc_arm.configNominalOutputReverse(0, 0);
+		mc_arm.configPeakOutputForward(1, 0);
+    mc_arm.configPeakOutputReverse(-1, 0);
+    
+		mc_wrist.configNominalOutputForward(0, 0);
+		mc_wrist.configNominalOutputReverse(0, 0);
+		mc_wrist.configPeakOutputForward(1, 0);
+		mc_wrist.configPeakOutputReverse(-1, 0);
 
 		/* Set Motion Magic gains in slot0 - see documentation */
 		mc_arm.selectProfileSlot(kSlotIdx, kPIDLoopIdx);
-		mc_arm.config_kF(kSlotIdx, kGains.kF, 20);
-		mc_arm.config_kP(kSlotIdx, kGains.kP, 20);
-		mc_arm.config_kI(kSlotIdx, kGains.kI, 20);
-		mc_arm.config_kD(kSlotIdx, kGains.kD, 20);
+		mc_arm.config_kF(kSlotIdx, kGains.kF, 0);
+		mc_arm.config_kP(kSlotIdx, kGains.kP, 0);
+		mc_arm.config_kI(kSlotIdx, kGains.kI, 0);
+    mc_arm.config_kD(kSlotIdx, kGains.kD, 0);
+    
+		mc_wrist.config_kF(kSlotIdx, kGainsw.kF, 0);
+		mc_wrist.config_kP(kSlotIdx, kGainsw.kP, 0);
+		mc_wrist.config_kI(kSlotIdx, kGainsw.kI, 0);
+		mc_wrist.config_kD(kSlotIdx, kGainsw.kD, 0);
 
 		/* Set acceleration and vcruise velocity - see documentation */
-		mc_arm.configMotionCruiseVelocity(/*15000*/ 350, 20);
-		mc_arm.configMotionAcceleration(/*6000*/ 400, 20);
-    mc_arm.configAllowableClosedloopError(0, 50, 20);
+		mc_arm.configMotionCruiseVelocity(/*15000*/ 350, 0);
+		mc_arm.configMotionAcceleration(/*6000*/ 400, 0);
+    mc_arm.configAllowableClosedloopError(0, 50, 0);
+    
+		mc_wrist.configMotionCruiseVelocity(/*15000*/ 350, 0);
+		mc_wrist.configMotionAcceleration(/*6000*/ 400, 0);
+    mc_wrist.configAllowableClosedloopError(0, 50, 0);
 		/* Zero the sensor */
-    // mc_arm.setSelectedSensorPosition(0, kPIDLoopIdx, 20);
+    // mc_arm.setSelectedSensorPosition(0, kPIDLoopIdx, 0);
     resetZero();
 
     zeros = new double[2];
@@ -114,17 +132,17 @@ public class ArmSubsystem extends Subsystem {
   }
 
   public void resetZero() { // Resets the encoder
-    mc_arm.setSelectedSensorPosition(0, 0, 20);
-    mc_wrist.setSelectedSensorPosition(0, 0, 20);
+    mc_arm.setSelectedSensorPosition(0, 0, 0);
+    mc_wrist.setSelectedSensorPosition(0, 0, 0);
   }
 
   public int getArmEncoderTicks() {  // Returns the ticks on the encoder
-    return mc_arm.getSensorCollection().getPulseWidthPosition();
+    return mc_arm.getSensorCollection().getQuadraturePosition();
   }
 
   public int getWristEncoderTicks()
   {
-    return mc_wrist.getSensorCollection().getPulseWidthPosition();
+    return mc_wrist.getSensorCollection().getQuadraturePosition();
   }
 
   // public void extensionLimit()

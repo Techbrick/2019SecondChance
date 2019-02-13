@@ -29,13 +29,14 @@ public class OI {
   Button intakeButton = new JoystickButton(stick, 6);
   Button ejectButton = new JoystickButton(stick, 5);
   Button hatchEjectButton = new JoystickButton(stick, 1);
-  Button ShiftGearButton = new JoystickButton(stick, 2);
+  // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
 
     intakeButton.whileHeld(new IntakeBall(robot, true));
     ejectButton.whileHeld(new IntakeBall(robot, false));
     hatchEjectButton.whenPressed(new HatchEjector(robot, !robot.arm_subsystem.getHatchEjectorValue())); 
-    ShiftGearButton.whileHeld(new ShiftGear(robot));
+    
+    // ShiftGearButton.whileHeld(new ShiftGear(robot));
     // hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot,true),new HatchEjector(robot,false),robot));
     
   }

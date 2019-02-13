@@ -1,0 +1,71 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
+package frc.robot.commands;
+
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Helpers;
+import frc.robot.Robot;
+import frc.robot.RobotMap;
+import frc.robot.TurnPid;
+
+/**
+ * An example command.  You can replace me with your own command.
+ */
+public class ManualDriveDirection extends Command {
+  private Robot _robot; 
+  double maxVel = 0;
+  Button ShiftGearButton;
+  private int direction;
+  TurnPid _turnPid;
+  
+
+  public ManualDriveDirection(Robot robot) {
+    // Use requires() here to declare subsystem dependencies
+    _robot = robot;
+    ShiftGearButton = new JoystickButton(robot.stick, 2);
+    requires(_robot.driveTrain);
+    direction = _robot.stick.getPOV();
+  }
+
+  // Called just before this Command runs the first time
+  @Override
+  protected void initialize() {
+    _turnPid = new TurnPid(_robot);
+    _turnPid.SetTargetAngle(direction);
+
+  }
+  // Called repeatedly when this Command is scheduled to run
+  @Override
+  protected void execute() {
+    double turnPower = _turnPid.GetAnglePidOutput(_robot.navX.getYaw());
+    _robot.driveTrain.Move(-turnPower, turnPower); 
+
+  }
+
+  // Make this return true when this Command no longer needs to run execute()
+  @Override
+  protected boolean isFinished() {
+    
+    return false;
+  }
+
+  // Called once after isFinished returns true
+  @Override
+  protected void end() {
+    SmartDashboard.putString("Instructions", "DONE With sample auto");
+  }
+
+  // Called when another command which requires one or more of the same
+  // subsystems is scheduled to run
+  @Override
+  protected void interrupted() {
+  }
+}

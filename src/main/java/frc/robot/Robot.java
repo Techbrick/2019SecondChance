@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -66,7 +67,6 @@ public class Robot extends TimedRobot {
   NetworkTableEntry telemetryEntry = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
   
   public Joystick stick;
-  public Joystick operatorStick;
 	public  double encoderConstant;
 	
   // public TalonSRX leftMaster;
@@ -93,9 +93,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("Instructions", "");
     SmartDashboard.putString("Status", "");
     stick = new Joystick(0);
-    operatorStick = new Joystick(1);
     robotMap.verbose = true;
-		
+	
 		//
 		// Configure drivetrain movement
     //

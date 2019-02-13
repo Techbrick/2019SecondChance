@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Helpers;
@@ -27,10 +29,12 @@ public class ManualDrive extends Command {
   private int avgAccellCounter = 0;
   private double avgVelPV = 0;
   private double avgAccellPV = 0;
+  Button ShiftGearButton;
 
   public ManualDrive(Robot robot) {
     // Use requires() here to declare subsystem dependencies
     _robot = robot;
+    ShiftGearButton   = new JoystickButton(robot.stick, 2);
     requires(_robot.driveTrain);
   }
 
@@ -43,8 +47,14 @@ public class ManualDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double power = Helpers.DeadbandJoystick(-_robot.stick.getY(), _robot.robotMap);
+    double power = Helpers.DeadbandJoystick( _robot.stick.getY(), _robot.robotMap);
     double twist = Helpers.DeadbandJoystick( _robot.stick.getTwist(), _robot.robotMap);
+    if(ShiftGearButton.get()){
+        _robot.driveTrain.setShifterSolenoid(true);
+    }
+    else{
+        _robot.driveTrain.setShifterSolenoid(false);
+    }
     _robot.driveTrain.ArcadeDrive(power, twist);   
     if(_robot.robotMap.verbose){
         
