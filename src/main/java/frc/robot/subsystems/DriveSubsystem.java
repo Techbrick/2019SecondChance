@@ -147,6 +147,8 @@ public class DriveSubsystem extends Subsystem {
     shifterSolenoidOut.set(!isOpen);
   }
 
+  
+
   @Override
   public void initDefaultCommand() {
   
