@@ -40,13 +40,14 @@ public class ArmSubsystem extends Subsystem {
   private TalonSRX mc_wrist;
   private Solenoid ejectorSolenoidIn;
   private Solenoid ejectorSolenoidOut;
-  private double[] zeros;
+ //private double[] zeros;
 
   // Constants
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
   private static final Gains kGains = new Gains((.5*1023)/(4096.0/12), 0.0, 0.0, 0.2, 0, 1.0);
-  private static final Gains kGainsw = new Gains((.5*1023)/(4096.0/12)/10, 0.0, 0.0, 0.2, 0, 1.0);
+  //private static final Gains kGains = new Gains((.0*1023)/(0/12), 0.0, 0.0, 0.0, 0, 0.0);
+  private static final Gains kGainsWrist = new Gains((.5*1023)/(4096.0/12)/10, 0.0, 0.0, 0.2, 0, 1.0);
   private static final int length = 5;
   // private static final int wristUpperLimit;
   // private static final int wristLowerLimit;
@@ -102,10 +103,10 @@ public class ArmSubsystem extends Subsystem {
 		mc_arm.config_kI(kSlotIdx, kGains.kI, 0);
     mc_arm.config_kD(kSlotIdx, kGains.kD, 0);
     
-		mc_wrist.config_kF(kSlotIdx, kGainsw.kF, 0);
-		mc_wrist.config_kP(kSlotIdx, kGainsw.kP, 0);
-		mc_wrist.config_kI(kSlotIdx, kGainsw.kI, 0);
-		mc_wrist.config_kD(kSlotIdx, kGainsw.kD, 0);
+		mc_wrist.config_kF(kSlotIdx, kGainsWrist.kF, 0);
+		mc_wrist.config_kP(kSlotIdx, kGainsWrist.kP, 0);
+		mc_wrist.config_kI(kSlotIdx, kGainsWrist.kI, 0);
+		mc_wrist.config_kD(kSlotIdx, kGainsWrist.kD, 0);
 
 		/* Set acceleration and vcruise velocity - see documentation */
 		mc_arm.configMotionCruiseVelocity(/*15000*/ 350, 0);
@@ -119,9 +120,9 @@ public class ArmSubsystem extends Subsystem {
     // mc_arm.setSelectedSensorPosition(0, kPIDLoopIdx, 0);
     resetZero();
 
-    zeros = new double[2];
-    zeros[0] = getArmEncoderTicks() - RobotMap.heights[0][0];
-    zeros[1] = getArmEncoderTicks() - RobotMap.heights[1][0];
+    // zeros = new double[2];
+    // zeros[0] = getArmEncoderTicks() - RobotMap.heights[0][0];
+    // zeros[1] = getArmEncoderTicks() - RobotMap.heights[1][0];
   }
   @Override
   public void initDefaultCommand() {
@@ -183,8 +184,8 @@ public class ArmSubsystem extends Subsystem {
     // if(pos < RobotMap.heights.length && pos > 0)  
     //   moveToHeight(RobotMap.heights[pos]);
 
-    mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos] + zeros[0]);
-    mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos] + zeros[1]);
+    mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos] );
+    mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos] );
     
     SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
     SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
@@ -202,13 +203,13 @@ public class ArmSubsystem extends Subsystem {
   public void setArmSpeed(double percentSpeed)
   {
     mc_arm.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
-    SmartDashboard.putNumber("Arm Enc Adj", getArmEncoderTicks() - RobotMap.heights[0][0] - zeros[0]);
+    SmartDashboard.putNumber("Arm Enc", getArmEncoderTicks());
   }
 
   public void setWristSpeed(double percentSpeed)
   {
     mc_wrist.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
-    SmartDashboard.putNumber("Wrist Enc Adj", getWristEncoderTicks() - RobotMap.heights[1][0] - zeros[1]);
+    SmartDashboard.putNumber("Wrist Enc", getWristEncoderTicks());
   }
 
   public void setHatchEjector(boolean isOpen)
