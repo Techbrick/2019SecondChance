@@ -10,11 +10,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commands.HatchEjector;
 import frc.robot.commands.HatchEjectorToggle;
 import frc.robot.commands.IntakeBall;
 import frc.robot.commands.ShiftGear;
-
+import frc.robot.commands.ManualDriveDirection;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -29,13 +30,18 @@ public class OI {
   Button intakeButton = new JoystickButton(stick, 6);
   Button ejectButton = new JoystickButton(stick, 5);
   Button hatchEjectButton = new JoystickButton(stick, 1);
+  POVButton forwards = new POVButton(stick,0);
+  POVButton leftwards = new POVButton(stick,270);
+  POVButton backwards = new POVButton(stick,180);
+  POVButton rightwards = new POVButton(stick,90);
   // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
 
     intakeButton.whileHeld(new IntakeBall(robot, true));
     ejectButton.whileHeld(new IntakeBall(robot, false));
     hatchEjectButton.whenPressed(new HatchEjector(robot, !robot.arm_subsystem.getHatchEjectorValue())); 
-    
+    forwards.whileHeld(new ManualDriveDirection(robot, 0));
+    backwards.whileHeld(new ManualDriveDirection(robot,180));
     // ShiftGearButton.whileHeld(new ShiftGear(robot));
     // hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot,true),new HatchEjector(robot,false),robot));
     

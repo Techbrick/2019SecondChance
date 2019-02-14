@@ -29,12 +29,12 @@ public class ManualDriveDirection extends Command {
   private boolean testCompleted = false;
   
 
-  public ManualDriveDirection(Robot robot) {
+  public ManualDriveDirection(Robot robot, int angle) {
     // Use requires() here to declare subsystem dependencies
     _robot = robot;
     ShiftGearButton = new JoystickButton(robot.stick, 2);
     requires(_robot.driveTrain);
-    direction = _robot.stick.getPOV();
+    direction = angle;
   }
 
   // Called just before this Command runs the first time
@@ -78,5 +78,6 @@ public class ManualDriveDirection extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    _robot.driveTrain.Move(0,0);    
   }
 }
