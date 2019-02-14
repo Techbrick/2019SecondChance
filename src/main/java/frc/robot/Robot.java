@@ -138,9 +138,12 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Height 7", new MoveToHeight(this, 7));
     SmartDashboard.putData("Height 8", new MoveToHeight(this, 8));
     // SmartDashboard.putData("Accelerometer Angle", new AccelerometerAngle(this));
-
-
     
+    SmartDashboard.putNumber("kp", robotMap.kp_Angle);
+    SmartDashboard.putNumber("ki", robotMap.ki_Angle);
+    SmartDashboard.putNumber("kd", robotMap.kd_Angle);
+    SmartDashboard.putNumber("min turn power", robotMap.minTurnPower);
+
     // Shuffleboard.getTab("Camera").add("Compression slider", );
     m_chooser.addObject("Drive Fwd 24 inches", new DriveDistanceAndDirection(this, 24, 0));
     m_chooser.addObject("Drive dog leg right", new DogLegRight(this));
@@ -255,6 +258,11 @@ public class Robot extends TimedRobot {
     double power =  stick.getY();
     double twist = stick.getX();
     //driveTrain.ArcadeDrive(power, twist);
+
+    robotMap.kp_Angle = SmartDashboard.getNumber("kp", robotMap.kp_Angle);
+    robotMap.ki_Angle = SmartDashboard.getNumber("ki", robotMap.ki_Angle);
+    robotMap.kd_Angle = SmartDashboard.getNumber("kd", robotMap.kd_Angle);
+    robotMap.minTurnPower = SmartDashboard.getNumber("min turn power", robotMap.minTurnPower);
   }
 
   /**
