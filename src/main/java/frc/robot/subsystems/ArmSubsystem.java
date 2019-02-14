@@ -46,7 +46,10 @@ public class ArmSubsystem extends Subsystem {
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
   private static final Gains kGains = new Gains((.5*1023)/(4096.0/12), 0.0, 0.0, 0.2, 0, 1.0);
+<<<<<<< HEAD
   //private static final Gains kGains = new Gains((.0*1023)/(0/12), 0.0, 0.0, 0.0, 0, 0.0);
+=======
+>>>>>>> 4aa0e2e5f8fd2481536bfe352b32fbd723bb155a
   private static final Gains kGainsWrist = new Gains((.5*1023)/(4096.0/12)/10, 0.0, 0.0, 0.2, 0, 1.0);
   private static final int length = 5;
   // private static final int wristUpperLimit;
@@ -120,9 +123,15 @@ public class ArmSubsystem extends Subsystem {
     // mc_arm.setSelectedSensorPosition(0, kPIDLoopIdx, 0);
     resetZero();
 
+<<<<<<< HEAD
     // zeros = new double[2];
     // zeros[0] = getArmEncoderTicks() - RobotMap.heights[0][0];
     // zeros[1] = getArmEncoderTicks() - RobotMap.heights[1][0];
+=======
+    zeros = new double[2];
+    // zeros[0] = getArmEncoderTicks() - RobotMap.heights[0][0];
+    zeros[1] = getArmEncoderTicks() - RobotMap.heights[1][0];
+>>>>>>> 4aa0e2e5f8fd2481536bfe352b32fbd723bb155a
   }
   @Override
   public void initDefaultCommand() {
@@ -184,8 +193,13 @@ public class ArmSubsystem extends Subsystem {
     // if(pos < RobotMap.heights.length && pos > 0)  
     //   moveToHeight(RobotMap.heights[pos]);
 
+<<<<<<< HEAD
     mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos] );
     mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos] );
+=======
+    mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos]);
+    mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
+>>>>>>> 4aa0e2e5f8fd2481536bfe352b32fbd723bb155a
     
     SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
     SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
@@ -203,7 +217,11 @@ public class ArmSubsystem extends Subsystem {
   public void setArmSpeed(double percentSpeed)
   {
     mc_arm.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
+<<<<<<< HEAD
     SmartDashboard.putNumber("Arm Enc", getArmEncoderTicks());
+=======
+    SmartDashboard.putNumber("Arm Enc Adj", getArmEncoderTicks() - RobotMap.heights[0][0]);
+>>>>>>> 4aa0e2e5f8fd2481536bfe352b32fbd723bb155a
   }
 
   public void setWristSpeed(double percentSpeed)

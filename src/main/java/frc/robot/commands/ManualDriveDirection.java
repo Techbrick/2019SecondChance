@@ -48,7 +48,7 @@ public class ManualDriveDirection extends Command {
   @Override
   protected void execute() {
     double turnPower = _turnPid.GetAnglePidOutput(_robot.navX.getYaw());
-    _robot.driveTrain.Move(-turnPower, turnPower);
+    _robot.driveTrain.Move(turnPower, turnPower);
     if (turnPower == 0){
       stoppedCounter ++;
      
