@@ -82,11 +82,7 @@ public class Robot extends TimedRobot {
   public CompressorSubsystem comp_subsystem;
   // public AccelerometerSubsystem accelerometer_subsystem;
   public AHRS navX;
-<<<<<<< HEAD
-
-=======
   public AHRS wristnavX;
->>>>>>> 6a8ce7418773acc73697de55f1383421e2f879b0
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
   DigitalInput pin1 = new DigitalInput(1);
@@ -108,13 +104,9 @@ public class Robot extends TimedRobot {
 		//
 		// Configure drivetrain movement
     //
-<<<<<<< HEAD
-    navX = new AHRS(SPI.Port.kMXP);
-=======
     navX = new AHRS(SPI.Port.kMXP );
 
     wristnavX = new AHRS(Port.kUSB);
->>>>>>> 6a8ce7418773acc73697de55f1383421e2f879b0
     
     driveTrain = new RealDriveTrain(this);
     arm_subsystem = new ArmSubsystem(this);

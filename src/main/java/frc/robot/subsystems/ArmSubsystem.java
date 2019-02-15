@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Helpers;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.TurnPid;
 import frc.robot.commands.ManualArm;
 
 
@@ -41,10 +42,7 @@ public class ArmSubsystem extends Subsystem {
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
   private static final Gains kGains = new Gains((.5*1023)/(4096.0/12), 0.0, 0.0, 0.2, 0, 1.0);
-<<<<<<< HEAD
-=======
   //private static final Gains kGains = new Gains((.0*1023)/(0/12), 0.0, 0.0, 0.0, 0, 0.0);
->>>>>>> 6a8ce7418773acc73697de55f1383421e2f879b0
   private static final Gains kGainsWrist = new Gains((.5*1023)/(4096.0/12)/10, 0.0, 0.0, 0.2, 0, 1.0);
   private static final int length = 5;
   // private static final int wristUpperLimit;
@@ -159,7 +157,7 @@ public class ArmSubsystem extends Subsystem {
 
   public void turns(double degrees) { // Turns a certain number of degrees
     mc_arm.set(ControlMode.Position, degrees / RobotMap.ArmTicksToDeg);
-    mc_wrist.set(ControlMode.Position, -degrees / RobotMap.ArmTicksToDeg);    // TODO: Get the right coefficient
+    //mc_wrist.set(ControlMode.Position, -degrees / RobotMap.ArmTicksToDeg);    // TODO: Get the right coefficient
     SmartDashboard.putNumber("target arm enc", degrees/RobotMap.ArmTicksToDeg);
   }
 
@@ -168,17 +166,16 @@ public class ArmSubsystem extends Subsystem {
   }
   public void moveToHeight(double height) {
     turns(Math.asin(height / RobotMap.armLength));
-    
+
   }
-  public void moveToHeightPreset(int pos) {
+  public void moveToHeightPreset(int pos, int power) {
     // if(pos < RobotMap.heights.length && pos > 0)  
     //   moveToHeight(RobotMap.heights[pos]);
 
     mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos] );
-    mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos] );
-    
+    mc_wrist.set(ControlMode.PercentOutput, power);
     SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
-    SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
+    SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));    
   }
   public void setIntakeSpeed(double percentSpeed)
   {

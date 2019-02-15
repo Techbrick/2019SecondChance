@@ -10,16 +10,13 @@
 
 /*----------------------------------------------------------------------------*/
 
-
-
 package frc.robot.commands;
-
-
 
 import edu.wpi.first.wpilibj.command.Command;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.TurnPid;
 import frc.robot.subsystems.*;
 
 /**
@@ -35,6 +32,9 @@ public class MoveToHeight extends Command {
   public int currentencoder;
   public int targetencoder = 0;
   public int position; 
+  private boolean testCompleted = false;
+  private int turnpower;
+  private int stoppedCounter = 0;
 
   public MoveToHeight(Robot r, int pos) {
   // Use requires() here to declare subsystem dependencies
@@ -64,22 +64,30 @@ public class MoveToHeight extends Command {
 
   @Override
   protected void execute() {
-    // if(currentencoder>targetencoder)
-    // {
-    //   arm.moveDown();
-    // }
-    // else if(currentencoder<targetencoder)
-    // {
-    //   arm.moveUp();
-    // }
-    // currentencoder = arm.getEncoderTicks();
-    arm.moveToHeightPreset(position);
+    if(position == 0)
+      turnpower = RobotMap.heights[1][position];
+    else if(position == 8)
+      turnpower = RobotMap.heights[1][position];
+    else{
+      TurnPid straighten = new TurnPid(robot);
+      straighten.SetTargetAngle(0);
+      double turnpower = straighten.GetAnglePidOutput(robot.wristnavX.getRoll());
+      if (turnpower == 0){
+        stoppedCounter ++;
+      }else{
+        stoppedCounter = 0;
+      }
+      if (stoppedCounter > 5){
+        testCompleted = true;
+      }
+    }
+    arm.moveToHeightPreset(position, turnpower);    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return arm.isTurnComplete(Math.asin(position / RobotMap.armLength));
+    return arm.isTurnComplete(Math.asin(position / RobotMap.armLength)) && testCompleted;
   }
 
   // Called once after isFinished returns true
