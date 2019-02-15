@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
   public AHRS wristnavX;
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
-  DigitalInput pin1 = new DigitalInput(1);
+  public DigitalInput DI = new DigitalInput(1);
 
   /**
    * This function is run when the robot is first started up and should be
@@ -310,7 +310,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Wrist Encoder Ticks", arm_subsystem.getWristEncoderTicks());
 
       SmartDashboard.putNumber("Wrist Encoder Angle", arm_subsystem.getWristEncoderTicks() * 360 / (4096 * 25));
-      SmartDashboard.putBoolean("Ball in", pin1.get());
+      SmartDashboard.putBoolean("Ball in", DI.get());
 
       SmartDashboard.putNumber("yaWw", wristnavX.getYaw());
       SmartDashboard.putNumber("pitchW", wristnavX.getPitch());

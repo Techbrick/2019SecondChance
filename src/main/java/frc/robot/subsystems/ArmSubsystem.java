@@ -43,7 +43,7 @@ public class ArmSubsystem extends Subsystem {
   private static final int kPIDLoopIdx = 0;
   private static final Gains kGains = new Gains((.5*1023)/(4096.0/12), 0.0, 0.0, 0.2, 0, 1.0);
   //private static final Gains kGains = new Gains((.0*1023)/(0/12), 0.0, 0.0, 0.0, 0, 0.0);
-  private static final Gains kGainsWrist = new Gains((.5*1023)/(4096.0/12)/10, 0.0, 0.0, 0.2, 0, 1.0);
+  private static final Gains kGainsWrist = new Gains((.5*1023)/(4096.0/12)/2, 0.0, 0.0, 0.2, 0, 1.0);
   private static final int length = 5;
   // private static final int wristUpperLimit;
   // private static final int wristLowerLimit;
@@ -172,18 +172,10 @@ public class ArmSubsystem extends Subsystem {
     // if(pos < RobotMap.heights.length && pos > 0)  
     //   moveToHeight(RobotMap.heights[pos]);
 
-<<<<<<< HEAD
+
     mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos]);
     mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
-=======
-    mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos] );
-<<<<<<< HEAD
     mc_wrist.set(ControlMode.PercentOutput, power);
-=======
-    mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos] );
->>>>>>> 6a8ce7418773acc73697de55f1383421e2f879b0
-    
->>>>>>> a41e408404833833ce8cd21c6f8422c74f904f78
     SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
     SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));    
   }

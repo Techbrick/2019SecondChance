@@ -21,7 +21,6 @@ public class IntakeBall extends Command {
   private Robot _robot;
   private static ArmSubsystem arm;
   private boolean out = false;
-
   private double intakeSpeed;
   boolean pullIn;
   public IntakeBall(Robot robot, boolean willIntake) {
@@ -30,8 +29,7 @@ public class IntakeBall extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(_robot.arm_subsystem);
-    DigitalInput DO = new DigitalInput(1);
-    out = DO.get();
+    out = _robot.DI.get();
   }
 
   // Called just before this Command runs the first time
@@ -45,7 +43,7 @@ public class IntakeBall extends Command {
   @Override
   protected void execute() {
     if(pullIn){
-      if(!out)
+      if(!_robot.DI.get())
       _robot.arm_subsystem.setIntakeSpeed(_robot.arm_subsystem.getIntakeSpeed() + intakeSpeed * -1);
     }
     else
