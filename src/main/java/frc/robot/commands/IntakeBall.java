@@ -20,6 +20,7 @@ import frc.robot.subsystems.ArmSubsystem;
 public class IntakeBall extends Command {
   private Robot _robot;
   private static ArmSubsystem arm;
+  private boolean out = false;
 
   private double intakeSpeed;
   boolean pullIn;
@@ -29,6 +30,8 @@ public class IntakeBall extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(_robot.arm_subsystem);
+    DigitalInput DO = new DigitalInput(1);
+    out = DO.get();
   }
 
   // Called just before this Command runs the first time
@@ -41,8 +44,12 @@ public class IntakeBall extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //SmartDashboard.putNumber("DigitalOutput", pin1.get()?1.0:0.0);
-    _robot.arm_subsystem.setIntakeSpeed(_robot.arm_subsystem.getIntakeSpeed() + intakeSpeed * (pullIn ? -1 : 1));
+    if(pullIn){
+      if(!out)
+      _robot.arm_subsystem.setIntakeSpeed(_robot.arm_subsystem.getIntakeSpeed() + intakeSpeed * -1);
+    }
+    else
+      _robot.arm_subsystem.setIntakeSpeed(_robot.arm_subsystem.getIntakeSpeed() + intakeSpeed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
