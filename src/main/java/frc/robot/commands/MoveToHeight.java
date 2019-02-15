@@ -35,6 +35,7 @@ public class MoveToHeight extends Command {
   private boolean testCompleted = false;
   private int turnpower;
   private int stoppedCounter = 0;
+  TurnPid straighten;
 
   public MoveToHeight(Robot r, int pos) {
   // Use requires() here to declare subsystem dependencies
@@ -43,6 +44,7 @@ public class MoveToHeight extends Command {
   arm = robot.arm_subsystem;
   targetencoder = arm.getArmEncoderTicks();
   position = pos;
+  straighten = new TurnPid(robot);
 
   }
 
@@ -69,7 +71,6 @@ public class MoveToHeight extends Command {
     else if(position == 8)
       turnpower = RobotMap.heights[1][position];
     else{
-      TurnPid straighten = new TurnPid(robot);
       straighten.SetTargetAngle(0);
       double turnpower = straighten.GetAnglePidOutput(robot.wristnavX.getRoll());
       if (turnpower == 0){
