@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -81,7 +82,11 @@ public class Robot extends TimedRobot {
   public CompressorSubsystem comp_subsystem;
   // public AccelerometerSubsystem accelerometer_subsystem;
   public AHRS navX;
+<<<<<<< HEAD
 
+=======
+  public AHRS wristnavX;
+>>>>>>> 6a8ce7418773acc73697de55f1383421e2f879b0
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
   DigitalInput pin1 = new DigitalInput(1);
@@ -103,7 +108,13 @@ public class Robot extends TimedRobot {
 		//
 		// Configure drivetrain movement
     //
+<<<<<<< HEAD
     navX = new AHRS(SPI.Port.kMXP);
+=======
+    navX = new AHRS(SPI.Port.kMXP );
+
+    wristnavX = new AHRS(Port.kUSB);
+>>>>>>> 6a8ce7418773acc73697de55f1383421e2f879b0
     
     driveTrain = new RealDriveTrain(this);
     arm_subsystem = new ArmSubsystem(this);
@@ -140,9 +151,14 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Height 7", new MoveToHeight(this, 7));
     SmartDashboard.putData("Height 8", new MoveToHeight(this, 8));
     // SmartDashboard.putData("Accelerometer Angle", new AccelerometerAngle(this));
-
+    
+    SmartDashboard.putNumber("kp", robotMap.kp_Angle);
+    SmartDashboard.putNumber("ki", robotMap.ki_Angle);
+    SmartDashboard.putNumber("kd", robotMap.kd_Angle);
+    SmartDashboard.putNumber("min turn power", robotMap.minTurnPower);
 
     
+
     // Shuffleboard.getTab("Camera").add("Compression slider", );
     m_chooser.addObject("Drive Fwd 24 inches", new DriveDistanceAndDirection(this, 24, 0));
     m_chooser.addObject("Drive dog leg right", new DogLegRight(this));
@@ -257,6 +273,11 @@ public class Robot extends TimedRobot {
     double power =  stick.getY();
     double twist = stick.getX();
     //driveTrain.ArcadeDrive(power, twist);
+    Logger();
+    robotMap.kp_Angle = SmartDashboard.getNumber("kp", robotMap.kp_Angle);
+    robotMap.ki_Angle = SmartDashboard.getNumber("ki", robotMap.ki_Angle);
+    robotMap.kd_Angle = SmartDashboard.getNumber("kd", robotMap.kd_Angle);
+    robotMap.minTurnPower = SmartDashboard.getNumber("min turn power", robotMap.minTurnPower);
   }
 
   /**
@@ -281,7 +302,7 @@ public class Robot extends TimedRobot {
 
   
   private void Logger(){
-    if(robotMap.verbose){
+    if(true){
       SmartDashboard.putNumber("l_encoder_pos", Math.round(driveTrain.GetLeftEncoderPosition()));
       // SmartDashboard.putNumber("l_encoder_rate", Math.round(leftEncoderRate.get()));
       SmartDashboard.putNumber("r_encoder_pos", Math.round(driveTrain.GetRightEncoderPosition()));
@@ -297,6 +318,10 @@ public class Robot extends TimedRobot {
 
       SmartDashboard.putNumber("Wrist Encoder Angle", arm_subsystem.getWristEncoderTicks() * 360 / (4096 * 25));
       SmartDashboard.putBoolean("Ball in", pin1.get());
+
+      SmartDashboard.putNumber("yaWw", wristnavX.getYaw());
+      SmartDashboard.putNumber("pitchW", wristnavX.getPitch());
+      SmartDashboard.putNumber("rollW", wristnavX.getRoll());
     }
     
     double yaw = navX.getYaw();
