@@ -174,7 +174,7 @@ public class ArmSubsystem extends Subsystem {
 
 
     mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos]);
-    mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
+    //mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
     mc_wrist.set(ControlMode.PercentOutput, power);
     SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
     SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));    
