@@ -38,7 +38,7 @@ public class VisionDrive extends Command {
         {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
           {
-                _robot.driveTrain.ArcadeDrive(_robot.driveTrain.m_LimelightDriveCommand,_robot.driveTrain.m_LimelightSteerCommand);
+                _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,_robot.driveTrain.m_LimelightSteerCommand);
           }
           else
           {

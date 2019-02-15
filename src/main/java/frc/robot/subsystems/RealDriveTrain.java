@@ -198,7 +198,7 @@ public class RealDriveTrain extends Subsystem {
         double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
         double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
 
-        boolean m_LimelightHasValidTarget;
+
     if (tv < 1.0)
         {
           m_LimelightHasValidTarget = false;

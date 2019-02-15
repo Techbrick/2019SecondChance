@@ -104,7 +104,7 @@ public class Robot extends TimedRobot {
 		//
 		// Configure drivetrain movement
     //
-    navX = new AHRS(SPI.Port.kMXP );
+    navX = new AHRS(SPI.Port.kMXP);
 
     wristnavX = new AHRS(Port.kUSB);
     
@@ -266,6 +266,7 @@ public class Robot extends TimedRobot {
     double twist = stick.getX();
     //driveTrain.ArcadeDrive(power, twist);
     Logger();
+    
     robotMap.kp_Angle = SmartDashboard.getNumber("kp", robotMap.kp_Angle);
     robotMap.ki_Angle = SmartDashboard.getNumber("ki", robotMap.ki_Angle);
     robotMap.kd_Angle = SmartDashboard.getNumber("kd", robotMap.kd_Angle);
