@@ -29,7 +29,9 @@ public class OI {
   Joystick stick = new Joystick(1);
   Button intakeButton = new JoystickButton(stick, 6);
   Button ejectButton = new JoystickButton(stick, 5);
-  Button hatchEjectButton = new JoystickButton(stick, 1);
+  Button hatchIn = new JoystickButton(stick, 3);
+  Button hatchOut = new JoystickButton(stick, 4);
+  // Button hatchEjectButton = new JoystickButton(stick, 1);
   POVButton forwards = new POVButton(stick,0);
   POVButton leftwards = new POVButton(stick,270); 
   POVButton backwards = new POVButton(stick,180);
@@ -37,10 +39,13 @@ public class OI {
   // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
 
+    hatchIn.whenPressed(new HatchEjector(robot, true));
+    hatchOut.whenPressed(new HatchEjector(robot, false));
+
     intakeButton.whileHeld(new IntakeBall(robot, true));
     ejectButton.whileHeld(new IntakeBall(robot, false));
-    hatchEjectButton.whenPressed(new HatchEjector(robot, !robot.arm_subsystem.getHatchEjectorValue())); 
-    forwards.whileHeld(new ManualDriveDirection(robot, 0));
+    // hatchEjectButton.whenPressed(new HatchEjector(robot, !robot.arm_subsystem.getHatchEjectorValue())); 
+    forwards.whileHeld(new ManualDwriveDirection(robot, 0));
     backwards.whileHeld(new ManualDriveDirection(robot, 180));
     leftwards.whileHeld(new ManualDriveDirection(robot, 270));
     rightwards.whileHeld(new ManualDriveDirection(robot, 90));
