@@ -181,7 +181,7 @@ public class ArmSubsystem extends Subsystem {
     turns(Math.asin(height / RobotMap.armLength));
     
   }
-  public void moveToHeightPreset(int pos, int turnpower) {
+  public void moveToHeightPreset(int pos, double turnpower) {
     // if(pos < RobotMap.heights.length && pos > 0)  
     //   moveToHeight(RobotMap.heights[pos]);
 
