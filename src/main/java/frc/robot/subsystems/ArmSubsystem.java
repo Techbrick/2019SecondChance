@@ -38,8 +38,8 @@ public class ArmSubsystem extends Subsystem {
   private VictorSPX mc_armFollower;
   private TalonSRX mc_intake;
   private TalonSRX mc_wrist;
-  private Solenoid ejectorSolenoidIn;
-  private Solenoid ejectorSolenoidOut;
+  private Solenoid ejectorSolenoid;
+  // private Solenoid ejectorSolenoidOut;
  //private double[] zeros;
 
   // Constants
@@ -77,8 +77,8 @@ public class ArmSubsystem extends Subsystem {
     mc_armFollower.follow(mc_arm);
 
 
-    ejectorSolenoidIn = new Solenoid(4);
-    ejectorSolenoidOut = new Solenoid(5);
+    ejectorSolenoid = new Solenoid(4);
+    // ejectorSolenoidOut = new Solenoid(5);
     setHatchEjector(true);
 
 		// /* Set relevant frame periods to be at least as fast as periodic rate */
@@ -215,13 +215,13 @@ public class ArmSubsystem extends Subsystem {
 
   public void setHatchEjector(boolean isOpen)
   {
-      ejectorSolenoidIn.set(isOpen);
-      ejectorSolenoidOut.set(!isOpen);
+      ejectorSolenoid.set(isOpen);
+      // ejectorSolenoidOut.set(!isOpen);
   }
 
   public boolean getHatchEjectorValue()
   {
-     return ejectorSolenoidIn.get();
+     return ejectorSolenoid.get();
   }
 
   public void rotateWrist(int dir) {
