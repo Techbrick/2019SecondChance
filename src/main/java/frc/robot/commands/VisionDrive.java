@@ -43,11 +43,12 @@ public class VisionDrive extends Command {
         // steer *= 0.70;
         // drive *= 0.70;
         absoluteAngle = tx + helper.ConvertYawToHeading(_robot.navX.getYaw());
+        difference = absoluteAngle - targetAngle;
         if (_robot.stick.getRawButton(4))
         {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
           {
-                _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,_robot.driveTrain.m_LimelightSteerCommand);
+                _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,difference*1.5); //_robot.driveTrain.m_LimelightSteerCommand
           }
           else
           {

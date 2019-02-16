@@ -45,7 +45,7 @@ public class OI {
     intakeButton.whileHeld(new IntakeBall(robot, true));
     ejectButton.whileHeld(new IntakeBall(robot, false));
     // hatchEjectButton.whenPressed(new HatchEjector(robot, !robot.arm_subsystem.getHatchEjectorValue())); 
-    forwards.whileHeld(new ManualDwriveDirection(robot, 0));
+    forwards.whileHeld(new ManualDriveDirection(robot, 0));
     backwards.whileHeld(new ManualDriveDirection(robot, 180));
     leftwards.whileHeld(new ManualDriveDirection(robot, 270));
     rightwards.whileHeld(new ManualDriveDirection(robot, 90));
