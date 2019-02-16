@@ -38,8 +38,8 @@ public class ArmSubsystem extends Subsystem {
   private VictorSPX mc_armFollower;
   private TalonSRX mc_intake;
   private TalonSRX mc_wrist;
-  private Solenoid ejectorSolenoid;
-  // private Solenoid ejectorSolenoidOut;
+  private Solenoid ejectorSolenoidIn;
+  private Solenoid ejectorSolenoidOut;
  //private double[] zeros;
 
   // Constants
@@ -77,8 +77,8 @@ public class ArmSubsystem extends Subsystem {
     mc_armFollower.follow(mc_arm);
 
 
-    ejectorSolenoid = new Solenoid(4);
-    // ejectorSolenoidOut = new Solenoid(5);
+    ejectorSolenoidIn = new Solenoid(4);
+    ejectorSolenoidOut = new Solenoid(5);
     setHatchEjector(true);
 
 		// /* Set relevant frame periods to be at least as fast as periodic rate */
@@ -186,8 +186,8 @@ public class ArmSubsystem extends Subsystem {
     //   moveToHeight(RobotMap.heights[pos]);
 
     mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos]);
-    mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
-    
+    // mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
+    mc_wrist.set(ControlMode.PercentOutput, turnpower);
     SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
     SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
   }
@@ -215,13 +215,13 @@ public class ArmSubsystem extends Subsystem {
 
   public void setHatchEjector(boolean isOpen)
   {
-      ejectorSolenoid.set(isOpen);
-      // ejectorSolenoidOut.set(!isOpen);
+      ejectorSolenoidIn.set(isOpen);
+      ejectorSolenoidOut.set(!isOpen);
   }
 
   public boolean getHatchEjectorValue()
   {
-     return ejectorSolenoid.get();
+     return ejectorSolenoidIn.get();
   }
 
   public void rotateWrist(int dir) {

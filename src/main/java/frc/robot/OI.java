@@ -30,7 +30,7 @@ public class OI {
   Button intakeButton = new JoystickButton(stick, 6);
   Button ejectButton = new JoystickButton(stick, 5);
   Button hatchIn = new JoystickButton(stick, 3);
-  // Button hatchOut = new JoystickButton(stick, 4);
+  Button hatchOut = new JoystickButton(stick, 4);
   // Button hatchEjectButton = new JoystickButton(stick, 1);
   POVButton forwards = new POVButton(stick,0);
   POVButton leftwards = new POVButton(stick,270); 
@@ -39,8 +39,8 @@ public class OI {
   // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
 
-    hatchIn.whileHeld(new HatchEjector(robot));
-    // hatchOut.whenPressed(new HatchEjector(robot, false));
+    hatchIn.whenPressed(new HatchEjector(robot, true));
+    hatchOut.whenPressed(new HatchEjector(robot, false));
 
     intakeButton.whileHeld(new IntakeBall(robot, true));
     ejectButton.whileHeld(new IntakeBall(robot, false));
