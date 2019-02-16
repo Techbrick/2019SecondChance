@@ -30,8 +30,8 @@ public class OI {
   Joystick DrvStick = new Joystick(0);
   Button intakeButton = new JoystickButton(opStick, 6);
   Button ejectButton = new JoystickButton(opStick, 5);
-  Button hatchIn = new JoystickButton(opStick, 3);
-  Button hatchOut = new JoystickButton(opStick, 4);
+  Button hatchIn = new JoystickButton(DrvStick, 3);
+  Button hatchOut = new JoystickButton(DrvStick, 4);
   // Button hatchEjectButton = new JoystickButton(stick, 1);
   POVButton forwards = new POVButton(DrvStick,0);
   POVButton leftwards = new POVButton(DrvStick,270); 
@@ -41,7 +41,7 @@ public class OI {
   POVButton southeast = new POVButton(DrvStick,135);
   POVButton southwest = new POVButton(DrvStick,225);
   POVButton northwest = new POVButton(DrvStick,315);
-  Button vision = new JoystickButton(DrvStick, 2);
+  Button vision = new JoystickButton(DrvStick, 1);
   // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
 

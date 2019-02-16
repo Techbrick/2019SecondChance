@@ -61,7 +61,7 @@ public class MoveToHeight extends Command {
 
   @Override
   protected void execute() {
-    turnpower = level.GetAnglePidOutput(helper.ConvertYawToHeading(robot.wristnavX.getYaw()));
+    turnpower = level.GetAnglePidOutput(helper.ConvertYawToHeading(robot.wristnavX.getRoll()));
     if (turnpower == 0){
       stoppedCounter ++;
     }else{
@@ -71,7 +71,6 @@ public class MoveToHeight extends Command {
       testCompleted = true;
     }
     arm.moveToHeightPreset(position, turnpower);
-    SmartDashboard.putNumber("rollW", helper.ConvertYawToHeading(robot.wristnavX.getYaw()));
   }
 
   // Make this return true when this Command no longer needs to run execute()
