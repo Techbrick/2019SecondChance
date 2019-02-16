@@ -19,9 +19,10 @@ public class VisionDrive extends Command {
   double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
   Helpers helper;
   boolean drive = true;
-  public VisionDrive(Robot robot) {
+  public VisionDrive(Robot robot, int angle) {
     _robot = robot;
     requires(robot.driveTrain);
+    targetAngle = angle;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -29,7 +30,6 @@ public class VisionDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    targetAngle = 0.0;
     //Figure out what target angle should be
   }
 
