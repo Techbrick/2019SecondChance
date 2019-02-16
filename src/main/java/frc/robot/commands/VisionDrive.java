@@ -36,8 +36,6 @@ public class VisionDrive extends Command {
   @Override
   protected void execute() {
     //Difference between absolute angle and target angle, then steer to it with difference * 1.5
-    _robot.driveTrain.Update_Limelight_Tracking();
-
         // double steer = m_Controller.getX(Hand.kRight);
         // double drive = -m_Controller.getY(Hand.kLeft);
         // boolean auto = m_Controller.getAButton();
@@ -45,6 +43,7 @@ public class VisionDrive extends Command {
         // drive *= 0.70;
         absoluteAngle = tx + helper.ConvertYawToHeading(_robot.navX.getYaw());
         difference = absoluteAngle - targetAngle;
+        _robot.driveTrain.Update_Limelight_Tracking();
         if (drive)
         {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
