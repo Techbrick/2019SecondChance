@@ -35,7 +35,7 @@ public class MoveToHeight extends Command {
   public int targetencoder = 0;
   public int position; 
   private boolean testCompleted = false;
-  private int turnpower;
+  private double turnpower;
   private int stoppedCounter = 0;
   private WristPid level;
   private Helpers helper;
@@ -49,6 +49,15 @@ public class MoveToHeight extends Command {
   position = pos;
   level = new WristPid(robot);
   helper = new Helpers();
+
+  if(position == 0)
+    level.SetTargetAngle(60);
+  if(position == 1)
+    level.SetTargetAngle(-74);
+  if(position == 5)
+    level.SetTargetAngle(-32);
+  else
+    level.SetTargetAngle(0);
   }
 
 
@@ -58,9 +67,7 @@ public class MoveToHeight extends Command {
   @Override
 
   protected void initialize() {
-
-  currentencoder = arm.getArmEncoderTicks();
-
+    currentencoder = arm.getArmEncoderTicks();
   }
 
 
@@ -69,23 +76,16 @@ public class MoveToHeight extends Command {
 
   @Override
   protected void execute() {
-    if(position == 0)
-      turnpower = RobotMap.heights[1][position];
-    else if(position == 8)
-      turnpower = RobotMap.heights[1][position];
-    else{
-      level.SetTargetAngle(0);
-      double turnpower = level.GetAnglePidOutput(helper.ConvertYawToHeading(robot.wristnavX.getRoll()));
-      if (turnpower == 0){
-        stoppedCounter ++;
-      }else{
-        stoppedCounter = 0;
-      }
-      if (stoppedCounter > 5){
-        testCompleted = true;
-      }
+    turnpower = level.GetAnglePidOutput(robot.wristnavX.getRoll());
+    if (turnpower == 0){
+      stoppedCounter ++;
+    }else{
+      stoppedCounter = 0;
     }
-    arm.moveToHeightPreset(position, turnpower);    
+    if (stoppedCounter > 5){
+      testCompleted = true;
+    }
+    arm.moveToHeightPreset(position, -turnpower);    
   }
 
   // Make this return true when this Command no longer needs to run execute()
