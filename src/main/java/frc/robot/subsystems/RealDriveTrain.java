@@ -201,7 +201,7 @@ public class RealDriveTrain extends Subsystem {
 
     if (tv < 1.0)
         {
-          m_LimelightHasValidTarget = false;
+          m_LimelightHasValidTarget = true;
           m_LimelightDriveCommand = 0.0;
           m_LimelightSteerCommand = 0.0;
           return;
