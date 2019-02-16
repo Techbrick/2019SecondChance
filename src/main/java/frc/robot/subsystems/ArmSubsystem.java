@@ -173,9 +173,6 @@ public class ArmSubsystem extends Subsystem {
     
   }
   public void moveToHeightPreset(int pos, double turnpower) {
-    // if(pos < RobotMap.heights.length && pos > 0)  
-    //   moveToHeight(RobotMap.heights[pos]);
-
     mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos]);
     // mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
     mc_wrist.set(ControlMode.PercentOutput, turnpower);
