@@ -13,7 +13,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.WristPid;
@@ -42,13 +42,13 @@ public class MoveToHeight extends Command {
   helper = new Helpers();
 
   if(position == 0)
-    level.SetTargetAngle(60);
-  if(position == 1)
-    level.SetTargetAngle(-74);
-  if(position == 5)
+    level.SetTargetAngle(130);
+  else if(position == 1)
+    level.SetTargetAngle(0);
+  else if(position == 5)
     level.SetTargetAngle(-32);
   else
-    level.SetTargetAngle(0);
+    level.SetTargetAngle(90);
   }
 
   // Called just before this Command runs the first time
@@ -61,7 +61,7 @@ public class MoveToHeight extends Command {
 
   @Override
   protected void execute() {
-    turnpower = level.GetAnglePidOutput(robot.wristnavX.getRoll());
+    turnpower = level.GetAnglePidOutput(helper.ConvertYawToHeading(robot.wristnavX.getYaw()));
     if (turnpower == 0){
       stoppedCounter ++;
     }else{
@@ -70,7 +70,8 @@ public class MoveToHeight extends Command {
     if (stoppedCounter > 5){
       testCompleted = true;
     }
-    arm.moveToHeightPreset(position, -turnpower);    
+    arm.moveToHeightPreset(position, turnpower);
+    SmartDashboard.putNumber("rollW", helper.ConvertYawToHeading(robot.wristnavX.getYaw()));
   }
 
   // Make this return true when this Command no longer needs to run execute()
