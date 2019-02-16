@@ -12,13 +12,16 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Helpers;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.TurnPid;
 import frc.robot.commands.ManualArm;
 
 
@@ -43,7 +46,7 @@ public class ArmSubsystem extends Subsystem {
   private static final int kPIDLoopIdx = 0;
   private static final Gains kGains = new Gains((.5*1023)/(4096.0/12), 0.0, 0.0, 0.2, 0, 1.0);
   //private static final Gains kGains = new Gains((.0*1023)/(0/12), 0.0, 0.0, 0.0, 0, 0.0);
-  private static final Gains kGainsWrist = new Gains((.5*1023)/(4096.0/12)/2, 0.0, 0.0, 0.2, 0, 1.0);
+  private static final Gains kGainsWrist = new Gains((.5*1023)/(4096.0/12)/10, 0.0, 0.0, 0.2, 0, 1.0);
   private static final int length = 5;
   // private static final int wristUpperLimit;
   // private static final int wristLowerLimit;
@@ -98,7 +101,8 @@ public class ArmSubsystem extends Subsystem {
 		mc_arm.config_kP(kSlotIdx, kGains.kP, 0);
 		mc_arm.config_kI(kSlotIdx, kGains.kI, 0);
     mc_arm.config_kD(kSlotIdx, kGains.kD, 0);
-    
+  
+		mc_wrist.selectProfileSlot(kSlotIdx, kPIDLoopIdx);
 		mc_wrist.config_kF(kSlotIdx, kGainsWrist.kF, 0);
 		mc_wrist.config_kP(kSlotIdx, kGainsWrist.kP, 0);
 		mc_wrist.config_kI(kSlotIdx, kGainsWrist.kI, 0);
@@ -157,7 +161,7 @@ public class ArmSubsystem extends Subsystem {
 
   public void turns(double degrees) { // Turns a certain number of degrees
     mc_arm.set(ControlMode.Position, degrees / RobotMap.ArmTicksToDeg);
-    //mc_wrist.set(ControlMode.Position, -degrees / RobotMap.ArmTicksToDeg);    // TODO: Get the right coefficient
+    mc_wrist.set(ControlMode.Position, -degrees / RobotMap.ArmTicksToDeg);    // TODO: Get the right coefficient
     SmartDashboard.putNumber("target arm enc", degrees/RobotMap.ArmTicksToDeg);
   }
 
@@ -166,18 +170,17 @@ public class ArmSubsystem extends Subsystem {
   }
   public void moveToHeight(double height) {
     turns(Math.asin(height / RobotMap.armLength));
-
+    
   }
-  public void moveToHeightPreset(int pos, int power) {
+  public void moveToHeightPreset(int pos, double turnpower) {
     // if(pos < RobotMap.heights.length && pos > 0)  
     //   moveToHeight(RobotMap.heights[pos]);
 
-
     mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos]);
-    //mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
-    mc_wrist.set(ControlMode.PercentOutput, power);
+    // mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
+    mc_wrist.set(ControlMode.PercentOutput, turnpower);
     SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
-    SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));    
+    SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
   }
   public void setIntakeSpeed(double percentSpeed)
   {
@@ -216,5 +219,4 @@ public class ArmSubsystem extends Subsystem {
     mc_wrist.set(ControlMode.PercentOutput, 0.15 * dir);
     SmartDashboard.putNumber("Wrist Enc Pos", mc_wrist.getSelectedSensorPosition(0));
   }
-
 }

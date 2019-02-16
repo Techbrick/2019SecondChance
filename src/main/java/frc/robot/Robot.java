@@ -86,6 +86,7 @@ public class Robot extends TimedRobot {
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
   public DigitalInput DI = new DigitalInput(1);
+  public Helpers helper;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -100,7 +101,8 @@ public class Robot extends TimedRobot {
     stick = new Joystick(0);
     operatorStick= new Joystick(1);
     robotMap.verbose = true;
-	
+  
+    helper = new Helpers();
 		//
 		// Configure drivetrain movement
     //
@@ -314,7 +316,8 @@ public class Robot extends TimedRobot {
 
       SmartDashboard.putNumber("yaWw", wristnavX.getYaw());
       SmartDashboard.putNumber("pitchW", wristnavX.getPitch());
-      SmartDashboard.putNumber("rollW", wristnavX.getRoll());
+      SmartDashboard.putNumber("raw roll", wristnavX.getRoll());
+      SmartDashboard.putNumber("rollW", helper.ConvertYawToHeading(wristnavX.getRoll()));
     }
     
     double yaw = navX.getYaw();
