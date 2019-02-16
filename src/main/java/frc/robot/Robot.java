@@ -132,7 +132,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Manual Arm", new ManualArm(this));
     SmartDashboard.putData("Dog Left", new DogLegLeft(this) );
     SmartDashboard.putData("Rotate 1", new Turn(this, 1));
-    SmartDashboard.putData("Vision Drive", new VisionDrive(this));
     //SmartDashboard.putData("DriveAlign", new DriveAlign(this));
 
     SmartDashboard.putData("Height 0", new MoveToHeight(this, 0));
@@ -145,7 +144,14 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Height 7", new MoveToHeight(this, 7));
     SmartDashboard.putData("Height 8", new MoveToHeight(this, 8));
     // SmartDashboard.putData("Accelerometer Angle", new AccelerometerAngle(this));
-    
+
+    SmartDashboard.putData("RocketAngle", new VisionDrive(this,300));
+    SmartDashboard.putData("Straight", new VisionDrive(this,0));
+    SmartDashboard.putData("RocketAngleBackSide", new VisionDrive(this,30));
+    SmartDashboard.putData("Left", new VisionDrive(this,270));
+    SmartDashboard.putData("Right", new VisionDrive(this,90));
+
+
     SmartDashboard.putNumber("kp", robotMap.kp_Angle);
     SmartDashboard.putNumber("ki", robotMap.ki_Angle);
     SmartDashboard.putNumber("kd", robotMap.kd_Angle);
