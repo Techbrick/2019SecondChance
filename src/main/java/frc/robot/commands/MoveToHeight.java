@@ -40,17 +40,8 @@ public class MoveToHeight extends Command {
   position = pos;
   level = new WristPid(robot);
   helper = new Helpers();
-
-  if(position == 0)
-    level.SetTargetAngle(130);
-  else if(position == 1)
-    level.SetTargetAngle(0);
-  else if(position == 5)
-    level.SetTargetAngle(-32);
-  else
-    level.SetTargetAngle(90);
+  level.SetTargetAngle(robot.robotMap.heights[1][position]);
   }
-
   // Called just before this Command runs the first time
 
   @Override

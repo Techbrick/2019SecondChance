@@ -15,6 +15,7 @@ import frc.robot.commands.HatchEjector;
 import frc.robot.commands.HatchEjectorToggle;
 import frc.robot.commands.IntakeBall;
 import frc.robot.commands.ShiftGear;
+import frc.robot.commands.VisionDrive;
 import frc.robot.commands.ManualDriveDirection;
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -59,6 +60,7 @@ public class OI {
     southeast.whileHeld(new ManualDriveDirection(robot, 135));
     southwest.whileHeld(new ManualDriveDirection(robot, 225));
     northwest.whileHeld(new ManualDriveDirection(robot, 315));
+    vision.whileHeld(new VisionDrive(robot));
     //ShiftGearButton.whenPressed(new ShiftGear(robot, true));
     //ShiftGearButton.whenReleased(new ShiftGear(robot, false));
     // hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot,true),new HatchEjector(robot,false),robot));

@@ -49,7 +49,7 @@ public class VisionDrive extends Command {
         {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
           {
-                _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,difference*1.5); //_robot.driveTrain.m_LimelightSteerCommand
+                _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,difference*1.5*0.03); //_robot.driveTrain.m_LimelightSteerCommand
           }
           else
           {
@@ -73,7 +73,7 @@ public class VisionDrive extends Command {
   protected void end() {
   }
 
-  // Called when another command which requires one or more of the same
+// Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
