@@ -73,7 +73,7 @@ public class MoveToHeight extends Command {
 
   @Override
   protected void execute() {
-    double turnpower = level.GetAnglePidOutput(robot.wristnavX.getRoll());
+    turnpower = level.GetAnglePidOutput(robot.wristnavX.getRoll());
     if (turnpower == 0){
       stoppedCounter ++;
     }else{
