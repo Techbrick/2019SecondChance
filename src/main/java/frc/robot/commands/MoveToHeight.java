@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.TurnPid;
+import frc.robot.WristPid;
 import frc.robot.subsystems.*;
 
 /**
@@ -35,7 +36,7 @@ public class MoveToHeight extends Command {
   private boolean testCompleted = false;
   private int turnpower;
   private int stoppedCounter = 0;
-  TurnPid straighten;
+  private WristPid level;
 
   public MoveToHeight(Robot r, int pos) {
   // Use requires() here to declare subsystem dependencies
@@ -44,7 +45,7 @@ public class MoveToHeight extends Command {
   arm = robot.arm_subsystem;
   targetencoder = arm.getArmEncoderTicks();
   position = pos;
-  straighten = new TurnPid(robot);
+  level = new WristPid(robot);
 
   }
 
@@ -71,8 +72,8 @@ public class MoveToHeight extends Command {
     else if(position == 8)
       turnpower = RobotMap.heights[1][position];
     else{
-      straighten.SetTargetAngle(0);
-      double turnpower = straighten.GetAnglePidOutput(robot.wristnavX.getRoll());
+      level.SetTargetAngle(0);
+      double turnpower = level.GetAnglePidOutput(robot.wristnavX.getRoll());
       if (turnpower == 0){
         stoppedCounter ++;
       }else{
