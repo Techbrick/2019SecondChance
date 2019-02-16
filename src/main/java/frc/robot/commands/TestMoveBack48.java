@@ -93,7 +93,7 @@ public class TestMoveBack48 extends Command {
   @Override
   protected boolean isFinished() {
     
-    boolean done = _robot.stick.getRawButton(2) || testCompleted;
+    boolean done = _robot.DrvStick.getRawButton(2) || testCompleted;
     if(done){
          _robot.driveTrain.Move(0, 0); 
         SmartDashboard.putString("Status", "Completed move back 24 inches");

@@ -48,7 +48,7 @@ public class DriveEncoderCal extends Command {
     }else{
        // SmartDashboard.putString("Status", "Running Encoder Cal execute");
 
-        double power = Helpers.DeadbandJoystick(_robot.stick.getY(), _robot.robotMap);
+        double power = Helpers.DeadbandJoystick(_robot.DrvStick.getY(), _robot.robotMap);
         SmartDashboard.putString("Status", "Running Encoder Cal execute stick "+ Double.toString(power));
         _robot.driveTrain.Move(power, power);
     }
@@ -59,7 +59,7 @@ public class DriveEncoderCal extends Command {
   @Override
   protected boolean isFinished() {
     
-    boolean done = _robot.stick.getRawButton(1);
+    boolean done = _robot.DrvStick.getRawButton(1);
     if(done){
         
         SmartDashboard.putString("Status", "Calculating Encoder Cal");

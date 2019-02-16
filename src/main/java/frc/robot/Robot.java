@@ -68,7 +68,7 @@ public class Robot extends TimedRobot {
   NetworkTableEntry autoSpeedEntry = NetworkTableInstance.getDefault().getEntry("/robot/autospeed");
   NetworkTableEntry telemetryEntry = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
   
-  public Joystick stick;
+  public Joystick DrvStick;
   public Joystick operatorStick;
 	public  double encoderConstant;
 	
@@ -98,7 +98,7 @@ public class Robot extends TimedRobot {
    
     SmartDashboard.putString("Instructions", "");
     SmartDashboard.putString("Status", "");
-    stick = new Joystick(0);
+    DrvStick = new Joystick(0);
     operatorStick= new Joystick(1);
     robotMap.verbose = true;
   
@@ -264,8 +264,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    double power =  stick.getY();
-    double twist = stick.getX();
+    double power =  DrvStick.getY();
+    double twist = DrvStick.getX();
     //driveTrain.ArcadeDrive(power, twist);
     Logger();
     

@@ -18,6 +18,7 @@ public class VisionDrive extends Command {
   double difference;
   double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
   Helpers helper;
+  boolean drive = true;
   public VisionDrive(Robot robot) {
     _robot = robot;
     // Use requires() here to declare subsystem dependencies
@@ -44,7 +45,7 @@ public class VisionDrive extends Command {
         // drive *= 0.70;
         absoluteAngle = tx + helper.ConvertYawToHeading(_robot.navX.getYaw());
         difference = absoluteAngle - targetAngle;
-        if (_robot.stick.getRawButton(4))
+        if (drive)
         {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
           {
