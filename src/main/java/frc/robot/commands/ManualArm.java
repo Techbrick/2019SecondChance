@@ -47,6 +47,10 @@ public class ManualArm extends Command {
     // }
     _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(2));
     _robot.arm_subsystem.setArmSpeed(_robot.operatorStick.getRawAxis(0));
+    if(_robot.operatorStick.getRawAxis(0)!=0)
+    {
+      
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
