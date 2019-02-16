@@ -86,6 +86,7 @@ public class Robot extends TimedRobot {
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
   public DigitalInput DI = new DigitalInput(1);
+  private Helpers helper;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -111,6 +112,7 @@ public class Robot extends TimedRobot {
     driveTrain = new RealDriveTrain(this);
     arm_subsystem = new ArmSubsystem(this);
     comp_subsystem = new CompressorSubsystem(this);
+    helper = new Helpers();
     // accelerometer_subsystem = new AccelerometerSubsystem(this);
 
     arm_subsystem.resetZero();
@@ -315,6 +317,8 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("yaWw", wristnavX.getYaw());
       SmartDashboard.putNumber("pitchW", wristnavX.getPitch());
       SmartDashboard.putNumber("raw roll", wristnavX.getRoll());
+      SmartDashboard.putNumber("Adjusted Roll", helper.ConvertYawToHeading(wristnavX.getRoll()));
+      SmartDashboard.putBoolean("HatchEjector", arm_subsystem.getHatchEjectorValue());
     }
     
     double yaw = navX.getYaw();

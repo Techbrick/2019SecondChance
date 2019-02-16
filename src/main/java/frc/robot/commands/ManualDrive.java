@@ -34,7 +34,7 @@ public class ManualDrive extends Command {
   public ManualDrive(Robot robot) {
     // Use requires() here to declare subsystem dependencies
     _robot = robot;
-    ShiftGearButton   = new JoystickButton(robot.DrvStick, 2);
+    ShiftGearButton = new JoystickButton(robot.DrvStick, 7);
     requires(_robot.driveTrain);
   }
 
