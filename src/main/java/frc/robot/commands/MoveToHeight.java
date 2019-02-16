@@ -16,23 +16,15 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.TurnPid;
 import frc.robot.WristPid;
 import frc.robot.subsystems.*;
 import frc.robot.Helpers;
 
-/**
-
-* An example command. You can replace me with your own command.
-
-*/
 
 public class MoveToHeight extends Command {
 
   private ArmSubsystem arm;
   private Robot robot;
-  public int currentencoder;
-  public int targetencoder = 0;
   public int position; 
   private boolean testCompleted = false;
   private double turnpower;
@@ -45,7 +37,6 @@ public class MoveToHeight extends Command {
   robot = r;
   requires(robot.arm_subsystem);
   arm = robot.arm_subsystem;
-  targetencoder = arm.getArmEncoderTicks();
   position = pos;
   level = new WristPid(robot);
   helper = new Helpers();
@@ -60,17 +51,11 @@ public class MoveToHeight extends Command {
     level.SetTargetAngle(0);
   }
 
-
-
   // Called just before this Command runs the first time
 
   @Override
-
   protected void initialize() {
-    currentencoder = arm.getArmEncoderTicks();
   }
-
-
 
   // Called repeatedly when this Command is scheduled to run
 

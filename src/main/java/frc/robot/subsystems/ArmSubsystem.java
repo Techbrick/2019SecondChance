@@ -12,7 +12,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -144,14 +143,6 @@ public class ArmSubsystem extends Subsystem {
   {
     return mc_wrist.getSensorCollection().getQuadraturePosition();
   }
-
-  // public void extensionLimit()
-  // {
-  //   if((getWristEncoderTicks() >= wristUpperLimit) && (getWristEncoderTicks() <= wristLowerLimit))
-  //   {
-      
-  //   }
-  // }
 
   public void move(int currAngle, int dPos) { // Changes height of arm based on current angle and desired change
     mc_arm.set(ControlMode.MotionMagic, 4096 * 25 * (-currAngle+Math.acos(dPos / -length - Math.cos(currAngle))) / 360);
