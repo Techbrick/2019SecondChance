@@ -21,6 +21,7 @@ public class VisionDrive extends Command {
   boolean drive = true;
   public VisionDrive(Robot robot) {
     _robot = robot;
+    requires(robot.driveTrain);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
