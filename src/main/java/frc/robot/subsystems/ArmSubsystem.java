@@ -102,7 +102,8 @@ public class ArmSubsystem extends Subsystem {
 		mc_arm.config_kP(kSlotIdx, kGains.kP, 0);
 		mc_arm.config_kI(kSlotIdx, kGains.kI, 0);
     mc_arm.config_kD(kSlotIdx, kGains.kD, 0);
-    
+  
+		mc_wrist.selectProfileSlot(kSlotIdx, kPIDLoopIdx);
 		mc_wrist.config_kF(kSlotIdx, kGainsWrist.kF, 0);
 		mc_wrist.config_kP(kSlotIdx, kGainsWrist.kP, 0);
 		mc_wrist.config_kI(kSlotIdx, kGainsWrist.kI, 0);
@@ -180,7 +181,7 @@ public class ArmSubsystem extends Subsystem {
     turns(Math.asin(height / RobotMap.armLength));
     
   }
-  public void moveToHeightPreset(int pos) {
+  public void moveToHeightPreset(int pos, int turnpower) {
     // if(pos < RobotMap.heights.length && pos > 0)  
     //   moveToHeight(RobotMap.heights[pos]);
 
