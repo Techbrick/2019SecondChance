@@ -38,10 +38,10 @@ public class RobotMap {
   public int rightShiftChannel = 0;
 
   public double kAngleSetpoint = 0.0;
-  public double kp_Angle = 0.02; // propotional turning constant WAS .04
-  public double ki_Angle = 0.00;
+  public double kp_Angle = 0.03; // propotional turning constant WAS .04
+  public double ki_Angle = 0.003;
   public double kd_Angle = 0.00;
-  public double kp_Angle_Wrist = 0.04; // propotional turning constant WAS .04
+  public double kp_Angle_Wrist = 0.07; // propotional turning constant WAS .04
   public double ki_Angle_Wrist = 0.00;
   public double kd_Angle_Wrist = 0.00;
   public double joystickDeadband = 0.05;
