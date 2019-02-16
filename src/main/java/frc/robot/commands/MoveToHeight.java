@@ -19,6 +19,7 @@ import frc.robot.RobotMap;
 import frc.robot.TurnPid;
 import frc.robot.WristPid;
 import frc.robot.subsystems.*;
+import frc.robot.Helpers;
 
 /**
 
@@ -37,6 +38,7 @@ public class MoveToHeight extends Command {
   private int turnpower;
   private int stoppedCounter = 0;
   private WristPid level;
+  private Helpers helper;
 
   public MoveToHeight(Robot r, int pos) {
   // Use requires() here to declare subsystem dependencies
@@ -46,7 +48,7 @@ public class MoveToHeight extends Command {
   targetencoder = arm.getArmEncoderTicks();
   position = pos;
   level = new WristPid(robot);
-
+  helper = new Helpers();
   }
 
 
@@ -73,7 +75,7 @@ public class MoveToHeight extends Command {
       turnpower = RobotMap.heights[1][position];
     else{
       level.SetTargetAngle(0);
-      double turnpower = level.GetAnglePidOutput(robot.wristnavX.getRoll());
+      double turnpower = level.GetAnglePidOutput(helper.ConvertYawToHeading(robot.wristnavX.getRoll()));
       if (turnpower == 0){
         stoppedCounter ++;
       }else{

@@ -228,5 +228,4 @@ public class ArmSubsystem extends Subsystem {
     mc_wrist.set(ControlMode.PercentOutput, 0.15 * dir);
     SmartDashboard.putNumber("Wrist Enc Pos", mc_wrist.getSelectedSensorPosition(0));
   }
-
 }
