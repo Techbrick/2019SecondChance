@@ -34,7 +34,7 @@ public class MoveToHeight extends Command {
   public int targetencoder = 0;
   public int position; 
   private boolean testCompleted = false;
-  private int turnpower;
+  private double turnpower;
   private int stoppedCounter = 0;
   private WristPid level;
 
