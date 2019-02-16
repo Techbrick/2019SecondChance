@@ -48,13 +48,13 @@ public class MoveToHeight extends Command {
   level = new WristPid(robot);
 
   if(position == 0)
-    straighten.SetTargetAngle(60);
+    level.SetTargetAngle(60);
   if(position == 1)
-    straighten.SetTargetAngle(-74);
+    level.SetTargetAngle(-74);
   if(position == 5)
-    straighten.SetTargetAngle(-32);
+    level.SetTargetAngle(-32);
   else
-    straighten.SetTargetAngle(0);
+    level.SetTargetAngle(0);
   }
 
 
@@ -73,8 +73,7 @@ public class MoveToHeight extends Command {
 
   @Override
   protected void execute() {
-<<<<<<< HEAD
-    double turnpower = straighten.GetAnglePidOutput(robot.wristnavX.getRoll());
+    double turnpower = level.GetAnglePidOutput(robot.wristnavX.getRoll());
     if (turnpower == 0){
       stoppedCounter ++;
     }else{
@@ -82,23 +81,6 @@ public class MoveToHeight extends Command {
     }
     if (stoppedCounter > 5){
       testCompleted = true;
-=======
-    if(position == 0)
-      turnpower = RobotMap.heights[1][position];
-    else if(position == 8)
-      turnpower = RobotMap.heights[1][position];
-    else{
-      level.SetTargetAngle(0);
-      double turnpower = level.GetAnglePidOutput(robot.wristnavX.getRoll());
-      if (turnpower == 0){
-        stoppedCounter ++;
-      }else{
-        stoppedCounter = 0;
-      }
-      if (stoppedCounter > 5){
-        testCompleted = true;
-      }
->>>>>>> 45f300f92bf72529c78edac0d9478ef273606b7a
     }
     arm.moveToHeightPreset(position, -turnpower);    
   }
