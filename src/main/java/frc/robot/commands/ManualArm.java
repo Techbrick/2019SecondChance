@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.ArmSubsystem;
 
@@ -48,6 +49,7 @@ public class ManualArm extends Command {
     // }
     _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(2));
     _robot.arm_subsystem.setArmSpeed(_robot.operatorStick.getRawAxis(0));
+    SmartDashboard.putNumber("Roll NavX wrist", _robot.wristnavX.getRoll());
     
     
   }
