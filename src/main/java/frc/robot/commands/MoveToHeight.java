@@ -20,12 +20,11 @@ import frc.robot.WristPid;
 import frc.robot.subsystems.*;
 import frc.robot.Helpers;
 
-
 public class MoveToHeight extends Command {
 
   private ArmSubsystem arm;
   private Robot robot;
-  public int position; 
+  public int position;
   private boolean testCompleted = false;
   private double turnpower;
   private int stoppedCounter = 0;
@@ -33,32 +32,32 @@ public class MoveToHeight extends Command {
   private Helpers helper;
 
   public MoveToHeight(Robot r, int pos) {
-  // Use requires() here to declare subsystem dependencies
-  robot = r;
-  requires(robot.arm_subsystem);
-  arm = robot.arm_subsystem;
-  position = pos;
-  level = new WristPid(robot);
-  helper = new Helpers();
-  level.SetTargetAngle(robot.robotMap.heights[1][position]);
+    // Use requires() here to declare subsystem dependencies
+    robot = r;
+    requires(robot.arm_subsystem);
+    arm = robot.arm_subsystem;
+    position = pos;
+    level = new WristPid(robot);
+    helper = new Helpers();
+    level.SetTargetAngle(robot.robotMap.heights[1][position]);
   }
   // Called just before this Command runs the first time
 
   @Override
   protected void initialize() {
-}
+  }
 
   // Called repeatedly when this Command is scheduled to run
 
   @Override
   protected void execute() {
     turnpower = level.GetAnglePidOutput(helper.ConvertYawToHeading(robot.wristnavX.getRoll()));
-    if (turnpower == 0){
-      stoppedCounter ++;
-    }else{
+    if (turnpower == 0) {
+      stoppedCounter++;
+    } else {
       stoppedCounter = 0;
     }
-    if (stoppedCounter > 5){
+    if (stoppedCounter > 5) {
       testCompleted = true;
     }
     arm.moveToHeightPreset(position, turnpower);
