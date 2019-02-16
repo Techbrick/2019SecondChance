@@ -9,7 +9,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.ArmSubsystem;
 
 public class ManualArm extends Command {
   Robot _robot;
@@ -48,8 +47,6 @@ public class ManualArm extends Command {
     // }
     _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(2));
     _robot.arm_subsystem.setArmSpeed(_robot.operatorStick.getRawAxis(0));
-    
-    
   }
 
   // Make this return true when this Command no longer needs to run execute()
