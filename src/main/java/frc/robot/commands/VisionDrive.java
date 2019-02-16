@@ -9,9 +9,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-
+import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.robot.Helpers;
 public class VisionDrive extends Command {
   Robot _robot;
+  double targetAngle;
+  double absoluteAngle;
+  double difference;
+  double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+  Helpers helper;
+  boolean drive = true;
   public VisionDrive(Robot robot) {
     _robot = robot;
     // Use requires() here to declare subsystem dependencies
@@ -21,11 +28,14 @@ public class VisionDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    targetAngle = 0.0;
+    //Figure out what target angle should be
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    //Difference between absolute angle and target angle, then steer to it with difference * 1.5
     _robot.driveTrain.Update_Limelight_Tracking();
 
         // double steer = m_Controller.getX(Hand.kRight);
@@ -33,12 +43,13 @@ public class VisionDrive extends Command {
         // boolean auto = m_Controller.getAButton();
         // steer *= 0.70;
         // drive *= 0.70;
-        
-        if (_robot.stick.getRawButton(4))
+        absoluteAngle = tx + helper.ConvertYawToHeading(_robot.navX.getYaw());
+        difference = absoluteAngle - targetAngle;
+        if (drive)
         {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
           {
-                _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,_robot.driveTrain.m_LimelightSteerCommand);
+                _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,difference*1.5); //_robot.driveTrain.m_LimelightSteerCommand
           }
           else
           {

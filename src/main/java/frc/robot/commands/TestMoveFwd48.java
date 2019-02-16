@@ -62,7 +62,7 @@ public class TestMoveFwd48 extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(_robot.stick.getRawButton(1)){
+    if(_robot.DrvStick.getRawButton(1)){
         double power = _distancePid.GetDistancePidOutput();
         _robot.driveTrain.Move(power, power); 
         if (power == 0){
@@ -89,7 +89,7 @@ public class TestMoveFwd48 extends Command {
   @Override
   protected boolean isFinished() {
     
-    boolean done = _robot.stick.getRawButton(2) || testCompleted;
+    boolean done = _robot.DrvStick.getRawButton(2) || testCompleted;
     if(done){
         
         SmartDashboard.putString("Status", "Completed move forward 48 inches");

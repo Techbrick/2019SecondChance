@@ -119,7 +119,7 @@ public class FindMinDrivePower extends Command {
   @Override
   protected boolean isFinished() {
     double testMin = 0;
-    boolean done = _robot.stick.getRawButton(2) || testCompleted;
+    boolean done = _robot.DrvStick.getRawButton(2) || testCompleted;
     if(done){
         if(minFrontDrive > minRearDrive){
             _robot.robotMap.minDrivePower = minFrontDrive;

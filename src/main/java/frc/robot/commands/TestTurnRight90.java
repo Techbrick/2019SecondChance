@@ -70,7 +70,7 @@ public class TestTurnRight90 extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(_robot.stick.getRawButton(1)){
+    if(_robot.DrvStick.getRawButton(1)){
         double power = _turnPid.GetAnglePidOutput(_robot.driveTrain.getRobotYaw());
         _robot.driveTrain.Move(-power, power); 
         if (power == 0){
@@ -95,7 +95,7 @@ public class TestTurnRight90 extends Command {
   @Override
   protected boolean isFinished() {
 
-    done = _robot.stick.getRawButton(2) || testCompleted;
+    done = _robot.DrvStick.getRawButton(2) || testCompleted;
     if(done){
         
         SmartDashboard.putString("Status", "Completed turn right 90");
