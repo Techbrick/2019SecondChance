@@ -20,13 +20,14 @@ public class VisionDrive extends Command {
   double tx;
   Helpers helper;
   boolean drive = true;
-  TurnPid turny = new TurnPid(_robot);
+  TurnPid turny;
   public VisionDrive(Robot robot, int angle) {
     _robot = robot;
     requires(robot.driveTrain);
     targetAngle = angle;
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    // eg. requires(chassis);==
+    turny = new TurnPid(.01,.03,0, .05 ,.02,1 );
   }
 
   // Called just before this Command runs the first time
@@ -53,15 +54,8 @@ public class VisionDrive extends Command {
         {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
           {
-            if(difference<25)
-            {
-              _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,turny.GetAnglePidOutput(tx)); //_robot.driveTrain.m_LimelightSteerCommand
-            }
-            else
-            {
-              _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,25*0.03);
-            }
-          }
+              _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,turny.GetAnglePidOutput(tx));
+           } //_robot.driveTrain.m_LimelightSteerCommand
           else
           {
                 _robot.driveTrain.ArcadeDrive(0.0,0.0);
