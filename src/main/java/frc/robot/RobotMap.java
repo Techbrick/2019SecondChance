@@ -44,11 +44,12 @@ public class RobotMap {
   public double kp_Angle_Wrist = 0.0001; // propotional turning constant WAS .04
   public double ki_Angle_Wrist = 0.0;
   public double kd_Angle_Wrist = 0.0;
-  public double minWristPower = 0.15;
+  public double minWristPower = 0.1;
   public double maxWristPower = 0.7;
   public double joystickDeadband = 0.05;
   public double driveEncoderTicksPerInch = 437.42;
   public double pidTurnDeadband = 1;
+  public double pidWristDeadband = 5;
 
   public double WHEEL_DIAMETER = 6;
   public static final double ENCODER_PULSE_PER_REV = 4096.0; //WAS 2048
