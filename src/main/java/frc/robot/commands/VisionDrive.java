@@ -49,10 +49,10 @@ public class VisionDrive extends Command {
         // steer *= 0.70;
         // drive *= 0.70;
         tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
-        absoluteAngle = tx + helper.ConvertYawToHeading(_robot.navX.getYaw());
+        absoluteAngle = tx + _robot.navX.getYaw();
         difference = absoluteAngle - targetAngle;
         _robot.driveTrain.Update_Limelight_Tracking();
-        turny.SetTargetAngle(difference*1.5);
+        turny.SetTargetAngle(helper.ConvertYawToHeading(difference*1.5 + targetAngle));
         if (drive)
         {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
@@ -61,8 +61,8 @@ public class VisionDrive extends Command {
             double turn = turny.GetAnglePidOutput(tx);
             SmartDashboard.putNumber("VD drv", drv);
             SmartDashboard.putNumber("VD Turn", turn);
-              _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,turny.GetAnglePidOutput(tx));
-           } //_robot.driveTrain.m_LimelightSteerCommand
+              _robot.driveTrain.Move(drv - turn, -(drv + turn));
+           }
           else
           {
                 _robot.driveTrain.ArcadeDrive(0.0,0.0);

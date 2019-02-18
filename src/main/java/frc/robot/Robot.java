@@ -340,15 +340,15 @@ public class Robot extends TimedRobot {
     double fps = driveTrain.GetAverageEncoderRate()*12;
     SmartDashboard.putNumber("fps", fps);
     SmartDashboard.putBoolean("bit1", pet.getbit1());
-    SmartDashboard.putBoolean("bit1", pet.getbit2());
-    SmartDashboard.putBoolean("bit1", pet.getbit3());
-    SmartDashboard.putBoolean("bit1", pet.getbit4());
+    SmartDashboard.putBoolean("bit2", pet.getbit2());
+    SmartDashboard.putBoolean("bit3", pet.getbit3());
+    SmartDashboard.putBoolean("bit4", pet.getbit4());
     
-    navX.getQuaternionW()
-    navX.getQuaternionX()
-    navX.getQuaternionY()
-    navX.getQuaternionZ()
-    
+    SmartDashboard.putNumber("QuaternionW", wristnavX.getQuaternionW());
+    SmartDashboard.putNumber("QuaternionX", wristnavX.getQuaternionX());
+    SmartDashboard.putNumber("QuaternionY", wristnavX.getQuaternionY());
+    SmartDashboard.putNumber("QuaternionZ", wristnavX.getQuaternionZ());
+    SmartDashboard.putNumber("Quaternion Angle", Math.atan2(wristnavX.getQuaternionW(),wristnavX.getQuaternionY()) * 180 / 3.14);
   }
 
 }
