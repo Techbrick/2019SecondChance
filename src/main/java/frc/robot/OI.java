@@ -60,7 +60,11 @@ public class OI {
     southeast.whileHeld(new ManualDriveDirection(robot, 135));
     southwest.whileHeld(new ManualDriveDirection(robot, 225));
     northwest.whileHeld(new ManualDriveDirection(robot, 315));
+<<<<<<< HEAD
     //vision.whileHeld(new VisionDrive(robot,0));
+=======
+    vision.whileHeld(new VisionDrive(robot,0));
+>>>>>>> c312d4b9afc3c19c6cc44d0e6a0d768a9177302d
     //ShiftGearButton.whenPressed(new ShiftGear(robot, true));
     //ShiftGearButton.whenReleased(new ShiftGear(robot, false));
     // hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot,true),new HatchEjector(robot,false),robot));
