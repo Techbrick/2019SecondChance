@@ -39,6 +39,7 @@ import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
+import com.kauailabs.navx.frc.Quaternion;
 
 //import org.omg.CORBA.PRIVATE_MEMBER;
 import org.opencv.core.Mat;
@@ -108,6 +109,7 @@ public class Robot extends TimedRobot {
 		// Configure drivetrain movement
     //
     navX = new AHRS(SPI.Port.kMXP);
+
 
     wristnavX = new AHRS(Port.kUSB);
     
@@ -341,6 +343,11 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("bit1", pet.getbit2());
     SmartDashboard.putBoolean("bit1", pet.getbit3());
     SmartDashboard.putBoolean("bit1", pet.getbit4());
+    
+    navX.getQuaternionW()
+    navX.getQuaternionX()
+    navX.getQuaternionY()
+    navX.getQuaternionZ()
     
   }
 
