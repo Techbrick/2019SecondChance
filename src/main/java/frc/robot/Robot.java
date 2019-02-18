@@ -30,7 +30,6 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.RealDriveTrain;
 import frc.robot.subsystems.SensorPet;
 
-
 import java.util.function.Supplier;
 import com.ctre.phoenix.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -326,7 +325,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("raw yaw", wristnavX.getYaw());
       SmartDashboard.putNumber("pitchW", wristnavX.getPitch());
       SmartDashboard.putNumber("raw roll", wristnavX.getRoll());
-      SmartDashboard.putNumber("Adjusted Yaw", helper.ConvertYawToHeading(wristnavX.getYaw()));
+      SmartDashboard.putNumber("Adjusted Yaw", helper.ConvertYawToHeading(wristnavX.getRoll()));
       SmartDashboard.putBoolean("HatchEjector", arm_subsystem.getHatchEjectorValue());
     }
     
