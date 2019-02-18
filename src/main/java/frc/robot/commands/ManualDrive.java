@@ -47,8 +47,8 @@ public class ManualDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double power = Helpers.DeadbandJoystick( _robot.DrvStick.getX(), _robot.robotMap)*0.8;
-    double twist = Helpers.DeadbandJoystick( _robot.DrvStick.getZ(), _robot.robotMap)*0.8;
+    double power = Helpers.DeadbandJoystick( _robot.DrvStick.getY(), _robot.robotMap)*0.8;
+    double twist = Helpers.DeadbandJoystick( _robot.DrvStick.getTwist(), _robot.robotMap)*0.8;
     if(ShiftGearButton.get()){
         _robot.driveTrain.setShifterSolenoid(true);
     }

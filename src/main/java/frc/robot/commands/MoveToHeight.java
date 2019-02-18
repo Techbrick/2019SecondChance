@@ -60,7 +60,7 @@ public class MoveToHeight extends Command {
     if (stoppedCounter > 5) {
       testCompleted = true;
     }
-    arm.moveToHeightPreset(position, turnpower);
+    arm.moveToHeightPreset(position, -turnpower);
   }
 
   // Make this return true when this Command no longer needs to run execute()
