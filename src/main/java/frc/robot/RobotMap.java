@@ -41,15 +41,15 @@ public class RobotMap {
   public double kp_Angle = 0.3; // propotional turning constant WAS .04
   public double ki_Angle = 0.03;
   public double kd_Angle = 0.00;
-  public double kp_Angle_Wrist = 0.1; // propotional turning constant WAS .04
+  public double kp_Angle_Wrist = 0.04; // propotional turning constant WAS .04
   public double ki_Angle_Wrist = 0.0;
   public double kd_Angle_Wrist = 0.0;
-  public double minWristPower = 0.1;
+  public double minWristPower = 0.05;
   public double maxWristPower = 0.7;
   public double joystickDeadband = 0.05;
   public double driveEncoderTicksPerInch = 437.42;
   public double pidTurnDeadband = 1;
-  public double pidWristDeadband = 5;
+  public double pidWristDeadband = 10;
 
   public double WHEEL_DIAMETER = 6;
   public static final double ENCODER_PULSE_PER_REV = 4096.0; //WAS 2048
@@ -81,7 +81,7 @@ public class RobotMap {
   
                                   // stow, hpu,  h1,   h2,    h3,    cpu,   c1,    c2,    c3
   public static int [][] heights = {{ 0,   0,   0, 14100, 26200, 7637, 11700, 23200, 31000},
-                                    {120, 40,   90,    90,     90,    90,   45,   45,   45}};
+                                    {130, 40,   90,    90,     90,    90,   45,   45,   45}};
 
   public static final int armLength = 26; //real one is 38, 26 is for testbot
 
