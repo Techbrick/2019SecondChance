@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.Helpers;
+import frc.robot.TurnPid;
 public class VisionDrive extends Command {
   Robot _robot;
   double targetAngle;
@@ -19,6 +20,7 @@ public class VisionDrive extends Command {
   double tx;
   Helpers helper;
   boolean drive = true;
+  TurnPid turny = new TurnPid(_robot);
   public VisionDrive(Robot robot, int angle) {
     _robot = robot;
     requires(robot.driveTrain);
@@ -46,13 +48,14 @@ public class VisionDrive extends Command {
         absoluteAngle = tx + helper.ConvertYawToHeading(_robot.navX.getYaw());
         difference = absoluteAngle - targetAngle;
         _robot.driveTrain.Update_Limelight_Tracking();
+        turny.SetTargetAngle(difference*1.5);
         if (drive)
         {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
           {
             if(difference<25)
             {
-              _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,difference*1.5*.03); //_robot.driveTrain.m_LimelightSteerCommand
+              _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,turny.GetAnglePidOutput(tx)); //_robot.driveTrain.m_LimelightSteerCommand
             }
             else
             {
