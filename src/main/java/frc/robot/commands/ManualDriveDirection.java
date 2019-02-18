@@ -35,12 +35,12 @@ public class ManualDriveDirection extends Command {
     ShiftGearButton = new JoystickButton(robot.DrvStick, 2);
     requires(_robot.driveTrain);
     direction = angle;
+    _turnPid = new TurnPid(_robot);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    _turnPid = new TurnPid(_robot);
     _turnPid.SetTargetAngle(direction);
 
   }
