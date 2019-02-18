@@ -35,7 +35,7 @@ public class WristPid {
         _kp = _robot.robotMap.kp_Angle_Wrist;
         _ki = _robot.robotMap.ki_Angle_Wrist;
         _kd = _robot.robotMap.kd_Angle_Wrist;
-        _minTurnPower = _robot.robotMap.minTurnPower;
+        _minTurnPower = _robot.robotMap.minWristPower;
         _interval = _robot.robotMap.timingInterval;
         _accumulatedI = 0;
         _deadband = _robot.robotMap.pidTurnDeadband;
@@ -49,15 +49,15 @@ public class WristPid {
     }
     public double GetAnglePidOutput(double currentAngle) {
         currentAngle = Helpers.ConvertYawToHeading(currentAngle);
-        SmartDashboard.putNumber("target", _targetAngle);
-        SmartDashboard.putNumber("current angle", currentAngle);
+        SmartDashboard.putNumber("Wtarget", _targetAngle);
+        SmartDashboard.putNumber("Wcurrent angle", currentAngle);
         if(start){
 
-            SmartDashboard.putString("Pid t Status", "Started New PidTurn Class");
+            SmartDashboard.putString("WPid t Status", "Started New PidWrist Class");
         }
         double angle_error = _targetAngle - currentAngle ; //calculate error
         if(_verbose){
-            SmartDashboard.putNumber("TEST angle error", angle_error);
+            SmartDashboard.putNumber("WTEST angle error", angle_error);
         }
         if(angle_error > 180){
             angle_error = 360-angle_error;
@@ -69,7 +69,7 @@ public class WristPid {
         //         angle_error = currentAngle - 360;
         // }
         if(_verbose){
-            SmartDashboard.putNumber("TEST angle error corr", angle_error);
+            SmartDashboard.putNumber("WTEST angle error corr", angle_error);
         }
         double p_Angle = _kp * angle_error; //calculate p
         _accumulatedI += _ki * (angle_error * _interval); //calculate i

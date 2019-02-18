@@ -46,7 +46,7 @@ public class ArmSubsystem extends Subsystem {
   private static final int kPIDLoopIdx = 0;
   private static final Gains kGains = new Gains(0.3, 0.03, 0.0, 0.0, 0, 1.0);
   //private static final Gains kGains = new Gains((.0*1023)/(0/12), 0.0, 0.0, 0.0, 0, 0.0);
-  private static final Gains kGainsWrist = new Gains(0.025, 0.0, 0.0, 0.0, 0, 1.0);
+  private static final Gains kGainsWrist = new Gains(0.002, 0.0, 0.0, 0.0, 0, 1.0);
   private static final int length = 5;
   // private static final int wristUpperLimit;
   // private static final int wristLowerLimit;
