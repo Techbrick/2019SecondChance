@@ -49,7 +49,7 @@ public class RobotMap {
   public double joystickDeadband = 0.05;
   public double driveEncoderTicksPerInch = 437.42;
   public double pidTurnDeadband = 1;
-  public double pidWristDeadband = 10;
+  public double pidWristDeadband = 30;
 
   public double WHEEL_DIAMETER = 6;
   public static final double ENCODER_PULSE_PER_REV = 4096.0; //WAS 2048
