@@ -38,7 +38,7 @@ public class WristPid {
         _minTurnPower = _robot.robotMap.minWristPower;
         _interval = _robot.robotMap.timingInterval;
         _accumulatedI = 0;
-        _deadband = _robot.robotMap.pidTurnDeadband;
+        _deadband = _robot.robotMap.pidWristDeadband;
         _verbose = _robot.robotMap.verbose;
         _maxPidPower = _robot.robotMap.maxPidPower;
         start = true;
