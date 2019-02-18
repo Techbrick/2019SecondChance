@@ -66,7 +66,8 @@ public class MoveToHeight extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return arm.isTurnComplete(Math.asin(position / RobotMap.armLength)) && testCompleted;
+    //return arm.isTurnComplete(Math.asin(position / RobotMap.armLength)) && testCompleted;
+    return false;
   }
 
   // Called once after isFinished returns true
