@@ -90,6 +90,7 @@ public class WristPid {
         angleOutput = Math.abs(angleOutput) < _minTurnPower ? Math.copySign(_minTurnPower, angleOutput) : angleOutput; //if angleOutput is below min, set to min
         angleOutput = Math.abs(angleOutput) > _maxPidPower ? Math.copySign(_maxPidPower, angleOutput) : angleOutput; //if angleOutput is above max, set to max
         //angleOutput = angle_error < 0 ? angleOutput : -angleOutput;
+        SmartDashboard.putNumber("Wrist error", angle_error);
         if (Math.abs(angle_error) < _deadband) { //if done moving
             i_Angle = 0;
             angleOutput = 0;
