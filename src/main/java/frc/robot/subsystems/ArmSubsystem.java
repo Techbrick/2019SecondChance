@@ -46,7 +46,7 @@ public class ArmSubsystem extends Subsystem {
   private static final int kPIDLoopIdx = 0;
   private static final Gains kGains = new Gains(0.3, 0.03, 0.0, 0.0, 0, 1.0);
   //private static final Gains kGains = new Gains((.0*1023)/(0/12), 0.0, 0.0, 0.0, 0, 0.0);
-  private static final Gains kGainsWrist = new Gains(0.025, 0.0, 0.0, 0.0, 0, 1.0);
+  private static final Gains kGainsWrist = new Gains(0.002, 0.0, 0.05, 0.0, 0, 1.0);
   private static final int length = 5;
   // private static final int wristUpperLimit;
   // private static final int wristLowerLimit;
@@ -177,7 +177,7 @@ public class ArmSubsystem extends Subsystem {
     // mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
     mc_wrist.set(ControlMode.PercentOutput, turnpower);
     SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
-    SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
+   // SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
   }
   public void setIntakeSpeed(double percentSpeed)
   {
