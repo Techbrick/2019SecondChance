@@ -48,7 +48,7 @@ public class WristPid {
         _targetAngle = targetAngle;
     }
     public double GetAnglePidOutput(double currentAngle) {
-        currentAngle = Helpers.ConvertYawToHeading(currentAngle);
+        //currentAngle = Helpers.ConvertYawToHeading(currentAngle);
         SmartDashboard.putNumber("Wtarget", _targetAngle);
         SmartDashboard.putNumber("Wcurrent angle", currentAngle);
         if(start){
