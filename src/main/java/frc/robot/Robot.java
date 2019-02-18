@@ -28,6 +28,8 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.RealDriveTrain;
+import frc.robot.subsystems.SensorPet;
+import sun.management.Sensor;
 
 import java.util.function.Supplier;
 import com.ctre.phoenix.*;
@@ -63,6 +65,7 @@ public class Robot extends TimedRobot {
   public RobotMap robotMap = new RobotMap();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+  public SensorPet pet = new SensorPet();
   
   public 
   NetworkTableEntry autoSpeedEntry = NetworkTableInstance.getDefault().getEntry("/robot/autospeed");
@@ -335,6 +338,10 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putBoolean("joystick buttom", stick.getRawButton(1));
     double fps = driveTrain.GetAverageEncoderRate()*12;
     SmartDashboard.putNumber("fps", fps);
+    SmartDashboard.putBoolean("bit1", pet.getbit1());
+    SmartDashboard.putBoolean("bit1", pet.getbit2());
+    SmartDashboard.putBoolean("bit1", pet.getbit3());
+    SmartDashboard.putBoolean("bit1", pet.getbit4());
     
   }
 

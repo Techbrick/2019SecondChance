@@ -37,8 +37,17 @@ public class SensorPet extends Subsystem {
     }
   }
 
-  public int getDistance(){
-    return distance;
+  public boolean getbit1(){
+    return bit1.get();
+  }
+  public boolean getbit2(){
+    return bit2.get();
+  }
+  public boolean getbit3(){
+    return bit3.get();
+  }
+  public boolean getbit4(){
+    return bit4.get();
   }
 
   @Override
