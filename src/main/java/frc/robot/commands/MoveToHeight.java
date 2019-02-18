@@ -46,7 +46,7 @@ public class MoveToHeight extends Command {
 
   @Override
   protected void initialize() {
-  }
+}
 
   // Called repeatedly when this Command is scheduled to run
 
