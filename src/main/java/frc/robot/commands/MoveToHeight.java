@@ -51,7 +51,7 @@ public class MoveToHeight extends Command {
 
   @Override
   protected void execute() {
-    turnpower = level.GetAnglePidOutput(helper.ConvertYawToHeading(robot.wristnavX.getRoll()));
+    turnpower = level.GetAnglePidOutput(Math.atan2(robot.wristnavX.getQuaternionW(),robot.wristnavX.getQuaternionY()) * 180 / 3.14);
     if (turnpower == 0) {
       stoppedCounter++;
     } else {
@@ -60,7 +60,7 @@ public class MoveToHeight extends Command {
     if (stoppedCounter > 5) {
       testCompleted = true;
     }
-    arm.moveToHeightPreset(position, turnpower);
+    arm.moveToHeightPreset(position, -turnpower);
   }
 
   // Make this return true when this Command no longer needs to run execute()
