@@ -191,7 +191,7 @@ public class RealDriveTrain extends Subsystem {
         final double STEER_K = 0.03;                    // how hard to turn toward the target
         final double DRIVE_K = 0.5;                    // how hard to drive fwd toward the target
         final double DESIRED_TARGET_AREA = 2.3;        // Area of the target when the robot reaches the wall
-        final double MAX_DRIVE = 0.7;                   // Simple speed limit so we don't drive too fast
+        final double MAX_DRIVE = 0.5;                   // Simple speed limit so we don't drive too fast
         final double minDrive = 0.15;
         double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
         double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
@@ -228,7 +228,7 @@ public class RealDriveTrain extends Subsystem {
           drive_cmd = minDrive;
         }
         
-        m_LimelightDriveCommand = manageDeadband(drive_cmd);
+        m_LimelightDriveCommand = drive_cmd;
         SmartDashboard.putNumber("LL DRIVE", m_LimelightDriveCommand);
   }
   @Override
