@@ -320,18 +320,18 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Wrist Encoder Angle", arm_subsystem.getWristEncoderTicks() * 360 / (4096 * 25));
       SmartDashboard.putBoolean("Ball in", DI.get());
 
-      SmartDashboard.putNumber("yaWw", wristnavX.getYaw());
+      SmartDashboard.putNumber("raw yaw", wristnavX.getYaw());
       SmartDashboard.putNumber("pitchW", wristnavX.getPitch());
       SmartDashboard.putNumber("raw roll", wristnavX.getRoll());
-      SmartDashboard.putNumber("Adjusted Roll", helper.ConvertYawToHeading(wristnavX.getRoll()));
+      SmartDashboard.putNumber("Adjusted Yaw", helper.ConvertYawToHeading(wristnavX.getYaw()));
       SmartDashboard.putBoolean("HatchEjector", arm_subsystem.getHatchEjectorValue());
     }
     
     double yaw = navX.getYaw();
     boolean navxAlive = navX.isConnected();
     SmartDashboard.putBoolean("navXConnected", navxAlive);
-    SmartDashboard.putNumber("navX yaw", Math.round(driveTrain.getRobotYaw()));
-    SmartDashboard.putNumber("Raw yaw", Math.round(yaw));
+    // SmartDashboard.putNumber("navX yaw", Math.round(driveTrain.getRobotYaw()));
+    // SmartDashboard.putNumber("Raw yaw", Math.round(yaw));
     //SmartDashboard.putBoolean("joystick buttom", stick.getRawButton(1));
     double fps = driveTrain.GetAverageEncoderRate()*12;
     SmartDashboard.putNumber("fps", fps);
