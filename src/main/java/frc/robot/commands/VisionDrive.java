@@ -16,7 +16,7 @@ public class VisionDrive extends Command {
   double targetAngle;
   double absoluteAngle;
   double difference;
-  double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+  double tx;
   Helpers helper;
   boolean drive = true;
   public VisionDrive(Robot robot, int angle) {
@@ -42,6 +42,7 @@ public class VisionDrive extends Command {
         // boolean auto = m_Controller.getAButton();
         // steer *= 0.70;
         // drive *= 0.70;
+        tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
         absoluteAngle = tx + helper.ConvertYawToHeading(_robot.navX.getYaw());
         difference = absoluteAngle - targetAngle;
         _robot.driveTrain.Update_Limelight_Tracking();
@@ -49,7 +50,14 @@ public class VisionDrive extends Command {
         {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
           {
-                _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,difference*1.5*0.03); //_robot.driveTrain.m_LimelightSteerCommand
+            if(difference<25)
+            {
+              _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,difference*1.5*.03); //_robot.driveTrain.m_LimelightSteerCommand
+            }
+            else
+            {
+              _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,25*0.03);
+            }
           }
           else
           {
