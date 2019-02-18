@@ -27,7 +27,7 @@ public class VisionDrive extends Command {
     targetAngle = angle;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);==
-    turny = new TurnPid(.05,.03,0, .1 ,.02,1 );
+    turny = new TurnPid(.01,.03,0, .05 ,.02,1 );
   }
 
   // Called just before this Command runs the first time
