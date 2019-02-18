@@ -145,10 +145,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Height 8", new MoveToHeight(this, 8));
     // SmartDashboard.putData("Accelerometer Angle", new AccelerometerAngle(this));
 
-    SmartDashboard.putData("RocketAngle", new VisionDrive(this,300));
+    SmartDashboard.putData("RocketAngle", new VisionDrive(this,-60));
     SmartDashboard.putData("Straight", new VisionDrive(this,0));
     SmartDashboard.putData("RocketAngleBackSide", new VisionDrive(this,30));
-    SmartDashboard.putData("Left", new VisionDrive(this,270));
+    SmartDashboard.putData("Left", new VisionDrive(this,-90));
     SmartDashboard.putData("Right", new VisionDrive(this,90));
 
 

@@ -42,7 +42,7 @@ public class OI {
   POVButton southeast = new POVButton(DrvStick,135);
   POVButton southwest = new POVButton(DrvStick,225);
   POVButton northwest = new POVButton(DrvStick,315);
-  Button vision = new JoystickButton(DrvStick, 1);
+  //Button vision = new JoystickButton(DrvStick, 1);
   // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
 
@@ -60,7 +60,7 @@ public class OI {
     southeast.whileHeld(new ManualDriveDirection(robot, 135));
     southwest.whileHeld(new ManualDriveDirection(robot, 225));
     northwest.whileHeld(new ManualDriveDirection(robot, 315));
-    vision.whileHeld(new VisionDrive(robot,0));
+    //vision.whileHeld(new VisionDrive(robot,0));
     //ShiftGearButton.whenPressed(new ShiftGear(robot, true));
     //ShiftGearButton.whenReleased(new ShiftGear(robot, false));
     // hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot,true),new HatchEjector(robot,false),robot));
