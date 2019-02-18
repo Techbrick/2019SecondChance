@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.Helpers;
@@ -27,12 +28,14 @@ public class VisionDrive extends Command {
     targetAngle = angle;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);==
-    turny = new TurnPid(.01,.03,0, .05 ,.02,1 );
+    
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    turny = new TurnPid(.01,.0,0, .00 ,.02,2.0 );
+    _robot.driveTrain.Move(0,0);
     //Figure out what target angle should be
   }
 
@@ -54,6 +57,10 @@ public class VisionDrive extends Command {
         {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
           {
+            double drv = -_robot.driveTrain.m_LimelightDriveCommand;
+            double turn = turny.GetAnglePidOutput(tx);
+            SmartDashboard.putNumber("VD drv", drv);
+            SmartDashboard.putNumber("VD Turn", turn);
               _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,turny.GetAnglePidOutput(tx));
            } //_robot.driveTrain.m_LimelightSteerCommand
           else
@@ -76,11 +83,13 @@ public class VisionDrive extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    _robot.driveTrain.Move(0,0);
   }
 
 // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    _robot.driveTrain.Move(0,0);
   }
 }

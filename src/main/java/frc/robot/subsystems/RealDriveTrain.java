@@ -208,10 +208,12 @@ public class RealDriveTrain extends Subsystem {
         }
 
         m_LimelightHasValidTarget = true;
+        SmartDashboard.putBoolean("LimelightTarget", m_LimelightHasValidTarget);
 
         // Start with proportional steering
         double steer_cmd = tx * STEER_K;
         m_LimelightSteerCommand = steer_cmd;
+        SmartDashboard.putNumber("ll steer", m_LimelightSteerCommand);
 
         // try to drive forward until the target area reaches our desired area
         double drive_cmd = (DESIRED_TARGET_AREA - ta) * DRIVE_K;
@@ -227,6 +229,7 @@ public class RealDriveTrain extends Subsystem {
         }
         
         m_LimelightDriveCommand = manageDeadband(drive_cmd);
+        SmartDashboard.putNumber("LL DRIVE", m_LimelightDriveCommand);
   }
   @Override
   public void initDefaultCommand() {
