@@ -49,7 +49,7 @@ public class RobotMap {
   public double joystickDeadband = 0.05;
   public double driveEncoderTicksPerInch = 437.42;
   public double pidTurnDeadband = 1;
-  public double pidWristDeadband = 10;
+  public double pidWristDeadband = 1;
 
   public double WHEEL_DIAMETER = 6;
   public static final double ENCODER_PULSE_PER_REV = 4096.0; //WAS 2048
@@ -81,7 +81,7 @@ public class RobotMap {
   
                                   // stow, hpu,  h1,   h2,    h3,    cpu,   c1,    c2,    c3
   public static int [][] heights = {{ 0,   0,   0, 14100, 26200, 7637, 11700, 23200, 31000},
-                                    {130, 40,   90,    90,     90,    90,   45,   45,   45}};
+                                    {130, 70,   90,    90,     90,    90,   60,   60,   60}};
 
   public static final int armLength = 26; //real one is 38, 26 is for testbot
 

@@ -172,12 +172,14 @@ public class ArmSubsystem extends Subsystem {
     turns(Math.asin(height / RobotMap.armLength));
     
   }
-  public void moveToHeightPreset(int pos, double turnpower) {
+  public void moveToHeightPreset(int pos) {
     mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos]);
     // mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
+   // SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
+  }
+  public void moveToHeightWrist(double turnpower){
     mc_wrist.set(ControlMode.PercentOutput, turnpower);
     SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
-   // SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
   }
   public void setIntakeSpeed(double percentSpeed)
   {
