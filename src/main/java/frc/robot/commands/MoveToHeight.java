@@ -45,6 +45,7 @@ public class MoveToHeight extends Command {
 
   @Override
   protected void initialize() {
+    arm.moveToHeightPreset(position);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -60,7 +61,7 @@ public class MoveToHeight extends Command {
     if (stoppedCounter > 5) {
       testCompleted = true;
     }
-    arm.moveToHeightPreset(position, turnpower);
+    arm.moveToHeightWrist(turnpower);
   }
 
   // Make this return true when this Command no longer needs to run execute()
