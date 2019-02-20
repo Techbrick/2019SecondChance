@@ -34,7 +34,7 @@ public class VisionDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    turny = new TurnPid(.01,.0,0, .00 ,.02,2.0 );
+    turny = new TurnPid(0.15, 0.0, 0.0, 0.0, 0.02, 2.0);
     _robot.driveTrain.Move(0,0);
     //Figure out what target angle should be
   }
@@ -58,10 +58,11 @@ public class VisionDrive extends Command {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
           {
             double drv = -_robot.driveTrain.m_LimelightDriveCommand;
+            drv = 0.0;
             double turn = turny.GetAnglePidOutput(tx);
             SmartDashboard.putNumber("VD drv", drv);
             SmartDashboard.putNumber("VD Turn", turn);
-              _robot.driveTrain.Move(drv - turn, -(drv + turn));
+            _robot.driveTrain.Move(drv - turn, -(drv + turn));
            }
           else
           {
