@@ -80,8 +80,8 @@ public class RobotMap {
   public static final double ArmTicksToDeg = 360.0 / ENCODER_PULSE_PER_REV / 25.0; // TODO: Change the / to * potentially
   
                                   // stow, hpu,  h1,   h2,    h3,    cpu,   c1,    c2,    c3
-  public static int [][] heights = {{ 0,   0,   0, 14500, 26600, 8000, 11800, 21600, 29400},
-                                    {-101, -30,   -68,    -68,     -68,    -68,   -26,   -36,   -42}};
+  public static int [][] heights = {{ 0,   0,   0, 14500, 26600, 8000, 11800, 20600, 29400},
+                                    {-101, -30,   -68,    -68,     -68,    -68,   -26,   -30,   -42}};
 
   public static final int armLength = 26; //real one is 38, 26 is for testbot
 
