@@ -75,7 +75,6 @@ public class ArmSubsystem extends Subsystem {
     mc_armFollower.setInverted(false);
     mc_armFollower.follow(mc_arm);
 
-
     ejectorSolenoidIn = new Solenoid(4);
     ejectorSolenoidOut = new Solenoid(5);
     setHatchEjector(true);
@@ -139,8 +138,7 @@ public class ArmSubsystem extends Subsystem {
     return mc_arm.getSensorCollection().getQuadraturePosition();
   }
 
-  public int getWristEncoderTicks()
-  {
+  public int getWristEncoderTicks(){
     return mc_wrist.getSensorCollection().getQuadraturePosition();
   }
 
@@ -182,8 +180,7 @@ public class ArmSubsystem extends Subsystem {
     SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
     SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
   }
-  public void setIntakeSpeed(double percentSpeed)
-  {
+  public void setIntakeSpeed(double percentSpeed){
       mc_intake.set(ControlMode.PercentOutput, percentSpeed);
   }
 
