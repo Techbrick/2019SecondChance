@@ -52,7 +52,7 @@ public class MoveToHeight extends Command {
 
   @Override
   protected void execute() {
-    turnpower = level.GetAnglePidOutput(Math.atan2(robot.wristnavX.getQuaternionW(),robot.wristnavX.getQuaternionY()) * 180 / 3.14);
+    turnpower = -level.GetAnglePidOutput(Math.atan2(robot.wristnavX.getQuaternionW(),robot.wristnavX.getQuaternionY()) * 180 / 3.14);
     if (turnpower == 0) {
       stoppedCounter++;
     } else {
