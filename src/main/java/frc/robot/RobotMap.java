@@ -81,7 +81,7 @@ public class RobotMap {
   
                                   // stow, hpu,  h1,   h2,    h3,    cpu,   c1,    c2,    c3
   public static int [][] heights = {{ 0,   0,   0, 14500, 26600, 8000, 11800, 21600, 29400},
-                                    {-101, -30,   -66,    -66,     -66,    -66,   -26,   -36,   -42}};
+                                    {-101, -30,   -68,    -68,     -68,    -68,   -26,   -36,   -42}};
 
   public static final int armLength = 26; //real one is 38, 26 is for testbot
 
