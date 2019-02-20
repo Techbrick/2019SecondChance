@@ -52,7 +52,7 @@ public class ManualArm extends Command {
 
     wristy.SetTargetAngle(-66);
 
-    _robot.arm_subsystem.setWristSpeed(wristy.GetAnglePidOutput(_robot.wristnavX.getAngle()));
+    // _robot.arm_subsystem.setWristSpeed(wristy.GetAnglePidOutput(Math.atan2(_robot.wristnavX.getQuaternionW(), _robot.wristnavX.getQuaternionY()) * 180 / 3.14159265358979323846264));
 
     if(_robot.operatorStick.getRawAxis(0)!=0)
     {
