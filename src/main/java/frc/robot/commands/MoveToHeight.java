@@ -25,6 +25,7 @@ public class MoveToHeight extends Command {
   private ArmSubsystem arm;
   private Robot robot;
   public int position;
+  private int OGposition;
   private boolean testCompleted = false;
   private double turnpower;
   private int stoppedCounter = 0;
@@ -36,15 +37,19 @@ public class MoveToHeight extends Command {
     robot = r;
     requires(robot.arm_subsystem);
     arm = robot.arm_subsystem;
-    position = pos;
+    OGposition = pos;
     level = new WristPid(robot);
     helper = new Helpers();
     level.SetTargetAngle(robot.robotMap.heights[1][position]);
   }
+
+
+
   // Called just before this Command runs the first time
 
   @Override
   protected void initialize() {
+    position = OGposition + (ArmSubsystem.getToggly() ? + 0:4);
     arm.moveToHeightPreset(position);
   }
 

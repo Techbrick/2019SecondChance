@@ -48,6 +48,7 @@ public class ArmSubsystem extends Subsystem {
   //private static final Gains kGains = new Gains((.0*1023)/(0/12), 0.0, 0.0, 0.0, 0, 0.0);
   private static final Gains kGainsWrist = new Gains(0.0001, 0.0, 0.0, 0.0, 0, 1.0);
   private static final int length = 5;
+  public static boolean toggly = true;
   // private static final int wristUpperLimit;
   // private static final int wristLowerLimit;
   // private static final int armUpperLimit;
@@ -217,5 +218,15 @@ public class ArmSubsystem extends Subsystem {
   public void rotateWrist(int dir) {
     mc_wrist.set(ControlMode.PercentOutput, 0.15 * dir);
     SmartDashboard.putNumber("Wrist Enc Pos", mc_wrist.getSelectedSensorPosition(0));
+  }
+
+  public static void setToggly(boolean bool)
+  {
+    toggly = bool;
+  }
+
+  public static boolean getToggly()
+  {
+    return toggly;
   }
 }
