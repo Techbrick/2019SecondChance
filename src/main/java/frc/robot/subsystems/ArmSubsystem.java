@@ -39,16 +39,15 @@ public class ArmSubsystem extends Subsystem {
   private TalonSRX mc_wrist;
   private Solenoid ejectorSolenoidIn;
   private Solenoid ejectorSolenoidOut;
- //private double[] zeros;
 
   // Constants
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
   private static final Gains kGains = new Gains(0.3, 0.03, 0.0, 0.0, 0, 1.0);
-  //private static final Gains kGains = new Gains((.0*1023)/(0/12), 0.0, 0.0, 0.0, 0, 0.0);
   private static final Gains kGainsWrist = new Gains(0.0001, 0.0, 0.0, 0.0, 0, 1.0);
   private static final int length = 5;
   public static boolean toggly = true;
+  public static boolean togglelevel = false;
   // private static final int wristUpperLimit;
   // private static final int wristLowerLimit;
   // private static final int armUpperLimit;
@@ -220,12 +219,12 @@ public class ArmSubsystem extends Subsystem {
     SmartDashboard.putNumber("Wrist Enc Pos", mc_wrist.getSelectedSensorPosition(0));
   }
 
-  public static void setToggly(boolean bool)
+  public void setToggly(boolean bool)
   {
     toggly = bool;
   }
 
-  public static boolean getToggly()
+  public boolean getToggly()
   {
     return toggly;
   }

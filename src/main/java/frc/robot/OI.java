@@ -69,7 +69,7 @@ public class OI {
     southeast.whileHeld(new ManualDriveDirection(robot, 135));
     southwest.whileHeld(new ManualDriveDirection(robot, 225));
     northwest.whileHeld(new ManualDriveDirection(robot, 315));
-    autoToggle.whenPressed(new SetToggle(robot, true));
+    autoToggle.whenPressed(new SetToggle(robot));
     posZero.whileHeld(new MoveToHeight(robot, 1));
     posOne.whileHeld(new MoveToHeight(robot,2));
     posTwo.whileHeld(new MoveToHeight(robot,3));

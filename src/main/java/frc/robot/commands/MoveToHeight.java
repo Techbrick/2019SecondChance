@@ -25,21 +25,16 @@ public class MoveToHeight extends Command {
   private ArmSubsystem arm;
   private Robot robot;
   public int position;
-  private int OGposition;
-  private boolean testCompleted = false;
   private double turnpower;
-  private int stoppedCounter = 0;
   private WristPid level;
-  private Helpers helper;
 
   public MoveToHeight(Robot r, int pos) {
     // Use requires() here to declare subsystem dependencies
     robot = r;
     requires(robot.arm_subsystem);
     arm = robot.arm_subsystem;
-    OGposition = pos;
+    position = pos;
     level = new WristPid(robot);
-    helper = new Helpers();
     level.SetTargetAngle(robot.robotMap.heights[1][position]);
   }
 
@@ -49,7 +44,6 @@ public class MoveToHeight extends Command {
 
   @Override
   protected void initialize() {
-    position = OGposition + (ArmSubsystem.getToggly() ? + 0:4);
     arm.moveToHeightPreset(position);
   }
 
@@ -57,15 +51,7 @@ public class MoveToHeight extends Command {
 
   @Override
   protected void execute() {
-    turnpower = -level.GetAnglePidOutput(Math.atan2(robot.wristnavX.getQuaternionW(),robot.wristnavX.getQuaternionY()) * 180 / 3.14);
-    if (turnpower == 0) {
-      stoppedCounter++;
-    } else {
-      stoppedCounter = 0;
-    }
-    if (stoppedCounter > 5) {
-      testCompleted = true;
-    }
+    turnpower = -level.GetAnglePidOutput(Math.toDegrees(Math.atan2(robot.wristnavX.getQuaternionY(), robot.wristnavX.getQuaternionW())));
     arm.moveToHeightWrist(turnpower);
   }
 

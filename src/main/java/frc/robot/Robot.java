@@ -331,24 +331,23 @@ public class Robot extends TimedRobot {
       SmartDashboard.putBoolean("HatchEjector", arm_subsystem.getHatchEjectorValue());
     }
     
-    double yaw = navX.getYaw();
-    boolean navxAlive = navX.isConnected();
-    SmartDashboard.putBoolean("navXConnected", navxAlive);
+    SmartDashboard.putBoolean("navXConnected", navX.isConnected());
     // SmartDashboard.putNumber("navX yaw", Math.round(driveTrain.getRobotYaw()));
     // SmartDashboard.putNumber("Raw yaw", Math.round(yaw));
     //SmartDashboard.putBoolean("joystick buttom", stick.getRawButton(1));
     double fps = driveTrain.GetAverageEncoderRate()*12;
-    SmartDashboard.putNumber("fps", fps);
+    SmartDashboard.putNumber("Drivetrain encoder rate", fps);
     SmartDashboard.putBoolean("bit1", pet.getbit1());
     SmartDashboard.putBoolean("bit2", pet.getbit2());
     SmartDashboard.putBoolean("bit3", pet.getbit3());
     SmartDashboard.putBoolean("bit4", pet.getbit4());
+    SmartDashboard.putBoolean("Hatch/Ball toggle", arm_subsystem.getToggly());
     
     SmartDashboard.putNumber("QuaternionW", wristnavX.getQuaternionW());
     SmartDashboard.putNumber("QuaternionX", wristnavX.getQuaternionX());
     SmartDashboard.putNumber("QuaternionY", wristnavX.getQuaternionY());
     SmartDashboard.putNumber("QuaternionZ", wristnavX.getQuaternionZ());
-    SmartDashboard.putNumber("Quaternion Angle", Math.atan2(wristnavX.getQuaternionW(),wristnavX.getQuaternionY()) * 180 / 3.14);
+    SmartDashboard.putNumber("Quaternion Angle", Math.toDegrees(Math.atan2(wristnavX.getQuaternionY(), wristnavX.getQuaternionW())));
   }
 
 }

@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.WristPid;
+
 public class ManualArm extends Command {
   Robot _robot;
   private WristPid wristy;
@@ -51,12 +52,13 @@ public class ManualArm extends Command {
     _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5));//0
 
     wristy.SetTargetAngle(-66);
-
-    // _robot.arm_subsystem.setWristSpeed(wristy.GetAnglePidOutput(Math.atan2(_robot.wristnavX.getQuaternionW(), _robot.wristnavX.getQuaternionY()) * 180 / 3.14159265358979323846264));
+      
+    if(_robot.arm_subsystem.getToggly()){
+      _robot.arm_subsystem.setWristSpeed(wristy.GetAnglePidOutput(Math.atan2(_robot.wristnavX.getQuaternionW(), _robot.wristnavX.getQuaternionY()) * 180 / 3.14159265358979323846264));
+    }
 
     if(_robot.operatorStick.getRawAxis(0)!=0)
     {
-      
     }
   }
 
