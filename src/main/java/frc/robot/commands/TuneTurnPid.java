@@ -89,7 +89,7 @@ public class TuneTurnPid extends Command {
   protected void execute() {
     
     
-    if(_robot.stick.getRawButton(1)){
+    if(_robot.DrvStick.getRawButton(1)){
         if(iterationCounter % 2 == 0){
             target = 90;
             secondTurn = true;
@@ -177,7 +177,7 @@ public class TuneTurnPid extends Command {
   @Override
   protected boolean isFinished() {
     
-    boolean done = _robot.stick.getRawButton(2) || testCompleted;
+    boolean done = _robot.DrvStick.getRawButton(2) || testCompleted;
     if(done){
         
         SmartDashboard.putString("Status", "Determined best Turn Kp: "+ Double.toString(testKp));

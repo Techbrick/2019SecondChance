@@ -111,7 +111,7 @@ public class FindMinTurnPower extends Command {
   @Override
   protected boolean isFinished() {
     
-    boolean done = _robot.stick.getRawButton(1) || testCompleted;
+    boolean done = _robot.DrvStick.getRawButton(1) || testCompleted;
     if(done){
         if(minLeftTurn > minRightTurn){
             _robot.robotMap.minTurnPower = minLeftTurn;

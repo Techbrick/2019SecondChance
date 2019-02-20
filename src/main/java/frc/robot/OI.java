@@ -15,6 +15,7 @@ import frc.robot.commands.HatchEjector;
 import frc.robot.commands.HatchEjectorToggle;
 import frc.robot.commands.IntakeBall;
 import frc.robot.commands.ShiftGear;
+import frc.robot.commands.VisionDrive;
 import frc.robot.commands.ManualDriveDirection;
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -26,16 +27,22 @@ public class OI {
   //// joystick.
   // You create one by telling it which joystick it's on and which button
   // number it is.
-  Joystick stick = new Joystick(1);
-  Button intakeButton = new JoystickButton(stick, 6);
-  Button ejectButton = new JoystickButton(stick, 5);
-  Button hatchIn = new JoystickButton(stick, 3);
-  Button hatchOut = new JoystickButton(stick, 4);
+  Joystick opStick = new Joystick(1);
+  Joystick DrvStick = new Joystick(0);
+  Button intakeButton = new JoystickButton(opStick, 6);
+  Button ejectButton = new JoystickButton(opStick, 5);
+  Button hatchIn = new JoystickButton(DrvStick, 3);
+  Button hatchOut = new JoystickButton(DrvStick, 4);
   // Button hatchEjectButton = new JoystickButton(stick, 1);
-  POVButton forwards = new POVButton(stick,0);
-  POVButton leftwards = new POVButton(stick,270); 
-  POVButton backwards = new POVButton(stick,180);
-  POVButton rightwards = new POVButton(stick,90);
+  POVButton forwards = new POVButton(DrvStick,0);
+  POVButton leftwards = new POVButton(DrvStick,270); 
+  POVButton backwards = new POVButton(DrvStick,180);
+  POVButton rightwards = new POVButton(DrvStick,90);
+  POVButton northeast = new POVButton(DrvStick,45);
+  POVButton southeast = new POVButton(DrvStick,135);
+  POVButton southwest = new POVButton(DrvStick,225);
+  POVButton northwest = new POVButton(DrvStick,315);
+  //Button vision = new JoystickButton(DrvStick, 1);
   // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
 
@@ -49,6 +56,11 @@ public class OI {
     backwards.whileHeld(new ManualDriveDirection(robot, 180));
     leftwards.whileHeld(new ManualDriveDirection(robot, 270));
     rightwards.whileHeld(new ManualDriveDirection(robot, 90));
+    northeast.whileHeld(new ManualDriveDirection(robot, 45));
+    southeast.whileHeld(new ManualDriveDirection(robot, 135));
+    southwest.whileHeld(new ManualDriveDirection(robot, 225));
+    northwest.whileHeld(new ManualDriveDirection(robot, 315));
+    //vision.whileHeld(new VisionDrive(robot,0));
     //ShiftGearButton.whenPressed(new ShiftGear(robot, true));
     //ShiftGearButton.whenReleased(new ShiftGear(robot, false));
     // hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot,true),new HatchEjector(robot,false),robot));

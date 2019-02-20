@@ -89,7 +89,7 @@ public class TuneDistancePid extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(_robot.stick.getRawButton(1)){
+    if(_robot.DrvStick.getRawButton(1)){
         double target = 0;
         boolean moving = false;  
         secondTurn = false;
@@ -195,7 +195,7 @@ public class TuneDistancePid extends Command {
   @Override
   protected boolean isFinished() {
     
-    boolean done = _robot.stick.getRawButton(2) || testCompleted;
+    boolean done = _robot.DrvStick.getRawButton(2) || testCompleted;
     if(done){
         
         SmartDashboard.putString("Status", "Determined best dist Kp: "+ Double.toString(testKp));

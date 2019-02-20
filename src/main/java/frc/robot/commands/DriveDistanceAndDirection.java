@@ -58,7 +58,7 @@ public class DriveDistanceAndDirection extends Command {
         double turnPower = _turnPid.GetAnglePidOutput(_robot.navX.getYaw());
         _robot.driveTrain.Move(power - turnPower, power + turnPower); 
 
-        if (power + turnPower == 0){
+        if ((power + turnPower) == 0){
             stoppedCounter ++;
            
         }else{

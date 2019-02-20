@@ -9,14 +9,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-
+import frc.robot.WristPid;
 public class ManualArm extends Command {
   Robot _robot;
+  private WristPid wristy;
   public ManualArm(Robot r) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     _robot = r;
     requires(_robot.arm_subsystem);
+    wristy = new WristPid(_robot);
   }
 
   // Called just before this Command runs the first time
@@ -45,8 +47,17 @@ public class ManualArm extends Command {
     // else {
     //   _robot.arm_subsystem.rotateWrist(0);
     // }
-    _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(2));
-    _robot.arm_subsystem.setArmSpeed(_robot.operatorStick.getRawAxis(0));
+    _robot.arm_subsystem.setWristSpeed(-_robot.operatorStick.getRawAxis(1));//2
+    _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5));//0
+
+    wristy.SetTargetAngle(90);
+
+    _robot.arm_subsystem.setWristSpeed(wristy.GetAnglePidOutput(_robot.wristnavX.getAngle()));
+
+    if(_robot.operatorStick.getRawAxis(0)!=0)
+    {
+      
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

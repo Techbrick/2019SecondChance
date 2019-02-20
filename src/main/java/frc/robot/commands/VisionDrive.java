@@ -8,38 +8,61 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-
+import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.robot.Helpers;
+import frc.robot.TurnPid;
 public class VisionDrive extends Command {
   Robot _robot;
-  public VisionDrive(Robot robot) {
+  double targetAngle;
+  double absoluteAngle;
+  double difference;
+  double tx;
+  Helpers helper;
+  boolean drive = true;
+  TurnPid turny;
+  public VisionDrive(Robot robot, int angle) {
     _robot = robot;
+    requires(robot.driveTrain);
+    targetAngle = angle;
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    // eg. requires(chassis);==
+    
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    turny = new TurnPid(.01,.0,0, .00 ,.02,2.0 );
+    _robot.driveTrain.Move(0,0);
+    //Figure out what target angle should be
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    _robot.driveTrain.Update_Limelight_Tracking();
-
+    //Difference between absolute angle and target angle, then steer to it with difference * 1.5
         // double steer = m_Controller.getX(Hand.kRight);
         // double drive = -m_Controller.getY(Hand.kLeft);
         // boolean auto = m_Controller.getAButton();
         // steer *= 0.70;
         // drive *= 0.70;
-        
-        if (_robot.stick.getRawButton(4))
+        tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+        absoluteAngle = tx + _robot.navX.getYaw();
+        difference = absoluteAngle - targetAngle;
+        _robot.driveTrain.Update_Limelight_Tracking();
+        turny.SetTargetAngle(helper.ConvertYawToHeading(difference*1.5 + targetAngle));
+        if (drive)
         {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
           {
-                _robot.driveTrain.ArcadeDrive(-_robot.driveTrain.m_LimelightDriveCommand,_robot.driveTrain.m_LimelightSteerCommand);
-          }
+            double drv = -_robot.driveTrain.m_LimelightDriveCommand;
+            double turn = turny.GetAnglePidOutput(tx);
+            SmartDashboard.putNumber("VD drv", drv);
+            SmartDashboard.putNumber("VD Turn", turn);
+              _robot.driveTrain.Move(drv - turn, -(drv + turn));
+           }
           else
           {
                 _robot.driveTrain.ArcadeDrive(0.0,0.0);
@@ -60,11 +83,13 @@ public class VisionDrive extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    _robot.driveTrain.Move(0,0);
   }
 
-  // Called when another command which requires one or more of the same
+// Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    _robot.driveTrain.Move(0,0);
   }
 }

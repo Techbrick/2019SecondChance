@@ -28,6 +28,7 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.RealDriveTrain;
+import frc.robot.subsystems.SensorPet;
 
 import java.util.function.Supplier;
 import com.ctre.phoenix.*;
@@ -38,6 +39,7 @@ import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
+import com.kauailabs.navx.frc.Quaternion;
 
 //import org.omg.CORBA.PRIVATE_MEMBER;
 import org.opencv.core.Mat;
@@ -63,12 +65,13 @@ public class Robot extends TimedRobot {
   public RobotMap robotMap = new RobotMap();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+  public SensorPet pet = new SensorPet();
   
   public 
   NetworkTableEntry autoSpeedEntry = NetworkTableInstance.getDefault().getEntry("/robot/autospeed");
   NetworkTableEntry telemetryEntry = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
   
-  public Joystick stick;
+  public Joystick DrvStick;
   public Joystick operatorStick;
 	public  double encoderConstant;
 	
@@ -86,6 +89,7 @@ public class Robot extends TimedRobot {
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
   public DigitalInput DI = new DigitalInput(1);
+  private Helpers helper;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -97,20 +101,22 @@ public class Robot extends TimedRobot {
    
     SmartDashboard.putString("Instructions", "");
     SmartDashboard.putString("Status", "");
-    stick = new Joystick(0);
+    DrvStick = new Joystick(0);
     operatorStick= new Joystick(1);
     robotMap.verbose = true;
-	
+  
 		//
 		// Configure drivetrain movement
     //
     navX = new AHRS(SPI.Port.kMXP);
+
 
     wristnavX = new AHRS(Port.kUSB);
     
     driveTrain = new RealDriveTrain(this);
     arm_subsystem = new ArmSubsystem(this);
     comp_subsystem = new CompressorSubsystem(this);
+    helper = new Helpers();
     // accelerometer_subsystem = new AccelerometerSubsystem(this);
 
     arm_subsystem.resetZero();
@@ -130,7 +136,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Manual Arm", new ManualArm(this));
     SmartDashboard.putData("Dog Left", new DogLegLeft(this) );
     SmartDashboard.putData("Rotate 1", new Turn(this, 1));
-    SmartDashboard.putData("Vision Drive", new VisionDrive(this));
     //SmartDashboard.putData("DriveAlign", new DriveAlign(this));
 
     SmartDashboard.putData("Height 0", new MoveToHeight(this, 0));
@@ -143,7 +148,14 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Height 7", new MoveToHeight(this, 7));
     SmartDashboard.putData("Height 8", new MoveToHeight(this, 8));
     // SmartDashboard.putData("Accelerometer Angle", new AccelerometerAngle(this));
-    
+
+    SmartDashboard.putData("RocketAngle", new VisionDrive(this,-60));
+    SmartDashboard.putData("Straight", new VisionDrive(this,0));
+    SmartDashboard.putData("RocketAngleBackSide", new VisionDrive(this,30));
+    SmartDashboard.putData("Left", new VisionDrive(this,-90));
+    SmartDashboard.putData("Right", new VisionDrive(this,90));
+
+
     SmartDashboard.putNumber("kp", robotMap.kp_Angle);
     SmartDashboard.putNumber("ki", robotMap.ki_Angle);
     SmartDashboard.putNumber("kd", robotMap.kd_Angle);
@@ -262,8 +274,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    double power =  stick.getY();
-    double twist = stick.getX();
+    double power =  DrvStick.getY();
+    double twist = DrvStick.getX();
     //driveTrain.ArcadeDrive(power, twist);
     Logger();
     
@@ -312,20 +324,31 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Wrist Encoder Angle", arm_subsystem.getWristEncoderTicks() * 360 / (4096 * 25));
       SmartDashboard.putBoolean("Ball in", DI.get());
 
-      SmartDashboard.putNumber("yaWw", wristnavX.getYaw());
+      SmartDashboard.putNumber("raw yaw", wristnavX.getYaw());
       SmartDashboard.putNumber("pitchW", wristnavX.getPitch());
-      SmartDashboard.putNumber("rollW", wristnavX.getRoll());
+      SmartDashboard.putNumber("raw roll", wristnavX.getRoll());
+      SmartDashboard.putNumber("Adjusted Yaw", helper.ConvertYawToHeading(wristnavX.getRoll()));
+      SmartDashboard.putBoolean("HatchEjector", arm_subsystem.getHatchEjectorValue());
     }
     
     double yaw = navX.getYaw();
     boolean navxAlive = navX.isConnected();
     SmartDashboard.putBoolean("navXConnected", navxAlive);
-    SmartDashboard.putNumber("navX yaw", Math.round(driveTrain.getRobotYaw()));
-    SmartDashboard.putNumber("Raw yaw", Math.round(yaw));
+    // SmartDashboard.putNumber("navX yaw", Math.round(driveTrain.getRobotYaw()));
+    // SmartDashboard.putNumber("Raw yaw", Math.round(yaw));
     //SmartDashboard.putBoolean("joystick buttom", stick.getRawButton(1));
     double fps = driveTrain.GetAverageEncoderRate()*12;
     SmartDashboard.putNumber("fps", fps);
+    SmartDashboard.putBoolean("bit1", pet.getbit1());
+    SmartDashboard.putBoolean("bit2", pet.getbit2());
+    SmartDashboard.putBoolean("bit3", pet.getbit3());
+    SmartDashboard.putBoolean("bit4", pet.getbit4());
     
+    SmartDashboard.putNumber("QuaternionW", wristnavX.getQuaternionW());
+    SmartDashboard.putNumber("QuaternionX", wristnavX.getQuaternionX());
+    SmartDashboard.putNumber("QuaternionY", wristnavX.getQuaternionY());
+    SmartDashboard.putNumber("QuaternionZ", wristnavX.getQuaternionZ());
+    SmartDashboard.putNumber("Quaternion Angle", Math.atan2(wristnavX.getQuaternionW(),wristnavX.getQuaternionY()) * 180 / 3.14);
   }
 
 }
