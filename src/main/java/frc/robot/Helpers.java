@@ -29,7 +29,9 @@ public class Helpers {
     }
     public static double ConvertYawToHeading(double yaw){
         if(yaw < 0){
-            yaw = yaw +360;
+            yaw = yaw + 360.0;
+        } else if(yaw > 360.0) {
+            yaw %= 360.0;
         }
         return yaw;
     }
