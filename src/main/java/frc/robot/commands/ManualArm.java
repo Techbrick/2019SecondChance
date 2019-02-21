@@ -20,7 +20,7 @@ public class ManualArm extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     _robot = r;
-    requires(_robot.armSubsystem);
+    requires(_robot.arm_subsystem);
     wristy = new WristPid(_robot);
   }
 
@@ -49,18 +49,18 @@ public class ManualArm extends Command {
     // else {
     //   _robot.arm_subsystem.rotateWrist(0);
     // }
-    _robot.armSubsystem.setWristSpeed(-_robot.operatorStick.getRawAxis(1));//2
-    _robot.armSubsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5));//0
+    _robot.arm_subsystem.setWristSpeed(-_robot.operatorStick.getRawAxis(1));//2
+    _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5));//0
 
     
-    if(_robot.armSubsystem.getToggly()){
-      wristy.SetTargetAngle(_robot.armSubsystem.heights[1][2]);
+    if(_robot.arm_subsystem.getToggly()){
+      wristy.SetTargetAngle(_robot.arm_subsystem.heights[1][2]);
     }
     else{
-      wristy.SetTargetAngle(_robot.armSubsystem.heights[1][6]);
+      wristy.SetTargetAngle(_robot.arm_subsystem.heights[1][6]);
     }
     if(on){
-      _robot.armSubsystem.setWristSpeed(wristy.GetAnglePidOutput(Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionW(), _robot.wristnavX.getQuaternionY()))));
+      _robot.arm_subsystem.setWristSpeed(wristy.GetAnglePidOutput(Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionW(), _robot.wristnavX.getQuaternionY()))));
     }
   }
   
@@ -73,8 +73,8 @@ public class ManualArm extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    _robot.armSubsystem.rotate(0);
-    _robot.armSubsystem.rotateWrist(0);
+    _robot.arm_subsystem.rotate(0);
+    _robot.arm_subsystem.rotateWrist(0);
   }
 
   // Called when another command which requires one or more of the same

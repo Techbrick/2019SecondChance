@@ -18,22 +18,22 @@ public class ResetAutoArm extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     _robot = robot;
-    requires(robot.armSubsystem);
+    requires(robot.arm_subsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    _robot.armSubsystem.moveToHeightWrist(0.5);
-    _robot.armSubsystem.setArmSpeed(-0.5);
+    _robot.arm_subsystem.moveToHeightWrist(0.5);
+    _robot.arm_subsystem.setArmSpeed(-0.5);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(_robot.armSubsystem.getWristSpeed() == 0 && _robot.armSubsystem.getArmSpeed() == 0){
-      _robot.armSubsystem.wristStartAngle = (int)Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
-      _robot.armSubsystem.setHeights();
+    if(_robot.arm_subsystem.getWristSpeed() == 0 && _robot.arm_subsystem.getArmSpeed() == 0){
+      _robot.arm_subsystem.wristStartAngle = (int)Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
+      _robot.arm_subsystem.setHeights();
       finished = true;
     }
   }

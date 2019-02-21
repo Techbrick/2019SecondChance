@@ -14,18 +14,18 @@ import frc.robot.subsystems.*;
 
 public class SetToggle extends InstantCommand {
   private Robot _robot;
-  public boolean toggle;
+  // private boolean toggle;
   
   public SetToggle(Robot robot) {
     _robot = robot;
-    requires(_robot.armSubsystem);
+    requires(_robot.arm_subsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     _robot.comp_subsystem.checkPressure();  //Starts compressor
-    _robot.armSubsystem.setToggly(!_robot.armSubsystem.getToggly());
+    _robot.arm_subsystem.setToggly(!_robot.arm_subsystem.getToggly());
   }
 
   // Called repeatedly when this Command is scheduled to run

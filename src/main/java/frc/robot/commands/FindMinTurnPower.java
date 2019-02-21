@@ -37,9 +37,6 @@ public class FindMinTurnPower extends Command {
     // Use requires() here to declare subsystem dependencies
     _robot = robot;
     requires(_robot.driveTrain);
-    
-
-
   }
 
   // Called just before this Command runs the first time

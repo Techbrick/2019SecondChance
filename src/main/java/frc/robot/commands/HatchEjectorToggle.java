@@ -27,6 +27,6 @@ public class HatchEjectorToggle extends  ConditionalCommand  {
 
   @Override
   protected boolean condition() {
-    return robot.armSubsystem.getHatchEjectorValue() == true;
+    return robot.arm_subsystem.getHatchEjectorValue() == true;
   }
 }

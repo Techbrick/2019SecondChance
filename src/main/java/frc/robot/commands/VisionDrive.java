@@ -14,14 +14,14 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.Helpers;
 import frc.robot.TurnPid;
 public class VisionDrive extends Command {
-  Robot _robot;
-  double targetAngle;
-  double absoluteAngle;
-  double difference;
-  double tx;
-  Helpers helper;
-  boolean drive = true;
-  TurnPid turny;
+  private Robot _robot;
+  private double targetAngle;
+  private double absoluteAngle;
+  private double difference;
+  private double tx;
+  // private Helpers helper;
+  private boolean drive = true;
+  private TurnPid turny;
   public VisionDrive(Robot robot, int angle) {
     _robot = robot;
     requires(robot.driveTrain);

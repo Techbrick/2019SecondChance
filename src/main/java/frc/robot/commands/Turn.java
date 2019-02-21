@@ -28,13 +28,13 @@ public class Turn extends Command {
 
   private ArmSubsystem arm;
   private Robot robot;
-  public double degrees;
+  private double degrees;
 
   public Turn(Robot r, double rev) {
     // Use requires() here to declare subsystem dependencies
     robot = r;
-    requires(robot.armSubsystem);
-    arm = robot.armSubsystem;
+    requires(robot.arm_subsystem);
+    arm = robot.arm_subsystem;
     degrees = 360.0 * rev;
   }
 

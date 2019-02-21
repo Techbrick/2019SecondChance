@@ -21,14 +21,14 @@ public class MoveToHeight extends Command {
 
   private ArmSubsystem arm;
   private Robot robot;
-  public int position;
+  private int position;
   private double turnpower;
   private WristPid level;
 
   public MoveToHeight(Robot r, int pos) {
     robot = r;
-    requires(robot.armSubsystem);
-    arm = robot.armSubsystem;
+    requires(robot.arm_subsystem);
+    arm = robot.arm_subsystem;
     position = pos;
     level = new WristPid(robot);
     level.SetTargetAngle(arm.heights[1][position]);

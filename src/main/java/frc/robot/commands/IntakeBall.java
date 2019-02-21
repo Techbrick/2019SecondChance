@@ -16,22 +16,22 @@ import frc.robot.subsystems.ArmSubsystem;
 
 public class IntakeBall extends Command {
   private Robot _robot;
-  private static ArmSubsystem arm;
+  private ArmSubsystem arm;
   private double intakeSpeed;
-  boolean pullIn;
+  private boolean pullIn;
 
   public IntakeBall(Robot robot, boolean willIntake) {
     _robot = robot;
     pullIn = willIntake;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(_robot.armSubsystem);
+    requires(_robot.arm_subsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    arm = _robot.armSubsystem;
+    arm = _robot.arm_subsystem;
     intakeSpeed = 1.0D;
   }
 
@@ -61,6 +61,6 @@ public class IntakeBall extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    _robot.armSubsystem.setIntakeSpeed(0.0D);
+    _robot.arm_subsystem.setIntakeSpeed(0.0D);
   }
 }
