@@ -12,8 +12,9 @@ import frc.robot.Robot;
 import frc.robot.WristPid;
 
 public class ManualArm extends Command {
-  Robot _robot;
+  private Robot _robot;
   private WristPid wristy;
+  private boolean on = false;
 
   public ManualArm(Robot r) {
     // Use requires() here to declare subsystem dependencies
@@ -58,10 +59,11 @@ public class ManualArm extends Command {
     else{
       wristy.SetTargetAngle(_robot.armSubsystem.heights[1][6]);
     }
-    
-    _robot.armSubsystem.setWristSpeed(wristy.GetAnglePidOutput(Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionW(), _robot.wristnavX.getQuaternionY()))));
+    if(on){
+      _robot.armSubsystem.setWristSpeed(wristy.GetAnglePidOutput(Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionW(), _robot.wristnavX.getQuaternionY()))));
+    }
   }
-
+  
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
