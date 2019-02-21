@@ -170,10 +170,11 @@ public class ArmSubsystem extends Subsystem {
   public boolean isTurnComplete(double degrees) { // Determines if degrees of current and target match
     return (getArmEncoderTicks() == (degrees / RobotMap.ArmTicksToDeg));
   }
+
   public void moveToHeight(double height) {
     turns(Math.asin(height / RobotMap.armLength));
-    
   }
+
   public void moveToHeightPreset(int pos) {
     mc_arm.set(ControlMode.Position, heights[0][pos]);
     // mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
@@ -241,6 +242,6 @@ public class ArmSubsystem extends Subsystem {
   
   public void setHeights(){// stow, hpu,  h1,   h2,    h3,    cpu,   c1,    c2,    c3
     heights = new int[][]{{      0,   0,   0, 14500, 26600, 8000, 11800, 21600, 29400},
-                          {wristStartAngle, wristStartAngle + 70, wristStartAngle + 33, wristStartAngle + 33, wristStartAngle + 33, wristStartAngle + 33, wristStartAngle + 75, wristStartAngle + 65, wristStartAngle + 60}};
+                          {wristStartAngle, wristStartAngle - 70, wristStartAngle - 33, wristStartAngle - 33, wristStartAngle - 33, wristStartAngle - 33, wristStartAngle - 75, wristStartAngle - 65, wristStartAngle - 60}};
   }
 }

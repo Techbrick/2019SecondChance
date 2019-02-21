@@ -19,11 +19,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.*;
-import frc.robot.RobotMap;
-/**
 
-* An example command. You can replace me with your own command.
-
+/*
+ An example command. You can replace me with your own command.
 */
 
 public class Turn extends Command {
@@ -51,13 +49,10 @@ public class Turn extends Command {
       arm.turns(degrees);
   }
 
-
-
   // Called repeatedly when this Command is scheduled to run
 
   @Override
   protected void execute() {
-  
   }
 
   // Make this return true when this Command no longer needs to run execute()

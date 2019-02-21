@@ -14,7 +14,6 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
-  private Robot _robot;
   public final int driveStick = 0;
   public final int opStick = 1;
   public double timingInterval = .02;

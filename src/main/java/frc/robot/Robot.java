@@ -73,7 +73,7 @@ public class Robot extends TimedRobot {
   
   public Joystick DrvStick;
   public Joystick operatorStick;
-	public  double encoderConstant;
+	public double encoderConstant;
 	
   // public TalonSRX leftMaster;
   // private TalonSRX leftFollower;
@@ -319,7 +319,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putBoolean("Ball in", DI.get());
 
       SmartDashboard.putNumber("raw yaw", wristnavX.getYaw());
-      SmartDashboard.putNumber("pitchW", wristnavX.getPitch());
+      SmartDashboard.putNumber("raw pitch", wristnavX.getPitch());
       SmartDashboard.putNumber("raw roll", wristnavX.getRoll());
       SmartDashboard.putBoolean("HatchEjector", armSubsystem.getHatchEjectorValue());
     }
