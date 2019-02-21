@@ -112,8 +112,6 @@ public class Robot extends TimedRobot {
     comp_subsystem = new CompressorSubsystem(this);
     helper = new Helpers();
     // accelerometer_subsystem = new AccelerometerSubsystem(this);
-
-    armSubsystem.resetZero();
     
     SmartDashboard.putData(driveTrain);
     SmartDashboard.putData(armSubsystem);
@@ -158,10 +156,10 @@ public class Robot extends TimedRobot {
     
 
     // Shuffleboard.getTab("Camera").add("Compression slider", );
-    m_chooser.addObject("Drive Fwd 24 inches", new DriveDistanceAndDirection(this, 24, 0));
-    m_chooser.addObject("Drive dog leg right", new DogLegRight(this));
-    m_chooser.addObject("Drive dog leg left", new DogLegLeft(this));
-    SmartDashboard.putData("Auto mode", m_chooser);
+    // m_chooser.addObject("Drive Fwd 24 inches", new DriveDistanceAndDirection(this, 24, 0));
+    // m_chooser.addObject("Drive dog leg right", new DogLegRight(this));
+    // m_chooser.addObject("Drive dog leg left", new DogLegLeft(this));
+    // SmartDashboard.putData("Auto mode", m_chooser);
 		
     NetworkTableInstance.getDefault().setUpdateRate(0.020);
     
@@ -272,11 +270,6 @@ public class Robot extends TimedRobot {
     // double twist = DrvStick.getX();
     //driveTrain.ArcadeDrive(power, twist);
     Logger();
-    
-    robotMap.kp_Angle = SmartDashboard.getNumber("kp", robotMap.kp_Angle);
-    robotMap.ki_Angle = SmartDashboard.getNumber("ki", robotMap.ki_Angle);
-    robotMap.kd_Angle = SmartDashboard.getNumber("kd", robotMap.kd_Angle);
-    robotMap.minTurnPower = SmartDashboard.getNumber("min turn power", robotMap.minTurnPower);
   }
 
   /**

@@ -51,11 +51,15 @@ public class ManualArm extends Command {
     _robot.armSubsystem.setWristSpeed(-_robot.operatorStick.getRawAxis(1));//2
     _robot.armSubsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5));//0
 
-    wristy.SetTargetAngle(_robot.armSubsystem.heights[1][3]);
-      
+    
     if(_robot.armSubsystem.getToggly()){
-      _robot.armSubsystem.setWristSpeed(wristy.GetAnglePidOutput(Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionW(), _robot.wristnavX.getQuaternionY()))));
+      wristy.SetTargetAngle(_robot.armSubsystem.heights[1][2]);
     }
+    else{
+      wristy.SetTargetAngle(_robot.armSubsystem.heights[1][6]);
+    }
+    
+    _robot.armSubsystem.setWristSpeed(wristy.GetAnglePidOutput(Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionW(), _robot.wristnavX.getQuaternionY()))));
   }
 
   // Make this return true when this Command no longer needs to run execute()
