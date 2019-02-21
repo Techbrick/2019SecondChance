@@ -26,7 +26,6 @@ public class MoveToHeight extends Command {
   private WristPid level;
 
   public MoveToHeight(Robot r, int pos) {
-    // Use requires() here to declare subsystem dependencies
     robot = r;
     requires(robot.armSubsystem);
     arm = robot.armSubsystem;
@@ -35,17 +34,13 @@ public class MoveToHeight extends Command {
     level.SetTargetAngle(arm.heights[1][position]);
   }
 
-
-
   // Called just before this Command runs the first time
-
   @Override
   protected void initialize() {
     arm.moveToHeightPreset(position);
   }
 
   // Called repeatedly when this Command is scheduled to run
-
   @Override
   protected void execute() {
     turnpower = level.GetAnglePidOutput(Math.toDegrees(Math.atan2(robot.wristnavX.getQuaternionY(), robot.wristnavX.getQuaternionW())));
@@ -62,14 +57,11 @@ public class MoveToHeight extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    // arm.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
-
   @Override
   protected void interrupted() {
-
   }
 }

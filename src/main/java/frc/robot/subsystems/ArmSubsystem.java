@@ -126,6 +126,7 @@ public class ArmSubsystem extends Subsystem {
     // zeros[0] = getArmEncoderTicks() - RobotMap.heights[0][0];
     // zeros[1] = getArmEncoderTicks() - RobotMap.heights[1][0];
   }
+  
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -141,8 +142,7 @@ public class ArmSubsystem extends Subsystem {
     return mc_arm.getSensorCollection().getQuadraturePosition();
   }
 
-  public int getWristEncoderTicks()
-  {
+  public int getWristEncoderTicks(){
     return mc_wrist.getSensorCollection().getQuadraturePosition();
   }
 
