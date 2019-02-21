@@ -7,7 +7,7 @@ public class Helpers {
     public static double  DeadbandJoystick(double value, RobotMap robotMap){
         double deadband = robotMap.joystickDeadband;
         if (value >= deadband) 
-        return value;
+            return value;
     
         /* Lower deadband */
         if (value <= -deadband)

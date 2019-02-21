@@ -35,8 +35,8 @@ public class Turn extends Command {
   public Turn(Robot r, double rev) {
     // Use requires() here to declare subsystem dependencies
     robot = r;
-    requires(robot.arm_subsystem);
-    arm = robot.arm_subsystem;
+    requires(robot.armSubsystem);
+    arm = robot.armSubsystem;
     degrees = 360.0 * rev;
   }
 

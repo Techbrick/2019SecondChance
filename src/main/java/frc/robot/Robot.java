@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
-import frc.robot.subsystems.AccelerometerSubsystem;
+// import frc.robot.subsystems.AccelerometerSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -81,7 +81,7 @@ public class Robot extends TimedRobot {
   // private TalonSRX rightFollower;
   // public  DriveSubsystem driveTrain;
   public RealDriveTrain driveTrain;
-  public ArmSubsystem arm_subsystem;
+  public ArmSubsystem armSubsystem;
   public CompressorSubsystem comp_subsystem;
   // public AccelerometerSubsystem accelerometer_subsystem;
   public AHRS navX;
@@ -98,31 +98,25 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     
-   
     SmartDashboard.putString("Instructions", "");
     SmartDashboard.putString("Status", "");
     DrvStick = new Joystick(0);
     operatorStick= new Joystick(1);
     robotMap.verbose = true;
-  
-		//
-		// Configure drivetrain movement
-    //
+
     navX = new AHRS(SPI.Port.kMXP);
-
-
     wristnavX = new AHRS(Port.kUSB);
     
     driveTrain = new RealDriveTrain(this);
-    arm_subsystem = new ArmSubsystem(this);
+    armSubsystem = new ArmSubsystem(this);
     comp_subsystem = new CompressorSubsystem(this);
     helper = new Helpers();
     // accelerometer_subsystem = new AccelerometerSubsystem(this);
 
-    arm_subsystem.resetZero();
+    armSubsystem.resetZero();
     
     SmartDashboard.putData(driveTrain);
-    SmartDashboard.putData(arm_subsystem);
+    SmartDashboard.putData(armSubsystem);
     SmartDashboard.putData("Drive Encoder Cal", new DriveEncoderCal(this));
     SmartDashboard.putData("Manual Drive", new ManualDrive(this));
     SmartDashboard.putData("Min Turn Power", new FindMinTurnPower(this));
@@ -274,8 +268,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    double power =  DrvStick.getY();
-    double twist = DrvStick.getX();
+    // double power =  DrvStick.getY();
+    // double twist = DrvStick.getX();
     //driveTrain.ArcadeDrive(power, twist);
     Logger();
     
@@ -316,19 +310,18 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("navx Heading", navX.getCompassHeading());
       SmartDashboard.putNumber("navx Angle", Math.round(navX.getRawMagX()));
       SmartDashboard.putNumber("avgEncoderRate", driveTrain.GetAverageEncoderRate());
-      SmartDashboard.putNumber("Arm Encoder Ticks", arm_subsystem.getArmEncoderTicks());
+      SmartDashboard.putNumber("Arm Encoder Ticks", armSubsystem.getArmEncoderTicks());
       //Ticks * bleh turns ticks into angles, / 25 to get past the reduction. 
-      SmartDashboard.putNumber("Arm Encoder Angle", arm_subsystem.getArmEncoderTicks() * 360 / (4096 * 25));
-      SmartDashboard.putNumber("Wrist Encoder Ticks", arm_subsystem.getWristEncoderTicks());
+      SmartDashboard.putNumber("Arm Encoder Angle", armSubsystem.getArmEncoderTicks() * 360 / (4096 * 25));
+      SmartDashboard.putNumber("Wrist Encoder Ticks", armSubsystem.getWristEncoderTicks());
 
-      SmartDashboard.putNumber("Wrist Encoder Angle", arm_subsystem.getWristEncoderTicks() * 360 / (4096 * 25));
+      SmartDashboard.putNumber("Wrist Encoder Angle", armSubsystem.getWristEncoderTicks() * 360 / (4096 * 25));
       SmartDashboard.putBoolean("Ball in", DI.get());
 
       SmartDashboard.putNumber("raw yaw", wristnavX.getYaw());
       SmartDashboard.putNumber("pitchW", wristnavX.getPitch());
       SmartDashboard.putNumber("raw roll", wristnavX.getRoll());
-      SmartDashboard.putNumber("Adjusted Yaw", helper.ConvertYawToHeading(wristnavX.getRoll()));
-      SmartDashboard.putBoolean("HatchEjector", arm_subsystem.getHatchEjectorValue());
+      SmartDashboard.putBoolean("HatchEjector", armSubsystem.getHatchEjectorValue());
     }
     
     SmartDashboard.putBoolean("navXConnected", navX.isConnected());
@@ -341,7 +334,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("bit2", pet.getbit2());
     SmartDashboard.putBoolean("bit3", pet.getbit3());
     SmartDashboard.putBoolean("bit4", pet.getbit4());
-    SmartDashboard.putBoolean("Hatch/Ball toggle", arm_subsystem.getToggly());
+    SmartDashboard.putBoolean("Hatch/Ball toggle", armSubsystem.getToggly());
     
     SmartDashboard.putNumber("QuaternionW", wristnavX.getQuaternionW());
     SmartDashboard.putNumber("QuaternionX", wristnavX.getQuaternionX());

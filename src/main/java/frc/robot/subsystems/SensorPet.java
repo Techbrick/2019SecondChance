@@ -7,8 +7,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.Map;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -48,6 +46,12 @@ public class SensorPet extends Subsystem {
   }
   public boolean getbit4(){
     return bit4.get();
+  }
+  /**
+   * @return the distance
+   */
+  public int getDistance() {
+    return distance;
   }
 
   @Override

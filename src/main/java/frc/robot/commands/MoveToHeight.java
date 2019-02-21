@@ -13,12 +13,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 import frc.robot.WristPid;
 import frc.robot.subsystems.*;
-import frc.robot.Helpers;
 
 public class MoveToHeight extends Command {
 
@@ -31,11 +28,11 @@ public class MoveToHeight extends Command {
   public MoveToHeight(Robot r, int pos) {
     // Use requires() here to declare subsystem dependencies
     robot = r;
-    requires(robot.arm_subsystem);
-    arm = robot.arm_subsystem;
+    requires(robot.armSubsystem);
+    arm = robot.armSubsystem;
     position = pos;
     level = new WristPid(robot);
-    level.SetTargetAngle(robot.robotMap.heights[1][position]);
+    level.SetTargetAngle(arm.heights[1][position]);
   }
 
 
