@@ -19,7 +19,7 @@ public class VisionDrive extends Command {
   private double absoluteAngle;
   private double difference;
   private double tx;
-  // private Helpers helper;
+  private Helpers helper;
   private boolean drive = true;
   private TurnPid turny;
   public VisionDrive(Robot robot, int angle) {
@@ -62,7 +62,7 @@ public class VisionDrive extends Command {
             SmartDashboard.putNumber("VD drv", drv);
             SmartDashboard.putNumber("VD Turn", turn);
             _robot.driveTrain.Move(drv - turn, -(drv + turn));
-            // _robot.driveTrain.Move(-turn, -turn);
+          // _robot.driveTrain.Move(-turn, -turn);
            }
           else
           {
