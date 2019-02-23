@@ -14,7 +14,6 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
-
   public final int driveStick = 0;
   public final int opStick = 1;
   public double timingInterval = .02;
@@ -41,7 +40,7 @@ public class RobotMap {
   public double kp_Angle = 0.3; // propotional turning constant WAS .04
   public double ki_Angle = 0.03;
   public double kd_Angle = 0.00;
-  public double kp_Angle_Wrist = 0.04; // propotional turning constant WAS .04
+  public double kp_Angle_Wrist = 0.03; // propotional turning constant WAS .04
   public double ki_Angle_Wrist = 0.0;
   public double kd_Angle_Wrist = 0.0;
   public double minWristPower = 0.05;
@@ -77,17 +76,15 @@ public class RobotMap {
   public double KpDistanceFollower = .8;
 
   public static final int mc_arm_CANID = 2;
-  public static final double ArmTicksToDeg = 360.0 / ENCODER_PULSE_PER_REV / 25.0; // TODO: Change the / to * potentially
-  
-                                  // stow, hpu,  h1,   h2,    h3,    cpu,   c1,    c2,    c3
-  public static int [][] heights = {{ 0,   0,   0, 14500, 26600, 8000, 11800, 21600, 29400},
-                                    {-101, -30,   -68,    -68,     -68,    -68,   -26,   -36,   -42}};
+  public static final double ArmTicksToDeg = 360.0 / ENCODER_PULSE_PER_REV / 25.0;
 
   public static final int armLength = 26; //real one is 38, 26 is for testbot
+
+  public static int desiredHeight = 0;
+  public static int toggle = 0;
 
   public static final int wristHatchSolenoidID = 9;
   public RobotMap()
   {
-    
   }
 }

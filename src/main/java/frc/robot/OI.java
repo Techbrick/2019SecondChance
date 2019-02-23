@@ -45,12 +45,12 @@ public class OI {
   POVButton southwest = new POVButton(DrvStick,225);
   POVButton northwest = new POVButton(DrvStick,315);
   Button autoToggle = new JoystickButton(opStick,2);
-  POVButton posZero = new POVButton(opStick,0);
-  POVButton posOne = new POVButton(opStick,270); 
-  POVButton posTwo = new POVButton(opStick,180);
-  POVButton posThree = new POVButton(opStick,90);
-  Button stow = new JoystickButton(opStick, 1);
-  //Button vision = new JoystickButton(DrvStick, 1);
+  POVButton posZero = new POVButton(opStick,90);
+  POVButton posOne = new POVButton(opStick,180); 
+  POVButton posTwo = new POVButton(opStick,270);
+  POVButton posThree = new POVButton(opStick,0);
+  Button stow = new JoystickButton(opStick, 13);
+  // Button vision = new JoystickButton(DrvStick, 1);
   // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
 
@@ -65,12 +65,18 @@ public class OI {
     southeast.whileHeld(new ManualDriveDirection(robot, 135));
     southwest.whileHeld(new ManualDriveDirection(robot, 225));
     northwest.whileHeld(new ManualDriveDirection(robot, 315));
-    autoToggle.whenPressed(new SetToggle(robot, true));
-    posZero.whileHeld(new MoveToHeight(robot, 1));
-    posOne.whileHeld(new MoveToHeight(robot,2));
-    posTwo.whileHeld(new MoveToHeight(robot,3));
-    posThree.whileHeld(new MoveToHeight(robot,4));
+    
+    SetToggle cmd = new SetToggle(robot);
+    autoToggle.whenPressed(cmd);
+
+    autoToggle.whenPressed(new SetToggle(robot));
+    posZero.whileHeld(new MoveToHeight(robot, 1)); // hatch pickup
+    posOne.whileHeld(new MoveToHeight(robot,2)); // hatch level 1
+    posTwo.whileHeld(new MoveToHeight(robot,3)); // hatch level 2
+    posThree.whileHeld(new MoveToHeight(robot,4)); // hatch level 3
     stow.whileHeld(new MoveToHeight(robot,0));
+    
+    
     //vision.whileHeld(new VisionDrive(robot,0));
     //ShiftGearButton.whenPressed(new ShiftGear(robot, true));
     //ShiftGearButton.whenReleased(new ShiftGear(robot, false));

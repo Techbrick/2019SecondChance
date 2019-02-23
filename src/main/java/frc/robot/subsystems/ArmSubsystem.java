@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Helpers;
@@ -39,16 +38,16 @@ public class ArmSubsystem extends Subsystem {
   private TalonSRX mc_wrist;
   private Solenoid ejectorSolenoidIn;
   private Solenoid ejectorSolenoidOut;
- //private double[] zeros;
-
   // Constants
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
   private static final Gains kGains = new Gains(0.3, 0.03, 0.0, 0.0, 0, 1.0);
-  //private static final Gains kGains = new Gains((.0*1023)/(0/12), 0.0, 0.0, 0.0, 0, 0.0);
-  private static final Gains kGainsWrist = new Gains(0.0001, 0.0, 0.0, 0.0, 0, 1.0);
+  private static final Gains kGainsWrist = new Gains(0.03, 0.0, 0.0, 0.0, 0, 1.0);
   private static final int length = 5;
   public static boolean toggly = true;
+  public static boolean togglelevel = false;
+  public int wristStartAngle;
+  public int [][] heights;
   // private static final int wristUpperLimit;
   // private static final int wristLowerLimit;
   // private static final int armUpperLimit;
@@ -57,11 +56,13 @@ public class ArmSubsystem extends Subsystem {
   public ArmSubsystem(Robot r) {  // Initialize the motion magic constants
     _robot = r;
     robotMap = new RobotMap();
+    wristStartAngle = (int)Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
+    setHeights();
+
     mc_arm = new TalonSRX(RobotMap.armMasterLeft1);
     mc_armFollower = new VictorSPX(RobotMap.armFollowerRight1);
     mc_intake = new TalonSRX(RobotMap.intakeMotor1);
     mc_wrist = new TalonSRX(RobotMap.wristMotor1);
-
     mc_wrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0, 10);
     mc_wrist.setSelectedSensorPosition(0, 0, 10);
     mc_wrist.setSensorPhase(true);
@@ -75,7 +76,6 @@ public class ArmSubsystem extends Subsystem {
     mc_arm.setInverted(true);
     mc_armFollower.setInverted(false);
     mc_armFollower.follow(mc_arm);
-
 
     ejectorSolenoidIn = new Solenoid(4);
     ejectorSolenoidOut = new Solenoid(5);
@@ -102,7 +102,6 @@ public class ArmSubsystem extends Subsystem {
 		mc_arm.config_kP(kSlotIdx, kGains.kP, 0);
 		mc_arm.config_kI(kSlotIdx, kGains.kI, 0);
     mc_arm.config_kD(kSlotIdx, kGains.kD, 0);
-  
 		mc_wrist.selectProfileSlot(kSlotIdx, kPIDLoopIdx);
 		mc_wrist.config_kF(kSlotIdx, kGainsWrist.kF, 0);
 		mc_wrist.config_kP(kSlotIdx, kGainsWrist.kP, 0);
@@ -125,6 +124,7 @@ public class ArmSubsystem extends Subsystem {
     // zeros[0] = getArmEncoderTicks() - RobotMap.heights[0][0];
     // zeros[1] = getArmEncoderTicks() - RobotMap.heights[1][0];
   }
+  
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -140,8 +140,7 @@ public class ArmSubsystem extends Subsystem {
     return mc_arm.getSensorCollection().getQuadraturePosition();
   }
 
-  public int getWristEncoderTicks()
-  {
+  public int getWristEncoderTicks(){
     return mc_wrist.getSensorCollection().getQuadraturePosition();
   }
 
@@ -162,28 +161,28 @@ public class ArmSubsystem extends Subsystem {
 
   public void turns(double degrees) { // Turns a certain number of degrees
     mc_arm.set(ControlMode.Position, degrees / RobotMap.ArmTicksToDeg);
-    mc_wrist.set(ControlMode.Position, -degrees / RobotMap.ArmTicksToDeg);    // TODO: Get the right coefficient
+    mc_wrist.set(ControlMode.Position, -degrees / RobotMap.ArmTicksToDeg);
     SmartDashboard.putNumber("target arm enc", degrees/RobotMap.ArmTicksToDeg);
   }
 
   public boolean isTurnComplete(double degrees) { // Determines if degrees of current and target match
     return (getArmEncoderTicks() == (degrees / RobotMap.ArmTicksToDeg));
   }
+
   public void moveToHeight(double height) {
     turns(Math.asin(height / RobotMap.armLength));
-    
   }
+
   public void moveToHeightPreset(int pos) {
-    mc_arm.set(ControlMode.Position, RobotMap.heights[0][pos]);
+    mc_arm.set(ControlMode.Position, heights[0][pos]);
     // mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
    // SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
   }
   public void moveToHeightWrist(double turnpower){
     mc_wrist.set(ControlMode.PercentOutput, turnpower);
-    SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
+    // SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
   }
-  public void setIntakeSpeed(double percentSpeed)
-  {
+  public void setIntakeSpeed(double percentSpeed){
       mc_intake.set(ControlMode.PercentOutput, percentSpeed);
   }
 
@@ -204,6 +203,14 @@ public class ArmSubsystem extends Subsystem {
     SmartDashboard.putNumber("Wrist Enc", getWristEncoderTicks());
   }
 
+  public double getWristSpeed(){
+    return mc_wrist.getOutputCurrent();
+  }
+
+  public double getArmSpeed(){
+    return mc_arm.getOutputCurrent();
+  }
+
   public void setHatchEjector(boolean isOpen)
   {
       ejectorSolenoidIn.set(isOpen);
@@ -220,13 +227,18 @@ public class ArmSubsystem extends Subsystem {
     SmartDashboard.putNumber("Wrist Enc Pos", mc_wrist.getSelectedSensorPosition(0));
   }
 
-  public static void setToggly(boolean bool)
+  public void setToggly(boolean bool)
   {
     toggly = bool;
   }
 
-  public static boolean getToggly()
+  public boolean getToggly()
   {
     return toggly;
+  }
+  
+  public void setHeights(){// stow, hpu,  h1,   h2,    h3,    cpu,   c1,    c2,    c3
+    heights = new int[][]{{      0,   0,   0, 14500, 26600, 8000, 11800, 21600, 29400},
+                        {0, -70, -30, -33, -30, -30, -75, -65, -60}};
   }
 }

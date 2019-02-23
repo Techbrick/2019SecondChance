@@ -13,59 +13,38 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 import frc.robot.WristPid;
 import frc.robot.subsystems.*;
-import frc.robot.Helpers;
 
 public class MoveToHeight extends Command {
 
   private ArmSubsystem arm;
   private Robot robot;
-  public int position;
-  private int OGposition;
-  private boolean testCompleted = false;
+  private int position;
   private double turnpower;
-  private int stoppedCounter = 0;
   private WristPid level;
-  private Helpers helper;
 
   public MoveToHeight(Robot r, int pos) {
-    // Use requires() here to declare subsystem dependencies
     robot = r;
     requires(robot.arm_subsystem);
     arm = robot.arm_subsystem;
-    OGposition = pos;
+    position = pos;
     level = new WristPid(robot);
-    helper = new Helpers();
-    level.SetTargetAngle(robot.robotMap.heights[1][position]);
   }
 
-
-
   // Called just before this Command runs the first time
-
   @Override
   protected void initialize() {
-    position = OGposition + (ArmSubsystem.getToggly() ? + 0:4);
-    arm.moveToHeightPreset(position);
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
-
   @Override
   protected void execute() {
-    turnpower = -level.GetAnglePidOutput(Math.atan2(robot.wristnavX.getQuaternionW(),robot.wristnavX.getQuaternionY()) * 180 / 3.14);
-    if (turnpower == 0) {
-      stoppedCounter++;
-    } else {
-      stoppedCounter = 0;
-    }
-    if (stoppedCounter > 5) {
-      testCompleted = true;
-    }
+    arm.moveToHeightPreset(position + (arm.getToggly() ? 4 : 0));
+    level.SetTargetAngle(arm.heights[1][position + (arm.getToggly() ? 4 : 0)] + arm.wristStartAngle);
+    turnpower = level.GetAnglePidOutput(Math.toDegrees(Math.atan2(robot.wristnavX.getQuaternionY(), robot.wristnavX.getQuaternionW())));
     arm.moveToHeightWrist(turnpower);
   }
 
@@ -79,14 +58,11 @@ public class MoveToHeight extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    // arm.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
-
   @Override
   protected void interrupted() {
-
   }
 }
