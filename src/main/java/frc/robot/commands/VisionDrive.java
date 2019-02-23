@@ -58,10 +58,11 @@ public class VisionDrive extends Command {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
           {
             double drv = -_robot.driveTrain.m_LimelightDriveCommand;
-            double turn = turny.GetAnglePidOutput(tx);
+            double turn = turny.GetAnglePidOutput(helper.ConvertYawToHeading(tx));
             SmartDashboard.putNumber("VD drv", drv);
             SmartDashboard.putNumber("VD Turn", turn);
               _robot.driveTrain.Move(drv - turn, -(drv + turn));
+              // _robot.driveTrain.Move(-turn, -turn);
            }
           else
           {
