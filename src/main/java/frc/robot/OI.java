@@ -16,7 +16,10 @@ import frc.robot.commands.HatchEjectorToggle;
 import frc.robot.commands.IntakeBall;
 import frc.robot.commands.ShiftGear;
 import frc.robot.commands.VisionDrive;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.commands.ManualDriveDirection;
+import frc.robot.commands.MoveToHeight;
+import frc.robot.commands.SetToggle;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -42,7 +45,13 @@ public class OI {
   POVButton southeast = new POVButton(DrvStick,135);
   POVButton southwest = new POVButton(DrvStick,225);
   POVButton northwest = new POVButton(DrvStick,315);
-  //Button vision = new JoystickButton(DrvStick, 1);
+  Button autoToggle = new JoystickButton(opStick,2);
+  POVButton posZero = new POVButton(opStick,0);
+  POVButton posOne = new POVButton(opStick,270); 
+  POVButton posTwo = new POVButton(opStick,180);
+  POVButton posThree = new POVButton(opStick,90);
+  Button stow = new JoystickButton(opStick, 1);
+  // Button vision = new JoystickButton(DrvStick, 1);
   // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
 
@@ -60,6 +69,12 @@ public class OI {
     southeast.whileHeld(new ManualDriveDirection(robot, 135));
     southwest.whileHeld(new ManualDriveDirection(robot, 225));
     northwest.whileHeld(new ManualDriveDirection(robot, 315));
+    autoToggle.whenPressed(new SetToggle(robot));
+    posZero.whileHeld(new MoveToHeight(robot, 1)); // hatch pickup
+    posOne.whileHeld(new MoveToHeight(robot,2)); // hatch level 1
+    posTwo.whileHeld(new MoveToHeight(robot,3)); // hatch level 2
+    posThree.whileHeld(new MoveToHeight(robot,4)); // hatch level 3
+    stow.whileHeld(new MoveToHeight(robot,0));
     //vision.whileHeld(new VisionDrive(robot,0));
     //ShiftGearButton.whenPressed(new ShiftGear(robot, true));
     //ShiftGearButton.whenReleased(new ShiftGear(robot, false));

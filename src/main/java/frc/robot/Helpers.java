@@ -7,7 +7,7 @@ public class Helpers {
     public static double  DeadbandJoystick(double value, RobotMap robotMap){
         double deadband = robotMap.joystickDeadband;
         if (value >= deadband) 
-        return value;
+            return value;
     
         /* Lower deadband */
         if (value <= -deadband)
@@ -29,7 +29,9 @@ public class Helpers {
     }
     public static double ConvertYawToHeading(double yaw){
         if(yaw < 0){
-            yaw = yaw +360;
+            yaw = yaw + 360.0;
+        } else if(yaw > 360.0) {
+            yaw %= 360.0;
         }
         return yaw;
     }

@@ -7,49 +7,41 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.subsystems.ArmSubsystem;
 
-public class IntakeBall extends Command {
+public class ResetAutoArm extends Command {
   private Robot _robot;
-  private ArmSubsystem arm;
-  private double intakeSpeed;
-  private boolean pullIn;
+  private boolean finished = false;
 
-  public IntakeBall(Robot robot, boolean willIntake) {
-    _robot = robot;
-    pullIn = willIntake;
+  public ResetAutoArm(Robot robot) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(_robot.arm_subsystem);
+    _robot = robot;
+    requires(robot.arm_subsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    arm = _robot.arm_subsystem;
-    intakeSpeed = 1.0D;
+    _robot.arm_subsystem.moveToHeightWrist(0.5);
+    _robot.arm_subsystem.setArmSpeed(-0.5);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(pullIn){
-      if(!_robot.DI.get())
-      arm.setIntakeSpeed(arm.getIntakeSpeed() + intakeSpeed * -1);
+    if(_robot.arm_subsystem.getWristSpeed() == 0 && _robot.arm_subsystem.getArmSpeed() == 0){
+      _robot.arm_subsystem.wristStartAngle = (int)Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
+      _robot.arm_subsystem.setHeights();
+      finished = true;
     }
-    else
-      arm.setIntakeSpeed(arm.getIntakeSpeed() + intakeSpeed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return finished;
   }
 
   // Called once after isFinished returns true
@@ -61,6 +53,5 @@ public class IntakeBall extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    _robot.arm_subsystem.setIntakeSpeed(0.0D);
   }
 }

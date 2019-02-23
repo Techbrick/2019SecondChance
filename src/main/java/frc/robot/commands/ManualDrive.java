@@ -20,16 +20,16 @@ import frc.robot.RobotMap;
  */
 public class ManualDrive extends Command {
   private Robot _robot; 
-  private double _lastLeftVel;
-  private double _lastRightVel;
+//   private double _lastLeftVel;
+//   private double _lastRightVel;
   private double _lastAvgVel;
   private double maxAccell = 0;
-  double maxVel = 0;
+  private double maxVel = 0;
   private int avgVelCounter = 0;
   private int avgAccellCounter = 0;
   private double avgVelPV = 0;
   private double avgAccellPV = 0;
-  Button ShiftGearButton;
+  private Button ShiftGearButton;
 
   public ManualDrive(Robot robot) {
     // Use requires() here to declare subsystem dependencies

@@ -21,18 +21,17 @@ import frc.robot.TurnPid;
  */
 public class ManualDriveDirection extends Command {
   private Robot _robot; 
-  double maxVel = 0;
-  Button ShiftGearButton;
+  // private double maxVel = 0;
+  // private Button ShiftGearButton;
   private int direction;
-  TurnPid _turnPid;
+  private TurnPid _turnPid;
   private int stoppedCounter = 0;
   private boolean testCompleted = false;
-  
 
   public ManualDriveDirection(Robot robot, int angle) {
     // Use requires() here to declare subsystem dependencies
     _robot = robot;
-    ShiftGearButton = new JoystickButton(robot.DrvStick, 2);
+    // ShiftGearButton = new JoystickButton(robot.DrvStick, 2);
     requires(_robot.driveTrain);
     direction = angle;
     _turnPid = new TurnPid(_robot);
@@ -42,23 +41,22 @@ public class ManualDriveDirection extends Command {
   @Override
   protected void initialize() {
     _turnPid.SetTargetAngle(direction);
-
   }
+
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double turnPower = _turnPid.GetAnglePidOutput(_robot.navX.getYaw());
+    double turnPower = _turnPid.GetAnglePidOutput(Helpers.ConvertYawToHeading(_robot.navX.getYaw()));
     _robot.driveTrain.Move(turnPower, turnPower);
     if (turnPower == 0){
       stoppedCounter ++;
-     
-  }else{
+    }
+    else{
       stoppedCounter = 0;
-      
-  }
-  if (stoppedCounter > 5){
+    }
+    if (stoppedCounter > 5){
       testCompleted = true;
-  }
+    }
 
   }
 

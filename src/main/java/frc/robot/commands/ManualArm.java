@@ -10,9 +10,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.WristPid;
+
 public class ManualArm extends Command {
-  Robot _robot;
+  private Robot _robot;
   private WristPid wristy;
+  private boolean on = false;
+
   public ManualArm(Robot r) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -24,7 +27,6 @@ public class ManualArm extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -50,16 +52,18 @@ public class ManualArm extends Command {
     _robot.arm_subsystem.setWristSpeed(-_robot.operatorStick.getRawAxis(1));//2
     _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5));//0
 
-    wristy.SetTargetAngle(90);
-
-    _robot.arm_subsystem.setWristSpeed(wristy.GetAnglePidOutput(_robot.wristnavX.getAngle()));
-
-    if(_robot.operatorStick.getRawAxis(0)!=0)
-    {
-      
+    
+    if(_robot.arm_subsystem.getToggly()){
+      wristy.SetTargetAngle(_robot.arm_subsystem.heights[1][2]);
+    }
+    else{
+      wristy.SetTargetAngle(_robot.arm_subsystem.heights[1][6]);
+    }
+    if(on){
+      _robot.arm_subsystem.setWristSpeed(wristy.GetAnglePidOutput(Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionW(), _robot.wristnavX.getQuaternionY()))));
     }
   }
-
+  
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
