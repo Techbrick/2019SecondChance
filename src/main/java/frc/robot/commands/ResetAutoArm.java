@@ -12,7 +12,7 @@ import frc.robot.Robot;
 
 public class ResetAutoArm extends Command {
   private Robot _robot;
-  private boolean finished = false;
+  private boolean finished;
 
   public ResetAutoArm(Robot robot) {
     // Use requires() here to declare subsystem dependencies
@@ -24,19 +24,14 @@ public class ResetAutoArm extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    _robot.arm_subsystem.moveToHeightWrist(-0.4);
-    _robot.arm_subsystem.setArmSpeed(-0.4);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(_robot.arm_subsystem.getWristSpeed() < 0.01 && _robot.arm_subsystem.getArmSpeed() < 0.01){
-      _robot.arm_subsystem.wristStartAngle = (int)Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
-      _robot.arm_subsystem.setHeights();
-      _robot.arm_subsystem.resetZero();
-      finished = true;
-    }
+    _robot.arm_subsystem.resetZero();
+    _robot.arm_subsystem.wristStartAngle = (int)Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
+    finished = true;
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -48,8 +43,7 @@ public class ResetAutoArm extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    _robot.arm_subsystem.moveToHeightWrist(0);
-    _robot.arm_subsystem.setArmSpeed(0);
+    finished = false;
   }
 
   // Called when another command which requires one or more of the same

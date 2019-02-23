@@ -31,7 +31,7 @@ public class MoveToHeight extends Command {
     arm = robot.arm_subsystem;
     position = pos;
     level = new WristPid(robot);
-    level.SetTargetAngle(arm.heights[1][position]);
+    level.SetTargetAngle(arm.heights[1][position] + arm.wristStartAngle);
   }
 
   // Called just before this Command runs the first time

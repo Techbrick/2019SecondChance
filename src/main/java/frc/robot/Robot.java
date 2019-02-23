@@ -154,8 +154,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("kd", robotMap.kd_Angle);
     SmartDashboard.putNumber("min turn power", robotMap.minTurnPower);
 
-    
-
     // Shuffleboard.getTab("Camera").add("Compression slider", );
     // m_chooser.addObject("Drive Fwd 24 inches", new DriveDistanceAndDirection(this, 24, 0));
     // m_chooser.addObject("Drive dog leg right", new DogLegRight(this));
