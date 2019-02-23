@@ -46,11 +46,11 @@ public class OI {
   POVButton southwest = new POVButton(DrvStick,225);
   POVButton northwest = new POVButton(DrvStick,315);
   Button autoToggle = new JoystickButton(opStick,2);
-  POVButton posZero = new POVButton(opStick,0);
-  POVButton posOne = new POVButton(opStick,270); 
-  POVButton posTwo = new POVButton(opStick,180);
-  POVButton posThree = new POVButton(opStick,90);
-  Button stow = new JoystickButton(opStick, 1);
+  POVButton posZero = new POVButton(opStick,90);
+  POVButton posOne = new POVButton(opStick,180); 
+  POVButton posTwo = new POVButton(opStick,270);
+  POVButton posThree = new POVButton(opStick,0);
+  Button stow = new JoystickButton(opStick, 13);
   // Button vision = new JoystickButton(DrvStick, 1);
   // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){

@@ -38,12 +38,11 @@ public class ArmSubsystem extends Subsystem {
   private TalonSRX mc_wrist;
   private Solenoid ejectorSolenoidIn;
   private Solenoid ejectorSolenoidOut;
-
   // Constants
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
   private static final Gains kGains = new Gains(0.3, 0.03, 0.0, 0.0, 0, 1.0);
-  private static final Gains kGainsWrist = new Gains(0.0005, 0.0, 0.0, 0.0, 0, 1.0);
+  private static final Gains kGainsWrist = new Gains(0.03, 0.0, 0.0, 0.0, 0, 1.0);
   private static final int length = 5;
   public static boolean toggly = true;
   public static boolean togglelevel = false;
@@ -64,7 +63,6 @@ public class ArmSubsystem extends Subsystem {
     mc_armFollower = new VictorSPX(RobotMap.armFollowerRight1);
     mc_intake = new TalonSRX(RobotMap.intakeMotor1);
     mc_wrist = new TalonSRX(RobotMap.wristMotor1);
-
     mc_wrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0, 10);
     mc_wrist.setSelectedSensorPosition(0, 0, 10);
     mc_wrist.setSensorPhase(true);
@@ -182,7 +180,7 @@ public class ArmSubsystem extends Subsystem {
   }
   public void moveToHeightWrist(double turnpower){
     mc_wrist.set(ControlMode.PercentOutput, turnpower);
-    SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
+    // SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
   }
   public void setIntakeSpeed(double percentSpeed){
       mc_intake.set(ControlMode.PercentOutput, percentSpeed);
@@ -241,6 +239,6 @@ public class ArmSubsystem extends Subsystem {
   
   public void setHeights(){// stow, hpu,  h1,   h2,    h3,    cpu,   c1,    c2,    c3
     heights = new int[][]{{      0,   0,   0, 14500, 26600, 8000, 11800, 21600, 29400},
-                          {wristStartAngle, wristStartAngle - 70, wristStartAngle - 33, wristStartAngle - 33, wristStartAngle - 33, wristStartAngle - 33, wristStartAngle - 75, wristStartAngle - 65, wristStartAngle - 60}};
+                        {0, -70, -30, -33, -30, -30, -75, -65, -60}};
   }
 }
