@@ -14,14 +14,14 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.Helpers;
 import frc.robot.TurnPid;
 public class VisionDrive extends Command {
-  Robot _robot;
-  double targetAngle;
-  double absoluteAngle;
-  double difference;
-  double tx;
-  Helpers helper;
-  boolean drive = true;
-  TurnPid turny;
+  private Robot _robot;
+  private double targetAngle;
+  private double absoluteAngle;
+  private double difference;
+  private double tx;
+  // private Helpers helper;
+  private boolean drive = true;
+  private TurnPid turny;
   public VisionDrive(Robot robot, int angle) {
     _robot = robot;
     requires(robot.driveTrain);
@@ -34,7 +34,7 @@ public class VisionDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    turny = new TurnPid(0.15, 0.0, 0.0, 0.0, 0.02, 2.0);
+    turny = new TurnPid(0.15, 0.0, 0.0, 0.0, 0.02, 0.5);
     _robot.driveTrain.Move(0,0);
     //Figure out what target angle should be
   }
@@ -52,17 +52,17 @@ public class VisionDrive extends Command {
         absoluteAngle = tx + _robot.navX.getYaw();
         difference = absoluteAngle - targetAngle;
         _robot.driveTrain.Update_Limelight_Tracking();
-        turny.SetTargetAngle(helper.ConvertYawToHeading(difference*1.5 + targetAngle));
+        turny.SetTargetAngle(Helpers.ConvertYawToHeading(difference*1.5 + targetAngle));
         if (drive)
         {
           if (_robot.driveTrain.m_LimelightHasValidTarget)
           {
             double drv = -_robot.driveTrain.m_LimelightDriveCommand;
             drv = 0.0;
-            double turn = turny.GetAnglePidOutput(tx);
+            double turn = turny.GetAnglePidOutput(Helpers.ConvertYawToHeading(tx));
             SmartDashboard.putNumber("VD drv", drv);
             SmartDashboard.putNumber("VD Turn", turn);
-              _robot.driveTrain.Move(drv - turn, -(drv + turn));
+            _robot.driveTrain.Move(drv + turn, -drv + turn);
            }
           else
           {

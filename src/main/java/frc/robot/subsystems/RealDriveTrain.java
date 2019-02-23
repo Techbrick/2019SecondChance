@@ -83,7 +83,6 @@ public class RealDriveTrain extends Subsystem {
 		leftEncoderRate = () -> _leftMaster.getSelectedSensorVelocity(0) * encoderConstant * 0.1;
 		
     _rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
-    
     _rightMaster.setSelectedSensorPosition(0, 0, 10);
 		rightEncoderPosition = () -> _rightMaster.getSelectedSensorPosition(0) * encoderConstant;
     rightEncoderRate = () -> _rightMaster.getSelectedSensorVelocity(0) * encoderConstant * 0.1;
