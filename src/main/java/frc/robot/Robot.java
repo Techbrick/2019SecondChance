@@ -139,6 +139,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Height 6", new MoveToHeight(this, 6));
     SmartDashboard.putData("Height 7", new MoveToHeight(this, 7));
     SmartDashboard.putData("Height 8", new MoveToHeight(this, 8));
+    SmartDashboard.putData("Stowreset", new ResetAutoArm(this));
     // SmartDashboard.putData("Accelerometer Angle", new AccelerometerAngle(this));
 
     SmartDashboard.putData("RocketAngle", new VisionDrive(this,-60));
@@ -334,6 +335,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("QuaternionY", wristnavX.getQuaternionY());
     SmartDashboard.putNumber("QuaternionZ", wristnavX.getQuaternionZ());
     SmartDashboard.putNumber("Quaternion Angle", Math.toDegrees(Math.atan2(wristnavX.getQuaternionY(), wristnavX.getQuaternionW())));
+    SmartDashboard.putNumber("WristStartAngle", arm_subsystem.wristStartAngle);
   }
 
 }
