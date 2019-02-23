@@ -19,7 +19,7 @@ public class VisionDrive extends Command {
   private double absoluteAngle;
   private double difference;
   private double tx;
-  // private Helpers helper;
+  private Helpers helper;
   private boolean drive = true;
   private TurnPid turny;
   public VisionDrive(Robot robot, int angle) {
