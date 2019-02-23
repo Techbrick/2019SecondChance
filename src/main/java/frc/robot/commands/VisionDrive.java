@@ -62,7 +62,7 @@ public class VisionDrive extends Command {
             SmartDashboard.putNumber("VD drv", drv);
             SmartDashboard.putNumber("VD Turn", turn);
             _robot.driveTrain.Move(drv - turn, -(drv + turn));
-            // _robot.driveTrain.Move(-turn, -turn);
+          // _robot.driveTrain.Move(-turn, -turn);
            }
           else
           {
