@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SerialPort.Port;
@@ -90,6 +91,7 @@ public class Robot extends TimedRobot {
 	Number[] numberArray = new Number[9];
   public DigitalInput DI = new DigitalInput(1);
   private Helpers helper;
+  public Spark MC_LEDS = new Spark(0);
 
   /**
    * This function is run when the robot is first started up and should be
