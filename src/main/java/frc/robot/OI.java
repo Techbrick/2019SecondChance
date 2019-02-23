@@ -69,12 +69,18 @@ public class OI {
     southeast.whileHeld(new ManualDriveDirection(robot, 135));
     southwest.whileHeld(new ManualDriveDirection(robot, 225));
     northwest.whileHeld(new ManualDriveDirection(robot, 315));
+    
+    SetToggle cmd = new SetToggle(robot);
+    autoToggle.whenPressed(cmd);
+
     autoToggle.whenPressed(new SetToggle(robot));
     posZero.whileHeld(new MoveToHeight(robot, 1)); // hatch pickup
     posOne.whileHeld(new MoveToHeight(robot,2)); // hatch level 1
     posTwo.whileHeld(new MoveToHeight(robot,3)); // hatch level 2
     posThree.whileHeld(new MoveToHeight(robot,4)); // hatch level 3
     stow.whileHeld(new MoveToHeight(robot,0));
+    
+    
     //vision.whileHeld(new VisionDrive(robot,0));
     //ShiftGearButton.whenPressed(new ShiftGear(robot, true));
     //ShiftGearButton.whenReleased(new ShiftGear(robot, false));

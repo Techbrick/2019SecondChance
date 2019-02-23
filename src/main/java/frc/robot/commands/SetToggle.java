@@ -24,7 +24,7 @@ public class SetToggle extends InstantCommand {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    _robot.comp_subsystem.checkPressure();  //Starts compressor
+    // _robot.comp_subsystem.checkPressure();  //Starts compressor
     _robot.arm_subsystem.setToggly(!_robot.arm_subsystem.getToggly());
   }
 
