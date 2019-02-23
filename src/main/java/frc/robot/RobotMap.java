@@ -80,6 +80,9 @@ public class RobotMap {
 
   public static final int armLength = 26; //real one is 38, 26 is for testbot
 
+  public static int desiredHeight = 0;
+  public static int toggle = 0;
+
   public static final int wristHatchSolenoidID = 9;
   public RobotMap()
   {
