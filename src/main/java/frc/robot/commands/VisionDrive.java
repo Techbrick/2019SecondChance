@@ -63,7 +63,7 @@ public class VisionDrive extends Command {
     SmartDashboard.putNumber("Angle Error", difference);
     if (drive && _robot.driveTrain.m_LimelightHasValidTarget)
     {
-      double drv = -_robot.driveTrain.m_LimelightDriveCommand;
+      double drv = _robot.driveTrain.m_LimelightDriveCommand;
       // double turn = _robot.driveTrain.m_LimelightSteerCommand;
       // double turn = turny.GetAnglePidOutput(helper.ConvertYawToHeading(tx));
       double turn = turny.GetAnglePidOutput(Helpers.ConvertYawToHeading(absCurrentAngle + difference));
