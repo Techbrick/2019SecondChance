@@ -68,9 +68,8 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   public SensorPet pet = new SensorPet();
   
-  public 
-  NetworkTableEntry autoSpeedEntry = NetworkTableInstance.getDefault().getEntry("/robot/autospeed");
-  NetworkTableEntry telemetryEntry = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
+  public NetworkTableEntry autoSpeedEntry = NetworkTableInstance.getDefault().getEntry("/robot/autospeed");
+  public NetworkTableEntry telemetryEntry = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
   
   public Joystick DrvStick;
   public Joystick operatorStick;
@@ -90,8 +89,8 @@ public class Robot extends TimedRobot {
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
   public DigitalInput DI = new DigitalInput(1);
-  private Helpers helper;
-  public Spark MC_LEDS = new Spark(0);
+  // private Helpers helper;
+  // public Spark MC_LEDS = new Spark(0);
 
   /**
    * This function is run when the robot is first started up and should be
@@ -112,7 +111,10 @@ public class Robot extends TimedRobot {
     driveTrain = new RealDriveTrain(this);
     arm_subsystem = new ArmSubsystem(this);
     comp_subsystem = new CompressorSubsystem(this);
-    helper = new Helpers();
+    // helper = new Helpers();
+
+    // MC_LEDS.setSafetyEnabled(false);
+    // MC_LEDS.setSpeed(-0.29);
     // accelerometer_subsystem = new AccelerometerSubsystem(this);
     
     SmartDashboard.putData(driveTrain);
@@ -144,7 +146,7 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putData("Stowreset", new ResetAutoArm(this));
     // SmartDashboard.putData("Accelerometer Angle", new AccelerometerAngle(this));
 
-    SmartDashboard.putData("RocketAngle", new VisionDrive(this,-60));
+    SmartDashboard.putData("RocketAngle", new VisionDrive(this,-60)); // You realize that there are 2 rockets?
     SmartDashboard.putData("Straight", new VisionDrive(this,0));
     SmartDashboard.putData("RocketAngleBackSide", new VisionDrive(this,30));
     SmartDashboard.putData("Left", new VisionDrive(this,-90));
@@ -226,8 +228,6 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
 
-    
-
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
@@ -281,9 +281,6 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     Scheduler.getInstance().run();
     Logger();
-    
-
-
   }
   //   this function is needed for commands to read position;
 
@@ -298,18 +295,16 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("navx Heading", navX.getCompassHeading());
       SmartDashboard.putNumber("navx Angle", Math.round(navX.getRawMagX()));
       SmartDashboard.putNumber("avgEncoderRate", driveTrain.GetAverageEncoderRate());
-      SmartDashboard.putNumber("Arm Encoder Ticks", arm_subsystem.getArmEncoderTicks());
-      //Ticks * bleh turns ticks into angles, / 25 to get past the reduction. 
+      SmartDashboard.putNumber("Arm Encoder Ticks", arm_subsystem.getArmEncoderTicks()); //Ticks * bleh turns ticks into angles, / 25 to get past the reduction. 
       SmartDashboard.putNumber("Arm Encoder Angle", arm_subsystem.getArmEncoderTicks() * 360 / (4096 * 25));
-      SmartDashboard.putNumber("Wrist Encoder Ticks", arm_subsystem.getWristEncoderTicks());
+      // SmartDashboard.putNumber("Wrist Encoder Ticks", arm_subsystem.getWristEncoderTicks());
 
       SmartDashboard.putNumber("Wrist Encoder Angle", arm_subsystem.getWristEncoderTicks() * 360 / (4096 * 25));
       SmartDashboard.putBoolean("Ball in", DI.get());
 
-      SmartDashboard.putNumber("raw yaw", wristnavX.getYaw());
-      SmartDashboard.putNumber("raw pitch", wristnavX.getPitch());
-      SmartDashboard.putNumber("raw roll", wristnavX.getRoll());
-      SmartDashboard.putBoolean("HatchEjector", arm_subsystem.getHatchEjectorValue());
+      // SmartDashboard.putNumber("raw yaw", wristnavX.getYaw());
+      // SmartDashboard.putNumber("raw pitch", wristnavX.getPitch());
+      // SmartDashboard.putNumber("raw roll", wristnavX.getRoll());
     }
     
     SmartDashboard.putBoolean("navXConnected", navX.isConnected());
@@ -323,6 +318,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("bit3", pet.getbit3());
     SmartDashboard.putBoolean("bit4", pet.getbit4());
     SmartDashboard.putBoolean("Hatch/Ball toggle", arm_subsystem.getToggly());
+    SmartDashboard.putBoolean("HatchEjector", arm_subsystem.getHatchEjectorValue());
     
     SmartDashboard.putNumber("QuaternionW", wristnavX.getQuaternionW());
     SmartDashboard.putNumber("QuaternionX", wristnavX.getQuaternionX());
