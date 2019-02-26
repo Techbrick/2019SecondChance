@@ -10,8 +10,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -23,10 +23,10 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ManualArm;
 
-
 /**
  * Add your docs here.
  */
+
 public class ArmSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
@@ -38,26 +38,28 @@ public class ArmSubsystem extends Subsystem {
   private TalonSRX mc_wrist;
   private Solenoid ejectorSolenoidIn;
   private Solenoid ejectorSolenoidOut;
+  public static boolean toggly = true;
+  public int wristStartAngle;
+  public int [][] heights;
+  
   // Constants
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
-  private static final Gains kGains = new Gains(0.3, 0.03, 0.0, 0.0, 0, 1.0);
-  private static final Gains kGainsWrist = new Gains(0.05, 0.0, 0.0, 0.0, 0, 1.0);
+  private static final Gains kGains = new Gains(0.3, 0.0, 0.0, 0.0, 0, 1.0);
+  private static final Gains kGainsWrist = new Gains(0.03, 0.0, 0.0, 0.0, 0, 1.0);
   private static final int length = 5;
-  public static boolean toggly = true;
-  public static boolean togglelevel = false;
-  public int wristStartAngle;
-  public int [][] heights;
+
   // private static final int wristUpperLimit;
   // private static final int wristLowerLimit;
   // private static final int armUpperLimit;
   // private static final int armLowerLimit;
-  
+
   public ArmSubsystem(Robot r) {  // Initialize the motion magic constants
     _robot = r;
     robotMap = new RobotMap();
     wristStartAngle = (int)Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
     setHeights();
+    resetZero();
 
     mc_arm = new TalonSRX(RobotMap.armMasterLeft1);
     mc_armFollower = new VictorSPX(RobotMap.armFollowerRight1);
@@ -84,8 +86,8 @@ public class ArmSubsystem extends Subsystem {
 		// /* Set relevant frame periods to be at least as fast as periodic rate */
 		// mc_arm.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 20);
 		// mc_arm.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 20);
-
-		/* Set the peak and nominal outputs */
+    
+    /* Set the peak and nominal outputs */
 		mc_arm.configNominalOutputForward(0, 0);
 		mc_arm.configNominalOutputReverse(0, 0);
 		mc_arm.configPeakOutputForward(1, 0);
@@ -118,13 +120,12 @@ public class ArmSubsystem extends Subsystem {
     mc_wrist.configAllowableClosedloopError(0, 50, 0);
 		/* Zero the sensor */
     // mc_arm.setSelectedSensorPosition(0, kPIDLoopIdx, 0);
-    resetZero();
 
     // zeros = new double[2];
     // zeros[0] = getArmEncoderTicks() - RobotMap.heights[0][0];
     // zeros[1] = getArmEncoderTicks() - RobotMap.heights[1][0];
   }
-  
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -155,8 +156,7 @@ public class ArmSubsystem extends Subsystem {
     else {  
       mc_arm.set(ControlMode.PercentOutput, 0.15 * dir); // WAS .15
     }
-    
-    SmartDashboard.putNumber("Arm Enc Pos", mc_arm.getSelectedSensorPosition(0));
+    // SmartDashboard.putNumber("Arm Enc Pos", mc_arm.getSelectedSensorPosition(0));
   }
 
   public void turns(double degrees) { // Turns a certain number of degrees
@@ -176,18 +176,19 @@ public class ArmSubsystem extends Subsystem {
   public void moveToHeightPreset(int pos) {
     mc_arm.set(ControlMode.Position, heights[0][pos]);
     // mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
-   // SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
+    // SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
   }
+
   public void moveToHeightWrist(double turnpower){
     mc_wrist.set(ControlMode.PercentOutput, turnpower);
     // SmartDashboard.putNumber("Arm Error", mc_arm.getClosedLoopError(0));
   }
+
   public void setIntakeSpeed(double percentSpeed){
       mc_intake.set(ControlMode.PercentOutput, percentSpeed);
   }
 
-  public double getIntakeSpeed()
-  {
+  public double getIntakeSpeed(){
       return mc_intake.getMotorOutputPercent();
   }
 
@@ -211,37 +212,33 @@ public class ArmSubsystem extends Subsystem {
   }
 
   public double getArmSpeed(){
-    return mc_arm.getOutputCurrent();
+    return mc_arm.getMotorOutputPercent();
   }
 
-  public void setHatchEjector(boolean isOpen)
-  {
+  public void setHatchEjector(boolean isOpen){
       ejectorSolenoidIn.set(isOpen);
       ejectorSolenoidOut.set(!isOpen);
   }
 
-  public boolean getHatchEjectorValue()
-  {
+  public boolean getHatchEjectorValue(){
      return ejectorSolenoidIn.get();
   }
 
   public void rotateWrist(int dir) {
     mc_wrist.set(ControlMode.PercentOutput, 0.15 * dir);
-    SmartDashboard.putNumber("Wrist Enc Pos", mc_wrist.getSelectedSensorPosition(0));
+    // SmartDashboard.putNumber("Wrist Enc Pos", mc_wrist.getSelectedSensorPosition(0));
   }
 
-  public void setToggly(boolean bool)
-  {
+  public void setToggly(boolean bool){
     toggly = bool;
   }
 
-  public boolean getToggly()
-  {
+  public boolean getToggly(){
     return toggly;
   }
-  
+
   public void setHeights(){// stow, hpu,  h1,   h2,    h3,    cpu,   c1,    c2,    c3
-    heights = new int[][]{{      0,   0,   0, 14500, 26600, 8000, 11800, 21600, 29400},
-                        {0, -70, -30, -33, -30, -30, -75, -65, -60}};
+    heights = new int[][]{{0,   0,   0, 14500, 26600, 8000, 11800, 21600, 29400},
+                          {0, -70, -30,   -33,   -30,  -30,   -75,   -65,   -60}};
   }
 }

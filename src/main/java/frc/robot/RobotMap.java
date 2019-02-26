@@ -40,7 +40,7 @@ public class RobotMap {
   public double kp_Angle = 0.3; // propotional turning constant WAS .04
   public double ki_Angle = 0.03;
   public double kd_Angle = 0.00;
-  public double kp_Angle_Wrist = 0.04; // propotional turning constant WAS .04
+  public double kp_Angle_Wrist = 0.03; // propotional turning constant WAS .04
   public double ki_Angle_Wrist = 0.0;
   public double kd_Angle_Wrist = 0.0;
   public double minWristPower = 0.05;

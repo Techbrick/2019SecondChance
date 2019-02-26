@@ -34,8 +34,7 @@ public class OI {
   Joystick DrvStick = new Joystick(0);
   Button intakeButton = new JoystickButton(opStick, 6);
   Button ejectButton = new JoystickButton(opStick, 5);
-  Button hatchIn = new JoystickButton(DrvStick, 3);
-  Button hatchOut = new JoystickButton(DrvStick, 4);
+  Button hatchToggle = new JoystickButton(opStick, 3);
   // Button hatchEjectButton = new JoystickButton(stick, 1);
   POVButton forwards = new POVButton(DrvStick,0);
   POVButton leftwards = new POVButton(DrvStick,270); 
@@ -46,20 +45,17 @@ public class OI {
   POVButton southwest = new POVButton(DrvStick,225);
   POVButton northwest = new POVButton(DrvStick,315);
   Button autoToggle = new JoystickButton(opStick,2);
-  POVButton posZero = new POVButton(opStick,0);
-  POVButton posOne = new POVButton(opStick,270); 
-  POVButton posTwo = new POVButton(opStick,180);
-  POVButton posThree = new POVButton(opStick,90);
-  Button stow = new JoystickButton(opStick, 1);
+  POVButton posZero = new POVButton(opStick,90);
+  POVButton posOne = new POVButton(opStick,180); 
+  POVButton posTwo = new POVButton(opStick,270);
+  POVButton posThree = new POVButton(opStick,0);
+  Button stow = new JoystickButton(opStick, 13);
   // Button vision = new JoystickButton(DrvStick, 1);
   // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
 
-    hatchIn.whenPressed(new HatchEjector(robot, true));
-    hatchOut.whenPressed(new HatchEjector(robot, false));
 
-    intakeButton.whileHeld(new IntakeBall(robot, true));
-    ejectButton.whileHeld(new IntakeBall(robot, false));
+    intakeButton.whenPressed(new IntakeBall(robot, true));
     // hatchEjectButton.whenPressed(new HatchEjector(robot, !robot.arm_subsystem.getHatchEjectorValue())); 
     forwards.whileHeld(new ManualDriveDirection(robot, 0));
     backwards.whileHeld(new ManualDriveDirection(robot, 180));
@@ -69,12 +65,18 @@ public class OI {
     southeast.whileHeld(new ManualDriveDirection(robot, 135));
     southwest.whileHeld(new ManualDriveDirection(robot, 225));
     northwest.whileHeld(new ManualDriveDirection(robot, 315));
+    
+    SetToggle cmd = new SetToggle(robot);
+    autoToggle.whenPressed(cmd);
+
     autoToggle.whenPressed(new SetToggle(robot));
     posZero.whileHeld(new MoveToHeight(robot, 1)); // hatch pickup
     posOne.whileHeld(new MoveToHeight(robot,2)); // hatch level 1
     posTwo.whileHeld(new MoveToHeight(robot,3)); // hatch level 2
     posThree.whileHeld(new MoveToHeight(robot,4)); // hatch level 3
     stow.whileHeld(new MoveToHeight(robot,0));
+    
+    
     //vision.whileHeld(new VisionDrive(robot,0));
     //ShiftGearButton.whenPressed(new ShiftGear(robot, true));
     //ShiftGearButton.whenReleased(new ShiftGear(robot, false));
