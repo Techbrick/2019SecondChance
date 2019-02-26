@@ -13,20 +13,21 @@ import frc.robot.Robot;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.Helpers;
 import frc.robot.TurnPid;
+
 public class VisionDrive extends Command {
   private Robot _robot;
-  private double targetAngle;
+  // private double targetAngle;
   private double absTargetAngle;
   private double difference;
   private double tx;
-  private Helpers helper;
+  // private Helpers helper;
   private boolean drive = true;
   private TurnPid turny;
   private double absCurrentAngle;
   public VisionDrive(Robot robot, int angle) {
     _robot = robot;
     requires(robot.driveTrain);
-    targetAngle = angle;
+    // targetAngle = angle;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -62,14 +63,14 @@ public class VisionDrive extends Command {
     SmartDashboard.putNumber("Angle Error", difference);
     if (drive && _robot.driveTrain.m_LimelightHasValidTarget)
     {
-      double drv = -_robot.driveTrain.m_LimelightDriveCommand;
+      double drv = _robot.driveTrain.m_LimelightDriveCommand;
       // double turn = _robot.driveTrain.m_LimelightSteerCommand;
       // double turn = turny.GetAnglePidOutput(helper.ConvertYawToHeading(tx));
       double turn = turny.GetAnglePidOutput(Helpers.ConvertYawToHeading(absCurrentAngle + difference));
       SmartDashboard.putNumber("VD drv", drv);
       SmartDashboard.putNumber("VD Turn", turn);
       // _robot.driveTrain.Move(drv - turn, -(drv + turn));
-      _robot.driveTrain.Move(drv + turn, turn - drv);
+      _robot.driveTrain.ArcadeDrive(drv, turn);
     }
     else
     {
