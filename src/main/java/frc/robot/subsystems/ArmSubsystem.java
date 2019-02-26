@@ -193,13 +193,16 @@ public class ArmSubsystem extends Subsystem {
 
   public void setArmSpeed(double percentSpeed)
   {
-    mc_arm.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
+    if(Math.abs(getArmEncoderTicks() - 16000) < 4000)
+      mc_arm.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
     SmartDashboard.putNumber("Arm Enc", getArmEncoderTicks());
   }
 
   public void setWristSpeed(double percentSpeed)
   {
-    mc_wrist.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
+    double angle = wristStartAngle + Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
+    if((getArmEncoderTicks() < 12000 || getArmEncoderTicks() > 20000) && Math.abs(angle - 52.5) < 7)
+      mc_wrist.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap)); 
     SmartDashboard.putNumber("Wrist Enc", getWristEncoderTicks());
   }
 

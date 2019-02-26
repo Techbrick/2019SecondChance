@@ -113,6 +113,9 @@ public class Robot extends TimedRobot {
     arm_subsystem = new ArmSubsystem(this);
     comp_subsystem = new CompressorSubsystem(this);
     helper = new Helpers();
+
+    MC_LEDS.setSafetyEnabled(false);
+    MC_LEDS.setSpeed(-0.29);
     // accelerometer_subsystem = new AccelerometerSubsystem(this);
     
     SmartDashboard.putData(driveTrain);
