@@ -69,11 +69,7 @@ public class VisionDrive extends Command {
       double turn = turny.GetAnglePidOutput(Helpers.ConvertYawToHeading(absCurrentAngle + difference));
       SmartDashboard.putNumber("VD drv", drv);
       SmartDashboard.putNumber("VD Turn", turn);
-<<<<<<< HEAD
-      // _robot.driveTrain.Move(drv + turn, -(drv - turn));
-=======
       // _robot.driveTrain.Move(drv - turn, -(drv + turn));
->>>>>>> 34ad1a11d6841f0e21c0536259e7d403d5fd78c3
       _robot.driveTrain.ArcadeDrive(drv, turn);
     }
     else
