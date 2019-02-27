@@ -197,6 +197,8 @@ public class ArmSubsystem extends Subsystem {
     double angle = -wristStartAngle + Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
     if(!((getArmEncoderTicks() > 12000 && getArmEncoderTicks() < 20000) && !(Math.abs(angle + 75) < 7 || Math.abs(angle + 30) < 7)))
       mc_arm.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
+    else
+      mc_arm.set(ControlMode.PercentOutput, 0);
     SmartDashboard.putNumber("Arm Enc", getArmEncoderTicks());
   }
 
