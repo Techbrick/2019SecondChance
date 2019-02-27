@@ -34,8 +34,8 @@ public class OI {
   Joystick DrvStick = new Joystick(0);
   Button intakeButton = new JoystickButton(opStick, 6);
   Button ejectButton = new JoystickButton(opStick, 5);
-  Button hatchToggle = new JoystickButton(opStick, 3);
-  // Button hatchEjectButton = new JoystickButton(stick, 1);
+  Button hatchIn = new JoystickButton(DrvStick, 3);
+  Button hatchEjectButton = new JoystickButton(DrvStick, 4);
   POVButton forwards = new POVButton(DrvStick,0);
   POVButton leftwards = new POVButton(DrvStick,270); 
   POVButton backwards = new POVButton(DrvStick,180);
@@ -56,7 +56,7 @@ public class OI {
 
 
     intakeButton.whenPressed(new IntakeBall(robot, true));
-    // hatchEjectButton.whenPressed(new HatchEjector(robot, !robot.arm_subsystem.getHatchEjectorValue())); 
+    hatchEjectButton.whenPressed(new HatchEjector(robot, false)); 
     forwards.whileHeld(new ManualDriveDirection(robot, 0));
     backwards.whileHeld(new ManualDriveDirection(robot, 180));
     leftwards.whileHeld(new ManualDriveDirection(robot, 270));
@@ -81,6 +81,7 @@ public class OI {
     //ShiftGearButton.whenPressed(new ShiftGear(robot, true));
     //ShiftGearButton.whenReleased(new ShiftGear(robot, false));
     // hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot,true),new HatchEjector(robot,false),robot));
+    
     
   }
   // There are a few additional built in buttons you can use. Additionally,

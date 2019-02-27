@@ -35,7 +35,7 @@ public class VisionDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    turny = new TurnPid(0.15, 0.0, 0.0, 0.0, 0.02, 0.5);
+    turny = new TurnPid(_robot);
     _robot.driveTrain.Move(0,0);
     //Figure out what target angle should be
   }
