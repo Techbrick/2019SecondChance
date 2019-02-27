@@ -194,15 +194,14 @@ public class ArmSubsystem extends Subsystem {
 
   public void setArmSpeed(double percentSpeed)
   {
-    if(Math.abs(getArmEncoderTicks() - 16000) < 4000)
+    double angle = -wristStartAngle + Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
+    if(!((getArmEncoderTicks() > 12000 && getArmEncoderTicks() < 20000) && !(Math.abs(angle + 75) < 7 || Math.abs(angle + 30) < 7)))
       mc_arm.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
     SmartDashboard.putNumber("Arm Enc", getArmEncoderTicks());
   }
 
   public void setWristSpeed(double percentSpeed)
   {
-    double angle = wristStartAngle + Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
-    if((getArmEncoderTicks() < 12000 || getArmEncoderTicks() > 20000) && Math.abs(angle - 52.5) < 7)
       mc_wrist.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap)); 
     SmartDashboard.putNumber("Wrist Enc", getWristEncoderTicks());
   }
@@ -238,12 +237,7 @@ public class ArmSubsystem extends Subsystem {
   }
 
   public void setHeights(){// stow, hpu,  h1,   h2,    h3,    cpu,   c1,    c2,    c3
-<<<<<<< HEAD
-    heights = new int[][]{{      0,   0,   0, 14500, 26600, 8000, 11800, 21600, 29400},
-                        {0, -70, -30, -30, -30, -30, -75, -65, -60}};
-=======
     heights = new int[][]{{0,   0,   0, 14500, 26600, 8000, 11800, 21600, 29400},
                           {0, -70, -30,   -33,   -30,  -30,   -75,   -65,   -60}};
->>>>>>> 7034d94910feef995161250e3866cefe24d4ffad
   }
 }
