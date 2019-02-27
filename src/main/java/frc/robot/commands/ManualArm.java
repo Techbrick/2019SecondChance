@@ -59,7 +59,7 @@ public class ManualArm extends Command {
     else{
       wristy.SetTargetAngle(_robot.arm_subsystem.heights[1][6]);
     }
-    if(true){
+    if(false){
       _robot.arm_subsystem.setWristSpeed(wristy.GetAnglePidOutput(Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()))));
     }
   }
