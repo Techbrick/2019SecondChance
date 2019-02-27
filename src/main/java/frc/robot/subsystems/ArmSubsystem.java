@@ -57,9 +57,7 @@ public class ArmSubsystem extends Subsystem {
   public ArmSubsystem(Robot r) {  // Initialize the motion magic constants
     _robot = r;
     robotMap = new RobotMap();
-    wristStartAngle = (int)Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
     setHeights();
-    resetZero();
 
     mc_arm = new TalonSRX(RobotMap.armMasterLeft1);
     mc_armFollower = new VictorSPX(RobotMap.armFollowerRight1);
@@ -118,6 +116,8 @@ public class ArmSubsystem extends Subsystem {
 		mc_wrist.configMotionCruiseVelocity(/*15000*/ 350, 0);
 		mc_wrist.configMotionAcceleration(/*6000*/ 400, 0);
     mc_wrist.configAllowableClosedloopError(0, 50, 0);
+    resetZero();
+    wristStartAngle = (int)Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
 		/* Zero the sensor */
     // mc_arm.setSelectedSensorPosition(0, kPIDLoopIdx, 0);
 
@@ -194,11 +194,11 @@ public class ArmSubsystem extends Subsystem {
 
   public void setArmSpeed(double percentSpeed)
   {
-    double angle = -wristStartAngle + Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
-    if(!((getArmEncoderTicks() > 12000 && getArmEncoderTicks() < 20000) && !(Math.abs(angle + 75) < 7 || Math.abs(angle + 30) < 7)))
+    //double angle = -wristStartAngle + Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
+    //if(!((getArmEncoderTicks() > 12000 && getArmEncoderTicks() < 20000) && !(Math.abs(angle + 75) < 7 || Math.abs(angle + 30) < 7)))
       mc_arm.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
-    else
-      mc_arm.set(ControlMode.PercentOutput, 0);
+    //else
+      //mc_arm.set(ControlMode.PercentOutput, 0);
     SmartDashboard.putNumber("Arm Enc", getArmEncoderTicks());
   }
 
