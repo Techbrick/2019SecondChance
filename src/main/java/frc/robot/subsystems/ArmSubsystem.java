@@ -117,10 +117,7 @@ public class ArmSubsystem extends Subsystem {
 		mc_wrist.configMotionAcceleration(/*6000*/ 400, 0);
     mc_wrist.configAllowableClosedloopError(0, 50, 0);
     resetZero();
-<<<<<<< HEAD
     wristStartAngle = (int)Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
-=======
->>>>>>> d46719d90b43e8e4f2342e1b639ac45c63b3b9b1
 		/* Zero the sensor */
     // mc_arm.setSelectedSensorPosition(0, kPIDLoopIdx, 0);
 
