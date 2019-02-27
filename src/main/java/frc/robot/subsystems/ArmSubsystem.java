@@ -79,7 +79,7 @@ public class ArmSubsystem extends Subsystem {
 
     ejectorSolenoidIn = new Solenoid(4);
     ejectorSolenoidOut = new Solenoid(5);
-    setHatchEjector(true);
+    setHatchEjector(false);
 
 		// /* Set relevant frame periods to be at least as fast as periodic rate */
 		// mc_arm.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 20);
