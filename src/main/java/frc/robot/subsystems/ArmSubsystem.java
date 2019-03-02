@@ -22,6 +22,8 @@ import frc.robot.Helpers;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ManualArm1;
+import frc.robot.commands.ManualArm2;
+import frc.robot.commands.ManualArm;
 
 /**
  * Add your docs here.
@@ -129,7 +131,7 @@ public class ArmSubsystem extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new ManualArm1(_robot));
+    setDefaultCommand(new ManualArm(_robot));
   }
 
   public void resetZero() { // Resets the encoder
@@ -244,6 +246,6 @@ public class ArmSubsystem extends Subsystem {
 
   public void setHeights(){// stow, hpu,  h1,   h2,    h3,    cpu,   c1,    c2,    c3
     heights = new int[][]{{0,   0,   0, 14500, 26600, 11800, 7000, 21600, 29400},
-                          {11, -60, -20,   -23,   -20,  -20,   -95,   -55,   -50}};
+                          {21, -50, -10,   -13,   -10,  -10,   -85,   -45,   -40}};
   }
 }

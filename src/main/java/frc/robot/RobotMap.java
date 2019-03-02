@@ -88,6 +88,8 @@ public class RobotMap {
   public final int maxWristAngle = 130;
   public final int minWristAngle = 0;
 
+  public final int pigeonID = 0;
+
   public RobotMap()
   {
   }

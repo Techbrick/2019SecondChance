@@ -55,7 +55,7 @@ public class WristPid {
 
     public double getCurrentAngle()
     {
-        return Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
+        return Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW())) - _robot.arm_subsystem.wristStartAngle;
     }
 
     public double GetAnglePidOutput(double currentAngle) {

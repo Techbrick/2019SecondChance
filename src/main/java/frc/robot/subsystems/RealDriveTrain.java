@@ -113,6 +113,8 @@ public class RealDriveTrain extends Subsystem {
     double w = (100.0 - Math.abs(y)) * (x / 100.0) + x;
     double r = (v + w) / 2.0;
     double l = (v-w) / 2.0;
+
+    //Yo dudes theres a double deadband
     _leftMaster.set(ControlMode.PercentOutput, manageDeadband(l));
     _rightMaster.set(ControlMode.PercentOutput, manageDeadband(r));
     SmartDashboard.putNumber("Left Input", l);

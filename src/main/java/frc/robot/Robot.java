@@ -39,6 +39,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.kauailabs.navx.frc.AHRS;
 import com.kauailabs.navx.frc.Quaternion;
 
@@ -89,6 +90,9 @@ public class Robot extends TimedRobot {
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
   public DigitalInput DI = new DigitalInput(1);
+
+  PigeonIMU pidgey = new PigeonIMU(robotMap.pigeonID);
+
   // private Helpers helper;
   // public Spark MC_LEDS = new Spark(0);
 
@@ -324,9 +328,14 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("QuaternionX", wristnavX.getQuaternionX());
     SmartDashboard.putNumber("QuaternionY", wristnavX.getQuaternionY());
     SmartDashboard.putNumber("QuaternionZ", wristnavX.getQuaternionZ());
-    SmartDashboard.putNumber("Quaternion Angle", Math.toDegrees(Math.atan2(wristnavX.getQuaternionY(), wristnavX.getQuaternionW())));
+    SmartDashboard.putNumber("Quaternion Angle", Math.toDegrees(Math.atan2(wristnavX.getQuaternionY(), wristnavX.getQuaternionW())) - arm_subsystem.wristStartAngle);
     SmartDashboard.putNumber("WristStartAngle", arm_subsystem.wristStartAngle);
     SmartDashboard.putNumber("Arm Angle", arm_subsystem.getArmEncoderAngle());
+    double[] pidgeyXYZ = new double[3];
+    pidgey.getYawPitchRoll(pidgeyXYZ);
+    SmartDashboard.putNumberArray("Pidgey YawPitchRoll", pidgeyXYZ);
+
+    
   }
 
 }

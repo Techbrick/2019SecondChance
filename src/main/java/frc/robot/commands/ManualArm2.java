@@ -13,7 +13,7 @@ import frc.robot.Helpers;
 import frc.robot.Robot;
 import frc.robot.WristPid;
 
-public class ManualArm1 extends Command {
+public class ManualArm2 extends Command {
   private Robot _robot;
   private WristPid wristy;
   private boolean on = false;
@@ -25,7 +25,7 @@ public class ManualArm1 extends Command {
   private double WristFlat = -60;
   private double WristBreakover = -55;
 
-  public ManualArm1(Robot r) {
+  public ManualArm2(Robot r) {
    
     _robot = r;
     requires(_robot.arm_subsystem);
@@ -41,7 +41,7 @@ public class ManualArm1 extends Command {
   @Override
   protected void execute() {
     double wristCurrentPosition = Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
-
+    float armMultiplier = 1;
     int armCurrentPosition = _robot.arm_subsystem.getArmEncoderTicks();
     boolean armOrange = armCurrentPosition > ArmLowerOrangeLimit && armCurrentPosition < ArmUpperOrangeLimit;
     boolean armRed = armCurrentPosition > ArmLowerRedLimit & armCurrentPosition < ArmUpperRedLimit;
@@ -53,29 +53,20 @@ public class ManualArm1 extends Command {
     SmartDashboard.putBoolean("armRed", armRed);
     SmartDashboard.putBoolean("wristGreen", wristGreen);
     SmartDashboard.putBoolean("wristInBall", wristInBall);
-    if(armOrange){
-      if(!(wristGreen || wristInBall)){
-        if(wristCloserToHatch){
-          wristy.SetTargetAngle(WristHatchAngle);
-          double wristTurn = wristy.GetAnglePidOutput(wristCurrentPosition);
-          _robot.arm_subsystem.setWristSpeed(wristTurn);//2
-        }else{
-          wristy.SetTargetAngle(WristFlat);
-          double wristTurn = wristy.GetAnglePidOutput(wristCurrentPosition);
-          _robot.arm_subsystem.setWristSpeed(wristTurn);//2
-        }
-        if(!armRed){
-          _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5)*.5);//0
-        }
-      }
-      else{
-        _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5));//0
-      }
-    }else{
-      _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(1));//2
-      _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5));//0
-
+    if(armOrange)
+    {
+      armMultiplier = armRed && !wristGreen ? 0 : 0.5F;
+      wristy.SetTargetAngle(wristCloserToHatch ? WristHatchAngle : WristFlat);
+      _robot.arm_subsystem.setWristSpeed(wristy.GetAnglePidOutput(wristy.getCurrentAngle())); 
     }
+    else
+    {
+      _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(1));
+    }
+
+    _robot.arm_subsystem.setArmSpeed(_robot.operatorStick.getRawAxis(5) * armMultiplier);
+
+
 
   }
   
