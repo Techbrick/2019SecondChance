@@ -44,7 +44,7 @@ public class RobotMap {
   public double ki_Angle_Wrist = 0.0;
   public double kd_Angle_Wrist = 0.0;
   public double minWristPower = 0.05;
-  public double maxWristPower = 0.7;
+  public double maxWristPower = 1;
   public double joystickDeadband = 0.05;
   public double driveEncoderTicksPerInch = 437.42;
   public double pidTurnDeadband = 1;
@@ -65,7 +65,7 @@ public class RobotMap {
   public double minTurnPower = .1; //WAS .24
   public double minDrivePower = .12;
   public double maxPidPower = .5;
-  public boolean verbose = true;
+  public boolean verbose = false;
   public double maxVelocity = 10;
   public double maxAccel = 15;
   public double fpsPerVolt = .8;

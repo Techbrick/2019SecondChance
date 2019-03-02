@@ -54,7 +54,7 @@ public class ManualArm1 extends Command {
     SmartDashboard.putBoolean("wristGreen", wristGreen);
     SmartDashboard.putBoolean("wristInBall", wristInBall);
     if(armOrange){
-      if(!wristGreen || wristInBall){
+      if(!(wristGreen || wristInBall)){
         if(wristCloserToHatch){
           wristy.SetTargetAngle(WristHatchAngle);
           double wristTurn = wristy.GetAnglePidOutput(wristCurrentPosition);
@@ -67,6 +67,9 @@ public class ManualArm1 extends Command {
         if(!armRed){
           _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5)*.5);//0
         }
+      }
+      else{
+        _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5));//0
       }
     }else{
       _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(1));//2

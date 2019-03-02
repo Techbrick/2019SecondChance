@@ -31,7 +31,7 @@ public class HatchEjector extends InstantCommand {
   @Override
   protected void execute() {
     robot.arm_subsystem.setHatchEjector(shouldEject);
-    shouldEject = !shouldEject;
+    //shouldEject = !shouldEject;
   }
 
   // Make this return true when this Command no longer needs to run execute()
