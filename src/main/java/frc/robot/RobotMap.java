@@ -84,6 +84,10 @@ public class RobotMap {
   public static int toggle = 0;
 
   public static final int wristHatchSolenoidID = 9;
+
+  public final int maxWristAngle = 130;
+  public final int minWristAngle = 0;
+
   public RobotMap()
   {
   }

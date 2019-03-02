@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Helpers;
 import frc.robot.Robot;
 import frc.robot.WristPid;
 
@@ -21,6 +22,7 @@ public class ManualArm extends Command {
     // eg. requires(chassis);
     _robot = r;
     requires(_robot.arm_subsystem);
+    
     wristy = new WristPid(_robot);
   }
 
@@ -49,19 +51,43 @@ public class ManualArm extends Command {
     // else {
     //   _robot.arm_subsystem.rotateWrist(0);
     // }
-    _robot.arm_subsystem.setWristSpeed(-_robot.operatorStick.getRawAxis(1));//2
+    
+    //TJ Declared unDeprecated
+    _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(1));//2
     _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5));//0
 
     
-    if(_robot.arm_subsystem.getToggly()){
+    /*if(_robot.arm_subsystem.getToggly()){
       wristy.SetTargetAngle(_robot.arm_subsystem.heights[1][2]);
     }
     else{
       wristy.SetTargetAngle(_robot.arm_subsystem.heights[1][6]);
     }
+    */
+    //Check if joystick is active
+    /*if(Helpers.DeadbandJoystick( _robot.operatorStick.getRawAxis(1), _robot.robotMap) > 0)
+    {
+      double angleDifferencePercent = ((_robot.robotMap.maxWristAngle - wristy.getCurrentAngle()) * Helpers.DeadbandJoystick( _robot.operatorStick.getRawAxis(1), _robot.robotMap));
+      wristy.SetTargetAngle(wristy.getCurrentAngle() + angleDifferencePercent);
+    }
+    else if(Helpers.DeadbandJoystick( _robot.operatorStick.getRawAxis(1), _robot.robotMap) < 0)
+    {
+      double angleDifferencePercent = ((_robot.robotMap.minWristAngle + wristy.getCurrentAngle()) * Helpers.DeadbandJoystick( _robot.operatorStick.getRawAxis(1), _robot.robotMap));
+      wristy.SetTargetAngle(wristy.getCurrentAngle() + angleDifferencePercent);
+    }
+    else{
+      wristy.SetTargetAngle(wristy.getTargetAngle());
+    }*/
+
+
+
+    //this will literally never do anything
+    /*
     if(false){
       _robot.arm_subsystem.setWristSpeed(wristy.GetAnglePidOutput(Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()))));
     }
+    */
+    //_robot.arm_subsystem.setWristSpeed(wristy.GetAnglePidOutput(Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()))));
   }
   
   // Make this return true when this Command no longer needs to run execute()

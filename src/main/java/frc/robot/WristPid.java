@@ -18,7 +18,7 @@ public class WristPid {
     private Robot _robot;
     private double _maxPidPower;
 
-    public WristPid(double kp, double ki, double kd, double minTurnPower, double interval, double deadband){
+    public WristPid(double kp, double ki, double kd, double minTurnPower, double interval, double deadband, double maxTurnPower){
         _kp = kp;
         _ki = ki;
         _kd = kd;
@@ -26,7 +26,7 @@ public class WristPid {
         _interval = interval;
         _accumulatedI = 0;
         _deadband = deadband;
-        _maxPidPower = .5;
+        _maxPidPower = maxTurnPower;
         _verbose = false;
         start = true;
     }
@@ -47,6 +47,17 @@ public class WristPid {
     public void SetTargetAngle(double targetAngle){
         _targetAngle = targetAngle;
     }
+
+    public double getTargetAngle()
+    {
+        return _targetAngle;
+    }
+
+    public double getCurrentAngle()
+    {
+        return Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
+    }
+
     public double GetAnglePidOutput(double currentAngle) {
         //currentAngle = Helpers.ConvertYawToHeading(currentAngle);
         SmartDashboard.putNumber("Wtarget", _targetAngle);

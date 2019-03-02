@@ -326,6 +326,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("QuaternionZ", wristnavX.getQuaternionZ());
     SmartDashboard.putNumber("Quaternion Angle", Math.toDegrees(Math.atan2(wristnavX.getQuaternionY(), wristnavX.getQuaternionW())));
     SmartDashboard.putNumber("WristStartAngle", arm_subsystem.wristStartAngle);
+    SmartDashboard.putNumber("Arm Angle", arm_subsystem.getArmEncoderAngle());
   }
 
 }
