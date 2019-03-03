@@ -17,13 +17,13 @@ public class ManualArm2 extends Command {
   private Robot _robot;
   private WristPid wristy;
   private boolean on = false;
-  private int ArmUpperOrangeLimit = 14000;
-  private int ArmUpperRedLimit = 12000;
-  private int ArmLowerRedLimit = 9500;
-  private int ArmLowerOrangeLimit = 8500;
-  private double WristHatchAngle = -20;
-  private double WristFlat = -60;
-  private double WristBreakover = -55;
+  private int ArmUpperOrangeLimit = 18000;
+  private int ArmUpperRedLimit = 17000;
+  private int ArmLowerRedLimit = 15000;
+  private int ArmLowerOrangeLimit = 14000;
+  private double WristHatchAngle = -30;
+  private double WristFlat = -65;
+  private double WristBreakover = -50;
 
   public ManualArm2(Robot r) {
    
