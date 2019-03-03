@@ -245,7 +245,7 @@ public class ArmSubsystem extends Subsystem {
   }
 
   public void setHeights(){// stow, hpu,  h1,   h2,    h3,    cpu,   c1,    c2,    c3
-    heights = new int[][]{{0,   0,   0, 14500, 26600, 11800, 7000, 21600, 29400},
-                          {0, -70, -30,   -33,   -30,  -30,   -105,   -65,   -60}};
+    heights =       new int[][]{{0,   0,   0, 14500, 26600,   7000,  11800, 21600, 29400},
+                                {0, -70, -30,   -30,   -30,   -105,  -70,  -65,   -60}};
   }
 }
