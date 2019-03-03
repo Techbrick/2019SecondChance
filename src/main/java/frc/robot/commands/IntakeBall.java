@@ -19,6 +19,7 @@ public class IntakeBall extends Command {
   private ArmSubsystem arm;
   private double intakeSpeed;
   private boolean pullIn;
+  private boolean isFinished;
 
   public IntakeBall(Robot robot, boolean willIntake) {
     _robot = robot;
@@ -33,6 +34,7 @@ public class IntakeBall extends Command {
   protected void initialize() {
     arm = _robot.arm_subsystem;
     intakeSpeed = 1.0D;
+    isFinished = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -40,7 +42,13 @@ public class IntakeBall extends Command {
   protected void execute() {
     if(pullIn){
       if(!_robot.DI.get())
-      arm.setIntakeSpeed(-intakeSpeed);
+      {
+        arm.setIntakeSpeed(-intakeSpeed);
+      } 
+      else
+      {
+        isFinished = true;
+      }
     }
     else
       arm.setIntakeSpeed(intakeSpeed);
@@ -49,12 +57,13 @@ public class IntakeBall extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return isFinished;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    _robot.arm_subsystem.setIntakeSpeed(0.0D);
   }
 
   // Called when another command which requires one or more of the same
