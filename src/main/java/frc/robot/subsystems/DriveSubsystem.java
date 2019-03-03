@@ -32,6 +32,8 @@ public class DriveSubsystem extends Subsystem {
   Supplier<Double> rightEncoderRate;
   private Solenoid shifterSolenoidIn;
   private Solenoid shifterSolenoidOut;
+  private Solenoid lifterSolenoidIn;
+  private Solenoid lifterSolenoidOut;
 
 
   public DriveSubsystem (Robot robot){
@@ -69,7 +71,12 @@ public class DriveSubsystem extends Subsystem {
     
     shifterSolenoidIn = new Solenoid(0);
     shifterSolenoidOut = new Solenoid(1);
+
+    lifterSolenoidIn = new Solenoid(6);
+    lifterSolenoidOut = new Solenoid(7);
+
     setShifterSolenoid(false);
+    setLifterSolenoid(false);
   }
   public void Move(double leftpower, double rightpower){
     _leftMaster.set(ControlMode.PercentOutput, leftpower);
@@ -145,7 +152,11 @@ public class DriveSubsystem extends Subsystem {
     shifterSolenoidOut.set(!isOpen);
   }
 
-  
+  public void setLifterSolenoid(boolean isOpen)
+  {
+    lifterSolenoidIn.set(isOpen);
+    lifterSolenoidOut.set(!isOpen);
+  }
 
   @Override
   public void initDefaultCommand() {

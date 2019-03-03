@@ -7,12 +7,19 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
+import frc.robot.Robot;
 
-public class LiftRobot extends Command {
-  public LiftRobot() {
+public class LiftRobot extends InstantCommand {
+
+  private boolean shouldOpen;
+  private Robot robot;
+  public LiftRobot(Robot parRobot, boolean parShouldOpen) {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    robot = parRobot;
+    shouldOpen = parShouldOpen;
+    requires(robot.driveTrain);
+
   }
 
   // Called just before this Command runs the first time
@@ -23,6 +30,7 @@ public class LiftRobot extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    robot.driveTrain.setLifterSolenoid(shouldOpen);
   }
 
   // Make this return true when this Command no longer needs to run execute()
