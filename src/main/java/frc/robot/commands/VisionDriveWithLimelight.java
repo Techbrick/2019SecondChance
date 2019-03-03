@@ -8,13 +8,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.Helpers;
 import frc.robot.TurnPid;
 
-public class VisionDrive extends Command {
+public class VisionDriveWithLimelight extends InstantCommand {
   private Robot _robot;
   // private double targetAngle;
   private double absTargetAngle;
@@ -24,9 +25,8 @@ public class VisionDrive extends Command {
   private boolean drive = true;
   private TurnPid turny;
   private double absCurrentAngle;
-  public VisionDrive(Robot robot, int angle) {
+  public VisionDriveWithLimelight(Robot robot) {
     _robot = robot;
-    requires(robot.driveTrain);
     // targetAngle = angle;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -63,14 +63,9 @@ public class VisionDrive extends Command {
     SmartDashboard.putNumber("Angle Error", difference);
     if (drive && _robot.driveTrain.m_LimelightHasValidTarget)
     {
-      double drv = -_robot.driveTrain.m_LimelightDriveCommand;
-      // double turn = _robot.driveTrain.m_LimelightSteerCommand;
-      // double turn = turny.GetAnglePidOutput(helper.ConvertYawToHeading(tx));
-      double turn = turny.GetAnglePidOutput(Helpers.ConvertYawToHeading(absCurrentAngle + difference));
-      SmartDashboard.putNumber("VD drv", drv);
-      SmartDashboard.putNumber("VD Turn", turn);
-      // _robot.driveTrain.Move(drv - turn, -(drv + turn));
-      _robot.driveTrain.ArcadeDrive(drv, turn);
+      // This part is new:
+      Command driveToCmd = new DriveDistanceAndDirection(_robot, NetworkTableInstance.getDefault().getTable("LIDAR").getEntry("dist").getDouble(0) * 0.039, tx);
+      driveToCmd.start();
     }
     else
     {

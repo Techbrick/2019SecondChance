@@ -30,11 +30,12 @@ public class ManualDrive extends Command {
   private double avgVelPV = 0;
   private double avgAccellPV = 0;
   private Button ShiftGearButton;
-
+  private Button ShiftSpeedButton;
   public ManualDrive(Robot robot) {
     // Use requires() here to declare subsystem dependencies
     _robot = robot;
     ShiftGearButton = new JoystickButton(robot.DrvStick, 7);
+    ShiftSpeedButton = new JoystickButton(robot.DrvStick, 8);
     requires(_robot.driveTrain);
   }
 
@@ -47,8 +48,11 @@ public class ManualDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double power = Helpers.DeadbandJoystick( _robot.DrvStick.getY(), _robot.robotMap)*0.8;
-    double twist = Helpers.DeadbandJoystick( _robot.DrvStick.getTwist(), _robot.robotMap)*0.8;
+    //double power = Helpers.DeadbandJoystick( _robot.DrvStick.getY(), _robot.robotMap);
+    //double twist = Helpers.DeadbandJoystick( _robot.DrvStick.getTwist(), _robot.robotMap);
+    float powerReduction = ShiftSpeedButton.get() ? 0.8F : 1;
+    double power = _robot.driveTrain.manageDeadband(_robot.DrvStick.getY() * powerReduction);
+    double twist = _robot.driveTrain.manageDeadband(_robot.DrvStick.getTwist() * powerReduction);
     if(ShiftGearButton.get()){
         _robot.driveTrain.setShifterSolenoid(true);
     }

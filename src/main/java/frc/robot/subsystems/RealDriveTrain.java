@@ -115,8 +115,8 @@ public class RealDriveTrain extends Subsystem {
     double l = (v-w) / 2.0;
 
     //Yo dudes theres a double deadband
-    _leftMaster.set(ControlMode.PercentOutput, manageDeadband(l));
-    _rightMaster.set(ControlMode.PercentOutput, manageDeadband(r));
+    _leftMaster.set(ControlMode.PercentOutput, l);
+    _rightMaster.set(ControlMode.PercentOutput, r);
     SmartDashboard.putNumber("Left Input", l);
     SmartDashboard.putNumber("Right Input", r);
   }

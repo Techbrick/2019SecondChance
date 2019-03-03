@@ -32,10 +32,10 @@ public class OI {
   // number it is.
   Joystick opStick = new Joystick(1);
   Joystick DrvStick = new Joystick(0);
-  Button intakeButton = new JoystickButton(opStick, 6);
-  Button ejectButton = new JoystickButton(opStick, 5);
-  Button hatchEjectButtonIn = new JoystickButton(DrvStick, 1);
-  Button hatchEjectButtonOut = new JoystickButton(DrvStick, 3);
+  Button intakeButton = new JoystickButton(DrvStick, 6);
+  Button ejectButton = new JoystickButton(DrvStick, 5);
+  Button hatchEjectButtonIn = new JoystickButton(opStick, 1);
+  Button hatchEjectButtonOut = new JoystickButton(opStick, 3);
   POVButton forwards = new POVButton(DrvStick,0);
   POVButton leftwards = new POVButton(DrvStick,270); 
   POVButton backwards = new POVButton(DrvStick,180);

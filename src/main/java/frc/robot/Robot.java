@@ -40,6 +40,7 @@ import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.PigeonIMUConfiguration;
 import com.kauailabs.navx.frc.AHRS;
 import com.kauailabs.navx.frc.Quaternion;
 
@@ -92,7 +93,6 @@ public class Robot extends TimedRobot {
   public DigitalInput DI = new DigitalInput(1);
 
   PigeonIMU pidgey = new PigeonIMU(robotMap.pigeonID);
-
   // private Helpers helper;
   // public Spark MC_LEDS = new Spark(0);
 
@@ -108,9 +108,10 @@ public class Robot extends TimedRobot {
     DrvStick = new Joystick(0);
     operatorStick= new Joystick(1);
     robotMap.verbose = true;
-
     navX = new AHRS(SPI.Port.kMXP);
     wristnavX = new AHRS(Port.kUSB);
+
+    
     
     driveTrain = new RealDriveTrain(this);
     arm_subsystem = new ArmSubsystem(this);
@@ -136,6 +137,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Manual Arm", new ManualArm(this));
     SmartDashboard.putData("Dog Left", new DogLegLeft(this) );
     SmartDashboard.putData("Rotate 1", new Turn(this, 1));
+    SmartDashboard.putData("LIDAR assisted auto-place", new VisionDriveWithLimelight(this));
     //SmartDashboard.putData("DriveAlign", new DriveAlign(this));
 
     // SmartDashboard.putData("Height 0", new MoveToHeight(this, 0));
@@ -335,7 +337,7 @@ public class Robot extends TimedRobot {
     pidgey.getYawPitchRoll(pidgeyXYZ);
     SmartDashboard.putNumberArray("Pidgey YawPitchRoll", pidgeyXYZ);
 
-    
+
   }
 
 }
