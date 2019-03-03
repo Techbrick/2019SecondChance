@@ -42,9 +42,9 @@ public class MoveToHeight extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    arm.moveToHeightPreset(position + (arm.getToggly() ? 4 : 0));
+    arm.moveToHeightPreset(position + (arm.getToggly() && position != 0 ? 4 : 0));
     //level.SetTargetAngle(arm.heights[1][position + (arm.getToggly() ? 4 : 0)] + arm.wristStartAngle);
-    level.SetTargetAngle(arm.heights[1][position + (arm.getToggly() ? 4 : 0)]);
+    level.SetTargetAngle(arm.heights[1][position + (arm.getToggly() && position != 0 ? 4 : 0)]);
     turnpower = level.GetAnglePidOutput(level.getCurrentAngle());
     arm.moveToHeightWrist(turnpower);
   }
