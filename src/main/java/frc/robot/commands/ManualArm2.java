@@ -64,7 +64,7 @@ public class ManualArm2 extends Command {
       _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(1));
     }
 
-    _robot.arm_subsystem.setArmSpeed(_robot.operatorStick.getRawAxis(5) * armMultiplier);
+    _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5) * armMultiplier);
 
 
 

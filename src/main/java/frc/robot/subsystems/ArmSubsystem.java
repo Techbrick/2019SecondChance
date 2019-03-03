@@ -131,7 +131,7 @@ public class ArmSubsystem extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new ManualArm2(_robot));
+    setDefaultCommand(new ManualArm(_robot));
   }
 
   public void resetZero() { // Resets the encoder
