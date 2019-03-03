@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commands.HatchEjector;
 import frc.robot.commands.HatchEjectorToggle;
 import frc.robot.commands.IntakeBall;
+import frc.robot.commands.LiftRobot;
 import frc.robot.commands.ShiftGear;
 import frc.robot.commands.VisionDrive;
 import frc.robot.subsystems.ArmSubsystem;
@@ -32,10 +33,11 @@ public class OI {
   // number it is.
   Joystick opStick = new Joystick(1);
   Joystick DrvStick = new Joystick(0);
-  Button intakeButton = new JoystickButton(DrvStick, 6);
-  Button ejectButton = new JoystickButton(DrvStick, 5);
-  Button hatchEjectButtonIn = new JoystickButton(opStick, 1);
-  Button hatchEjectButtonOut = new JoystickButton(opStick, 3);
+  Button intakeButton = new JoystickButton(opStick, 6);
+  Button ejectButton = new JoystickButton(opStick, 5);
+  Button hatchEjectButtonIn = new JoystickButton(DrvStick, 1);
+  Button hatchEjectButtonOut = new JoystickButton(DrvStick, 3);
+  Button lifterDoButton = new JoystickButton(DrvStick, 5);
   POVButton forwards = new POVButton(DrvStick,0);
   POVButton leftwards = new POVButton(DrvStick,270); 
   POVButton backwards = new POVButton(DrvStick,180);
@@ -80,8 +82,8 @@ public class OI {
     
     
     //vision.whileHeld(new VisionDrive(robot,0));
-    //ShiftGearButton.whenPressed(new ShiftGear(robot, true));
-    //ShiftGearButton.whenReleased(new ShiftGear(robot, false));
+    lifterDoButton.whenPressed(new LiftRobot(robot, true));
+    lifterDoButton.whenReleased(new LiftRobot(robot, false));
     // hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot,true),new HatchEjector(robot,false),robot));
     
     

@@ -41,6 +41,7 @@ public class RealDriveTrain extends Subsystem {
   Supplier<Double> rightEncoderRate;
   private double encoderConstant;
   private DoubleSolenoid shifterSolenoid;
+  private DoubleSolenoid lifterSolenoid;
   public boolean m_LimelightHasValidTarget;
   public double m_LimelightDriveCommand;
   public double m_LimelightSteerCommand;
@@ -89,6 +90,10 @@ public class RealDriveTrain extends Subsystem {
     
     shifterSolenoid = new DoubleSolenoid(0,1);
     shifterSolenoid.set(Value.kOff);
+
+    lifterSolenoid = new DoubleSolenoid(6,7);
+    lifterSolenoid.set(Value.kOff);
+
   }
 
   public void Move(double leftpower, double rightpower){
@@ -184,6 +189,11 @@ public class RealDriveTrain extends Subsystem {
   public void setShifterSolenoid(boolean isOpen)
   {
     shifterSolenoid.set(isOpen ? Value.kForward : Value.kReverse);
+  }
+
+  public void setLifterSolenoid(boolean isOpen)
+  {
+    lifterSolenoid.set(isOpen ? Value.kForward : Value.kReverse);
   }
 
   public void Update_Limelight_Tracking()

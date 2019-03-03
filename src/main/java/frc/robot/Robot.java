@@ -336,6 +336,9 @@ public class Robot extends TimedRobot {
     double[] pidgeyXYZ = new double[3];
     pidgey.getYawPitchRoll(pidgeyXYZ);
     SmartDashboard.putNumberArray("Pidgey YawPitchRoll", pidgeyXYZ);
+    SmartDashboard.putNumber("Navx", navX.getRoll());
+    SmartDashboard.putNumber("Navx", navX.getPitch());
+    SmartDashboard.putNumber("Navx", navX.getYaw());
 
 
   }
