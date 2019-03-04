@@ -89,7 +89,6 @@ public class WristPid {
         double angleOutput = p_Angle + i_Angle + d_Angle; //calculate output
         _lastError = angle_error; //set last angle error for d value
       
-      
         angleOutput = Math.abs(angleOutput) < _minTurnPower ? Math.copySign(_minTurnPower, angleOutput) : angleOutput; //if angleOutput is below min, set to min
         angleOutput = Math.abs(angleOutput) > _maxPidPower ? Math.copySign(_maxPidPower, angleOutput) : angleOutput; //if angleOutput is above max, set to max
         //angleOutput = angle_error < 0 ? angleOutput : -angleOutput;

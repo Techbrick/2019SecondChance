@@ -23,7 +23,6 @@ import frc.robot.subsystems.*;
 /*
  An example command. You can replace me with your own command.
 */
-
 public class Turn extends Command {
 
   private ArmSubsystem arm;
@@ -38,19 +37,14 @@ public class Turn extends Command {
     degrees = 360.0 * rev;
   }
 
-
-
   // Called just before this Command runs the first time
-
   @Override
-
   protected void initialize() { // Begins motion magic
       SmartDashboard.putString("Status", "Target is " + degrees);
       arm.turns(degrees);
   }
 
   // Called repeatedly when this Command is scheduled to run
-
   @Override
   protected void execute() {
   }

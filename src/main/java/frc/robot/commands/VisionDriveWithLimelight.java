@@ -25,8 +25,11 @@ public class VisionDriveWithLimelight extends InstantCommand {
   private boolean drive = true;
   private TurnPid turny;
   private double absCurrentAngle;
+  private Command driveToCmd;
+
   public VisionDriveWithLimelight(Robot robot) {
     _robot = robot;
+    requires(_robot.driveTrain);
     // targetAngle = angle;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -64,7 +67,7 @@ public class VisionDriveWithLimelight extends InstantCommand {
     if (drive && _robot.driveTrain.m_LimelightHasValidTarget)
     {
       // This part is new:
-      Command driveToCmd = new DriveDistanceAndDirection(_robot, NetworkTableInstance.getDefault().getTable("LIDAR").getEntry("dist").getDouble(0) * 0.039, tx);
+      driveToCmd = new DriveDistanceAndDirection(_robot, NetworkTableInstance.getDefault().getTable("LIDAR").getEntry("dist").getDouble(0) * 0.039, tx);
       driveToCmd.start();
     }
     else

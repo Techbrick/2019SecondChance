@@ -7,18 +7,13 @@
 
 package frc.robot.commands;
 
-import java.io.PipedReader;
 import java.util.ArrayList;
-import java.util.Stack;
-import java.util.logging.Logger;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Helpers;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 import frc.robot.TurnPid;
 import frc.robot.DTO.PidDataDTO;
 
@@ -55,9 +50,6 @@ public class TuneTurnPid extends Command {
     // Use requires() here to declare subsystem dependencies
     _robot = robot;
     requires(_robot.driveTrain);
-    
-
-
   }
 
   // Called just before this Command runs the first time
@@ -164,13 +156,6 @@ public class TuneTurnPid extends Command {
     }else{
         _robot.driveTrain.Move(0,0);
     }
-    
-
-    
-
-    
-    
-  
   }
 
   // Make this return true when this Command no longer needs to run execute()

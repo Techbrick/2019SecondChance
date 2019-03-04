@@ -1,17 +1,11 @@
 package frc.robot.commands;
 
-
 // import edu.wpi.first.wpilibj.DriverStation;
-// import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.DistancePid;
-// import frc.robot.Helpers;
 import frc.robot.Robot;
-// import frc.robot.RobotMap;
 import frc.robot.TurnPid;
-// import frc.robot.subsystems.RealDriveTrain;
-// import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveDistanceAndDirection extends Command {
 

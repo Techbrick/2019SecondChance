@@ -7,8 +7,6 @@
 
 package frc.robot.commands;
 
-// import java.util.logging.Logger;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

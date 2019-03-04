@@ -9,14 +9,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Helpers;
 import frc.robot.Robot;
 import frc.robot.WristPid;
 
 public class ManualArm2 extends Command {
   private Robot _robot;
   private WristPid wristy;
-  private boolean on = false;
   private int ArmUpperOrangeLimit = 18000;
   private int ArmUpperRedLimit = 17000;
   private int ArmLowerRedLimit = 15000;
@@ -26,7 +24,6 @@ public class ManualArm2 extends Command {
   private double WristBreakover = -50;
 
   public ManualArm2(Robot r) {
-   
     _robot = r;
     requires(_robot.arm_subsystem);
     wristy = new WristPid(.02, 0,0,.1, .02, 1, 1.0);
@@ -65,9 +62,6 @@ public class ManualArm2 extends Command {
     }
 
     _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5) * armMultiplier);
-
-
-
   }
   
   // Make this return true when this Command no longer needs to run execute()

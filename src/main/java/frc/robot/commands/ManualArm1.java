@@ -9,14 +9,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Helpers;
 import frc.robot.Robot;
 import frc.robot.WristPid;
 
 public class ManualArm1 extends Command {
   private Robot _robot;
   private WristPid wristy;
-  private boolean on = false;
   private int ArmUpperOrangeLimit = 14000;
   private int ArmUpperRedLimit = 12000;
   private int ArmLowerRedLimit = 9500;

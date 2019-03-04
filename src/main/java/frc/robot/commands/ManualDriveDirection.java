@@ -7,13 +7,10 @@
 
 package frc.robot.commands;
 
-// import edu.wpi.first.wpilibj.buttons.Button;
-// import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Helpers;
 import frc.robot.Robot;
-// import frc.robot.RobotMap;
 import frc.robot.TurnPid;
 
 /**
@@ -21,8 +18,6 @@ import frc.robot.TurnPid;
  */
 public class ManualDriveDirection extends Command {
   private Robot _robot; 
-  // private double maxVel = 0;
-  // private Button ShiftGearButton;
   private int direction;
   private TurnPid _turnPid;
   private int stoppedCounter = 0;

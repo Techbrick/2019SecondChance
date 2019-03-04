@@ -11,17 +11,13 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import frc.robot.Helpers;
 import frc.robot.Robot;
-// import frc.robot.RobotMap;
 
 /**
  * An example command.  You can replace me with your own command.
  */
 public class ManualDrive extends Command {
   private Robot _robot; 
-//   private double _lastLeftVel;
-//   private double _lastRightVel;
   private double _lastAvgVel;
   private double maxAccell = 0;
   private double maxVel = 0;

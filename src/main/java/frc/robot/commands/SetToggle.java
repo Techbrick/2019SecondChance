@@ -7,14 +7,12 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+// import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
-import frc.robot.subsystems.*;
 
 public class SetToggle extends InstantCommand {
   private Robot _robot;
-  // private boolean toggle;
   
   public SetToggle(Robot robot) {
     _robot = robot;

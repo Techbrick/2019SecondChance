@@ -50,11 +50,6 @@ public class ArmSubsystem extends Subsystem {
   private static final Gains kGainsWrist = new Gains(0.04, 0.0, 0.0, 0.0, 0, 1.0);
   private static final int length = 5;
 
-  // private static final int wristUpperLimit;
-  // private static final int wristLowerLimit;
-  // private static final int armUpperLimit;
-  // private static final int armLowerLimit;
-
   public ArmSubsystem(Robot r) {  // Initialize the motion magic constants
     _robot = r;
     robotMap = new RobotMap();
@@ -243,8 +238,8 @@ public class ArmSubsystem extends Subsystem {
     return toggly;
   }
 
-  public void setHeights(){// stow, hpu,  h1,   h2,    h3,    cpu,   c1,    c2,    c3
+  public void setHeights(){// stow, hpu,  h1,    h2,    h3,    cpu,   c1,    c2,    c3
     heights =       new int[][]{{0,   0,   0, 14500, 26600,   7000,  11800, 21600, 29400},
-                                {0, -70, -30,   -30,   -30,   -105,  -70,  -65,   -60}};
+                                {0, -70, -30,   -30,   -30,   -105,    -70,   -65,   -60}};
   }
 }

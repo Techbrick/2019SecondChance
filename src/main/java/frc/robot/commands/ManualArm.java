@@ -8,14 +8,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Helpers;
+// import frc.robot.Helpers;
 import frc.robot.Robot;
-import frc.robot.WristPid;
+// import frc.robot.WristPid;
 
 public class ManualArm extends Command {
   private Robot _robot;
-  private WristPid wristy;
-  private boolean on = false;
+  // private WristPid wristy;
+  // private boolean on = false;
 
   public ManualArm(Robot r) {
     // Use requires() here to declare subsystem dependencies
@@ -23,7 +23,7 @@ public class ManualArm extends Command {
     _robot = r;
     requires(_robot.arm_subsystem);
     
-    wristy = new WristPid(_robot);
+    // wristy = new WristPid(_robot);
   }
 
   // Called just before this Command runs the first time

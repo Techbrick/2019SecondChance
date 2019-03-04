@@ -17,15 +17,15 @@ public class RobotMap {
   public final int driveStick = 0;
   public final int opStick = 1;
   public double timingInterval = .02;
-  public static boolean verbose = false;
+  public boolean verbose = false;
 
   // CAN IDs
-  public final int leftMaster = 4;
-  public final int leftFollower1 = 5;
-  public final int leftFollower2 = 6;
-  public final int rightMaster = 1;
-  public final int rightFollower1 = 2;
-  public final int rightFollower2 = 3;
+  public static final int leftMaster = 4;
+  public static final int leftFollower1 = 5;
+  public static final int leftFollower2 = 6;
+  public static final int rightMaster = 1;
+  public static final int rightFollower1 = 2;
+  public static final int rightFollower2 = 3;
 
   public static final int armMasterLeft1 = 7;
   public static final int armFollowerRight1 = 8;

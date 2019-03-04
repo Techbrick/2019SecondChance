@@ -7,17 +7,12 @@
 
 package frc.robot.commands;
 
-import java.util.Stack;
-import java.util.logging.Logger;
 
-import edu.wpi.first.wpilibj.DriverStation;
+// import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.DistancePid;
-import frc.robot.Helpers;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 import frc.robot.TurnPid;
 
 /**
@@ -39,16 +34,11 @@ public class TestTurnRight90 extends Command {
     _robot = robot;
     requires(_robot.driveTrain);
     stoppedCounter = 0;
-    
-
-
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    
-    // 
     SmartDashboard.putString("Instructions", "The Robot will turn right 90 degrees, you can press button 2 to stop");
     SmartDashboard.putString("Status", "Running turn right 90 degrees");
     testCompleted = false;
@@ -87,17 +77,14 @@ public class TestTurnRight90 extends Command {
         }
     }else{
       _robot.driveTrain.Move(0, 0); 
-  }
-
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-
     done = _robot.DrvStick.getRawButton(2) || testCompleted;
     if(done){
-        
         SmartDashboard.putString("Status", "Completed turn right 90");
         return true;
     }
@@ -107,7 +94,6 @@ public class TestTurnRight90 extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    
     _robot.driveTrain.Move(0, 0); 
   }
 

@@ -17,8 +17,8 @@ public class HatchEjector extends InstantCommand {
 
   public HatchEjector(Robot parRobot, Boolean parEject) {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     robot = parRobot;
+    requires(robot.arm_subsystem);
     shouldEject = parEject;
   }
 

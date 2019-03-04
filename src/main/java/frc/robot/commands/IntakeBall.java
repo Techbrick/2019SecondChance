@@ -7,8 +7,6 @@
 
 package frc.robot.commands;
 
-// import edu.wpi.first.wpilibj.DigitalInput;
-// import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Command;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -25,7 +23,6 @@ public class IntakeBall extends Command {
     _robot = robot;
     pullIn = willIntake;
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(_robot.arm_subsystem);
   }
 
