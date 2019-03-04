@@ -7,16 +7,16 @@
 
 package frc.robot.commands;
 
-import java.util.Stack;
-import java.util.logging.Logger;
+// import java.util.Stack;
+// import java.util.logging.Logger;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
+// import edu.wpi.first.wpilibj.DriverStation;
+// import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Helpers;
+// import frc.robot.Helpers;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
+// import frc.robot.RobotMap;
 
 /**
  * An example command.  You can replace me with your own command.
@@ -28,20 +28,17 @@ public class FindMinDrivePower extends Command {
     private double minRearDrive;
     
     private Integer testPowerLevel;
-    private Integer powerCounter;
+    // private Integer powerCounter;
     private Integer powerLevelTimer;
     private Integer PowerLevelTimeout;
     private boolean secondTurn = false;
     private boolean testCompleted;
-    private Timer _timer;
+    // private Timer _timer;
 
   public FindMinDrivePower(Robot robot) {
     // Use requires() here to declare subsystem dependencies
     _robot = robot;
     requires(_robot.driveTrain);
-    
-
-
   }
 
   // Called just before this Command runs the first time
@@ -52,14 +49,14 @@ public class FindMinDrivePower extends Command {
     SmartDashboard.putString("Instructions", "The Robot will determine the min motor power to turn, press button 1 to end");
     SmartDashboard.putString("Status", "Running FindMinTurnPower");
     testPowerLevel = 2;
-    powerCounter = 0;
+    // powerCounter = 0;
     powerLevelTimer = 0;
     PowerLevelTimeout = 100;
     secondTurn = false;
     testCompleted = false;
     minFrontDrive = 0;
     minRearDrive = 0;
-    _timer = new Timer();
+    // _timer = new Timer();
     SmartDashboard.putString("Status", "Determined Min FWD PWR: "+ Double.toString(testPowerLevel) + "%");
     SmartDashboard.putNumber("Min fwd PWR", minFrontDrive);
     SmartDashboard.putNumber("Min rvs Pwr", minRearDrive);

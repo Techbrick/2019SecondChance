@@ -1,20 +1,20 @@
 package frc.robot.commands;
 
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
+// import edu.wpi.first.wpilibj.DriverStation;
+// import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.DistancePid;
-import frc.robot.Helpers;
+// import frc.robot.Helpers;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
+// import frc.robot.RobotMap;
 import frc.robot.TurnPid;
 // import frc.robot.subsystems.RealDriveTrain;
-import frc.robot.subsystems.DriveSubsystem;
+// import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveDistanceAndDirection extends Command {
-    
+
     private Robot _robot;
     private int stoppedCounter;
     private boolean testCompleted;
@@ -23,24 +23,16 @@ public class DriveDistanceAndDirection extends Command {
     private TurnPid _turnPid;
     private double _heading;
 
-
   public DriveDistanceAndDirection(Robot robot, double distance, double heading) {
-    
     _robot = robot;
     requires(_robot.driveTrain);
     _distance = distance;
     _heading = heading;
     stoppedCounter = 0;
-    
-
-
   }
 
   @Override
   protected void initialize() {
-    
-    
-   
     SmartDashboard.putString("Status", "Running move " + Double.toString(_distance) + " inches, heading " + Double.toString(_heading) );
     testCompleted = false;
     stoppedCounter = 0;
@@ -49,11 +41,9 @@ public class DriveDistanceAndDirection extends Command {
     _turnPid = new TurnPid(_robot);
     _turnPid.SetTargetAngle(_heading);
   }
-
  
   @Override
   protected void execute() {
-   
         double power = _distancePid.GetDistancePidOutput();
         double turnPower = _turnPid.GetAnglePidOutput(_robot.navX.getYaw());
         _robot.driveTrain.Move(power - turnPower, power + turnPower); 
@@ -68,9 +58,7 @@ public class DriveDistanceAndDirection extends Command {
         if (stoppedCounter > 5){
             testCompleted = true;
         }
-
   }
-
   
   @Override
   protected boolean isFinished() {
@@ -84,16 +72,12 @@ public class DriveDistanceAndDirection extends Command {
     return false;
   }
 
-  
   @Override
   protected void end() {
-    
     _robot.driveTrain.Move(0, 0); 
   }
 
-  
   @Override
   protected void interrupted() {
-    
   }
 }

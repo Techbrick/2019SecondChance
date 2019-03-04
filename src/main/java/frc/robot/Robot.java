@@ -7,50 +7,50 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.CameraServer;
+// import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.IterativeRobot;
+// import edu.wpi.first.wpilibj.GenericHID;
+// import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
+// import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+// import edu.wpi.first.wpilibj.Spark;
+// import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+// import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 // import frc.robot.subsystems.AccelerometerSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
-import frc.robot.subsystems.DriveSubsystem;
+// import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.RealDriveTrain;
-import frc.robot.subsystems.SensorPet;
+// import frc.robot.subsystems.SensorPet;
 
-import java.util.function.Supplier;
-import com.ctre.phoenix.*;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.sensors.PigeonIMU;
-import com.ctre.phoenix.sensors.PigeonIMUConfiguration;
+// import java.util.function.Supplier;
+// import com.ctre.phoenix.*;
+// import com.ctre.phoenix.motorcontrol.ControlMode;
+// import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+// import com.ctre.phoenix.motorcontrol.NeutralMode;
+// import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
+// import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+// import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+// import com.ctre.phoenix.sensors.PigeonIMU;
+// import com.ctre.phoenix.sensors.PigeonIMUConfiguration;
 import com.kauailabs.navx.frc.AHRS;
-import com.kauailabs.navx.frc.Quaternion;
+// import com.kauailabs.navx.frc.Quaternion;
 
 //import org.omg.CORBA.PRIVATE_MEMBER;
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
+// import org.opencv.core.Mat;
+// import org.opencv.imgproc.Imgproc;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
+// import edu.wpi.cscore.CvSink;
+// import edu.wpi.cscore.CvSource;
+// import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
@@ -68,7 +68,7 @@ public class Robot extends TimedRobot {
   public RobotMap robotMap = new RobotMap();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-  public SensorPet pet = new SensorPet();
+  // public SensorPet pet = new SensorPet();
   
   public NetworkTableEntry autoSpeedEntry = NetworkTableInstance.getDefault().getEntry("/robot/autospeed");
   public NetworkTableEntry telemetryEntry = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
@@ -85,14 +85,13 @@ public class Robot extends TimedRobot {
   public RealDriveTrain driveTrain;
   public ArmSubsystem arm_subsystem;
   public CompressorSubsystem comp_subsystem;
-  // public AccelerometerSubsystem accelerometer_subsystem;
   public AHRS navX;
   public AHRS wristnavX;
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
   public DigitalInput DI = new DigitalInput(1);
 
-  PigeonIMU pidgey = new PigeonIMU(robotMap.pigeonID);
+  // PigeonIMU pidgey = new PigeonIMU(robotMap.pigeonID); // Pigeon threw nullpointer exceptions
   // private Helpers helper;
   // public Spark MC_LEDS = new Spark(0);
 
@@ -111,8 +110,6 @@ public class Robot extends TimedRobot {
     navX = new AHRS(SPI.Port.kMXP);
     wristnavX = new AHRS(Port.kUSB);
 
-    
-    
     driveTrain = new RealDriveTrain(this);
     arm_subsystem = new ArmSubsystem(this);
     comp_subsystem = new CompressorSubsystem(this);
@@ -150,7 +147,6 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putData("Height 7", new MoveToHeight(this, 7));
     // SmartDashboard.putData("Height 8", new MoveToHeight(this, 8));
     // SmartDashboard.putData("Stowreset", new ResetAutoArm(this));
-    // SmartDashboard.putData("Accelerometer Angle", new AccelerometerAngle(this));
 
     SmartDashboard.putData("RocketAngle", new VisionDrive(this,-60)); // You realize that there are 2 rockets?
     SmartDashboard.putData("Straight", new VisionDrive(this,0));
@@ -167,27 +163,22 @@ public class Robot extends TimedRobot {
     NetworkTableInstance.getDefault().setUpdateRate(0.020);
     
     m_oi = new OI(this);
-    double initYaw = navX.getYaw();
-    SmartDashboard.putNumber("intYaw", initYaw);
-    //navX.reset();
+    SmartDashboard.putNumber("intYaw", navX.getYaw());
     navX.zeroYaw();
+
     // new Thread(() -> {
     //   UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
     //   camera.setResolution(640, 480);
-      
     //   CvSink cvSink = CameraServer.getInstance().getVideo();
     //   CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
-      
     //   Mat source = new Mat();
     //   Mat output = new Mat();
-      
     //   while(!Thread.interrupted()) {
     //       cvSink.grabFrame(source);
     //       Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
     //       outputStream.putFrame(output);
     //   }
-  // }).start();
-
+    // }).start();
    }
 
   /**
@@ -200,7 +191,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    
     // Logger();
   }
 
@@ -292,55 +282,47 @@ public class Robot extends TimedRobot {
 
   
   private void Logger(){
-    if(true){
+    if(robotMap.verbose){
       SmartDashboard.putNumber("l_encoder_pos", Math.round(driveTrain.GetLeftEncoderPosition()));
       // SmartDashboard.putNumber("l_encoder_rate", Math.round(leftEncoderRate.get()));
       SmartDashboard.putNumber("r_encoder_pos", Math.round(driveTrain.GetRightEncoderPosition()));
       // SmartDashboard.putNumber("r_encoder_rate", Math.round(rightEncoderRate.get()));
-      SmartDashboard.putNumber("navx pitch", Math.round(navX.getPitch()));
-      SmartDashboard.putNumber("navx Heading", navX.getCompassHeading());
-      SmartDashboard.putNumber("navx Angle", Math.round(navX.getRawMagX()));
+      SmartDashboard.putNumber("navX Heading", navX.getCompassHeading());
+      SmartDashboard.putNumber("navX Angle", Math.round(navX.getRawMagX()));
       SmartDashboard.putNumber("avgEncoderRate", driveTrain.GetAverageEncoderRate());
       SmartDashboard.putNumber("Arm Encoder Ticks", arm_subsystem.getArmEncoderTicks()); //Ticks * bleh turns ticks into angles, / 25 to get past the reduction. 
       SmartDashboard.putNumber("Arm Encoder Angle", arm_subsystem.getArmEncoderTicks() * 360 / (4096 * 25));
-      // SmartDashboard.putNumber("Wrist Encoder Ticks", arm_subsystem.getWristEncoderTicks());
-
+      SmartDashboard.putNumber("Wrist Encoder Ticks", arm_subsystem.getWristEncoderTicks());
       SmartDashboard.putNumber("Wrist Encoder Angle", arm_subsystem.getWristEncoderTicks() * 360 / (4096 * 25));
-      SmartDashboard.putBoolean("Ball in", DI.get());
-
-      // SmartDashboard.putNumber("raw yaw", wristnavX.getYaw());
-      // SmartDashboard.putNumber("raw pitch", wristnavX.getPitch());
-      // SmartDashboard.putNumber("raw roll", wristnavX.getRoll());
+      SmartDashboard.putBoolean("navXConnected", navX.isConnected());
+      SmartDashboard.putBoolean("navXConnected", wristnavX.isConnected());
+      SmartDashboard.putNumber("QuaternionW", wristnavX.getQuaternionW());
+      SmartDashboard.putNumber("QuaternionX", wristnavX.getQuaternionX());
+      SmartDashboard.putNumber("QuaternionY", wristnavX.getQuaternionY());
+      SmartDashboard.putNumber("QuaternionZ", wristnavX.getQuaternionZ());
+      SmartDashboard.putNumber("Quaternion Angle", Math.toDegrees(Math.atan2(wristnavX.getQuaternionY(), wristnavX.getQuaternionW())) - arm_subsystem.wristStartAngle);
+      SmartDashboard.putNumber("WristStartAngle", arm_subsystem.wristStartAngle);
     }
     
-    SmartDashboard.putBoolean("navXConnected", navX.isConnected());
-    // SmartDashboard.putNumber("navX yaw", Math.round(driveTrain.getRobotYaw()));
-    // SmartDashboard.putNumber("Raw yaw", Math.round(yaw));
-    //SmartDashboard.putBoolean("joystick buttom", stick.getRawButton(1));
     double fps = driveTrain.GetAverageEncoderRate()*12;
     SmartDashboard.putNumber("Drivetrain encoder rate", fps);
-    SmartDashboard.putBoolean("bit1", pet.getbit1());
-    SmartDashboard.putBoolean("bit2", pet.getbit2());
-    SmartDashboard.putBoolean("bit3", pet.getbit3());
-    SmartDashboard.putBoolean("bit4", pet.getbit4());
+    // SmartDashboard.putBoolean("bit1", pet.getbit1());
+    // SmartDashboard.putBoolean("bit2", pet.getbit2());
+    // SmartDashboard.putBoolean("bit3", pet.getbit3());
+    // SmartDashboard.putBoolean("bit4", pet.getbit4());
+    
+    SmartDashboard.putNumber("Arm Angle", arm_subsystem.getArmEncoderAngle());
+    // double[] pidgeyXYZ = new double[3];
+    // pidgey.getYawPitchRoll(pidgeyXYZ);
+    // SmartDashboard.putNumberArray("Pidgey YawPitchRoll", pidgeyXYZ);
+    SmartDashboard.putNumber("Navx Roll", navX.getRoll());
+    SmartDashboard.putNumber("Navx Pitch", navX.getPitch());
+    SmartDashboard.putNumber("Navx Yaw", navX.getYaw());
+
+    //IMPORTANT BOOLEANS
     SmartDashboard.putBoolean("Hatch/Ball toggle", arm_subsystem.getToggly());
     SmartDashboard.putBoolean("HatchEjector", arm_subsystem.getHatchEjectorValue());
-    
-    SmartDashboard.putNumber("QuaternionW", wristnavX.getQuaternionW());
-    SmartDashboard.putNumber("QuaternionX", wristnavX.getQuaternionX());
-    SmartDashboard.putNumber("QuaternionY", wristnavX.getQuaternionY());
-    SmartDashboard.putNumber("QuaternionZ", wristnavX.getQuaternionZ());
-    SmartDashboard.putNumber("Quaternion Angle", Math.toDegrees(Math.atan2(wristnavX.getQuaternionY(), wristnavX.getQuaternionW())) - arm_subsystem.wristStartAngle);
-    SmartDashboard.putNumber("WristStartAngle", arm_subsystem.wristStartAngle);
-    SmartDashboard.putNumber("Arm Angle", arm_subsystem.getArmEncoderAngle());
-    double[] pidgeyXYZ = new double[3];
-    pidgey.getYawPitchRoll(pidgeyXYZ);
-    SmartDashboard.putNumberArray("Pidgey YawPitchRoll", pidgeyXYZ);
-    SmartDashboard.putNumber("Navx", navX.getRoll());
-    SmartDashboard.putNumber("Navx", navX.getPitch());
-    SmartDashboard.putNumber("Navx", navX.getYaw());
-
-
+    SmartDashboard.putBoolean("Ball in", DI.get());
   }
 
 }

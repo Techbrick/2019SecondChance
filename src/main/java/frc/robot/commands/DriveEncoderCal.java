@@ -7,7 +7,7 @@
 
 package frc.robot.commands;
 
-import java.util.logging.Logger;
+// import java.util.logging.Logger;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,7 +27,6 @@ public class DriveEncoderCal extends Command {
     // Use requires() here to declare subsystem dependencies
     _robot = robot;
     requires(_robot.driveTrain);
-
   }
 
   // Called just before this Command runs the first time
@@ -41,30 +40,24 @@ public class DriveEncoderCal extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
     if(_robot == null){
         DriverStation.reportError("_robot is null", false);
         SmartDashboard.putString("Status", "_robot is null");
     }else{
        // SmartDashboard.putString("Status", "Running Encoder Cal execute");
-
         double power = Helpers.DeadbandJoystick(_robot.DrvStick.getY(), _robot.robotMap);
         SmartDashboard.putString("Status", "Running Encoder Cal execute stick "+ Double.toString(power));
         _robot.driveTrain.Move(power, power);
     }
-      
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    
     boolean done = _robot.DrvStick.getRawButton(1);
     if(done){
-        
         SmartDashboard.putString("Status", "Calculating Encoder Cal");
         endingEncoderPosition = _robot.driveTrain.GetAverageEncoderPositionRaw();
-    
         return true;
     }
     return false;
@@ -75,7 +68,6 @@ public class DriveEncoderCal extends Command {
   protected void end() {
     SmartDashboard.putString("Status", "Calculating Encoder Cal");
     double ticksPerInch = (endingEncoderPosition - startingEncoderPosition)/48;
-    
     if(ticksPerInch == 0){
         SmartDashboard.putString("Instructions", "Your should check the connections and configuration of your encoders");
         SmartDashboard.putString("Status", "ERROR - There was no change in encoder position detected");
@@ -85,7 +77,6 @@ public class DriveEncoderCal extends Command {
         SmartDashboard.putNumber("Endcoder Ticks/In", ticksPerInch);
         _robot.encoderConstant =1/ticksPerInch;
     }
-    
   }
 
   // Called when another command which requires one or more of the same

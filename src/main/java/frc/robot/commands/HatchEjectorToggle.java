@@ -7,12 +7,12 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+// import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.ConditionalCommand;
 import frc.robot.Robot;
 
-public class HatchEjectorToggle extends  ConditionalCommand  {
+public class HatchEjectorToggle extends ConditionalCommand  {
   private Robot robot;
   public HatchEjectorToggle(Command parOnTrue, Command parOnFalse, Robot parRobot)
   {

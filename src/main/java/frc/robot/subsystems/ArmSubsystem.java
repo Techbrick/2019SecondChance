@@ -10,12 +10,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
+// import edu.wpi.first.wpilibj.DoubleSolenoid;
+// import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Talon;
+// import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Helpers;
@@ -47,8 +46,8 @@ public class ArmSubsystem extends Subsystem {
   // Constants
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
-  private static final Gains kGains = new Gains(0.3, 0.0, 0.0, 0.0, 0, 1.0);
-  private static final Gains kGainsWrist = new Gains(0.03, 0.0, 0.0, 0.0, 0, 1.0);
+  private static final Gains kGains = new Gains(0.02, 0.0, 0.0, 0.0, 0, 1.0);
+  private static final Gains kGainsWrist = new Gains(0.04, 0.0, 0.0, 0.0, 0, 1.0);
   private static final int length = 5;
 
   // private static final int wristUpperLimit;
@@ -134,7 +133,7 @@ public class ArmSubsystem extends Subsystem {
     setDefaultCommand(new ManualArm(_robot));
   }
 
-  public void resetZero() { // Resets the encoder
+  public void resetZero() { // Resets the encoder - Only called at startup
     mc_arm.setSelectedSensorPosition(0, 0, 0);
     mc_wrist.setSelectedSensorPosition(0, 0, 0);
   }

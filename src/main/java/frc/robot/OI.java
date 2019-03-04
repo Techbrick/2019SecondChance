@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commands.HatchEjector;
-import frc.robot.commands.HatchEjectorToggle;
+// import frc.robot.commands.HatchEjectorToggle;
 import frc.robot.commands.IntakeBall;
 import frc.robot.commands.LiftRobot;
-import frc.robot.commands.ShiftGear;
-import frc.robot.commands.VisionDrive;
-import frc.robot.subsystems.ArmSubsystem;
+// import frc.robot.commands.ShiftGear;
+// import frc.robot.commands.VisionDrive;
+// import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.commands.ManualDriveDirection;
 import frc.robot.commands.MoveToHeight;
 import frc.robot.commands.SetToggle;
@@ -55,8 +55,6 @@ public class OI {
   // Button vision = new JoystickButton(DrvStick, 1);
   // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
-
-
     intakeButton.whileHeld(new IntakeBall(robot, true));
     ejectButton.whileHeld(new IntakeBall(robot, false));
     hatchEjectButtonIn.whenPressed(new HatchEjector(robot, true)); 

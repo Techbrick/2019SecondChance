@@ -7,10 +7,10 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.buttons.Button;
+// import edu.wpi.first.wpilibj.DigitalInput;
+// import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.ArmSubsystem;
 
@@ -41,12 +41,10 @@ public class IntakeBall extends Command {
   @Override
   protected void execute() {
     if(pullIn){
-      if(!_robot.DI.get())
-      {
+      if(!_robot.DI.get()){
         arm.setIntakeSpeed(-intakeSpeed);
       } 
-      else
-      {
+      else{
         isFinished = true;
       }
     }

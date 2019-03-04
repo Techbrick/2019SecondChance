@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Helpers;
+// import frc.robot.Helpers;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
+// import frc.robot.RobotMap;
 
 /**
  * An example command.  You can replace me with your own command.
@@ -31,6 +31,7 @@ public class ManualDrive extends Command {
   private double avgAccellPV = 0;
   private Button ShiftGearButton;
   private Button ShiftSpeedButton;
+  
   public ManualDrive(Robot robot) {
     // Use requires() here to declare subsystem dependencies
     _robot = robot;
@@ -48,7 +49,7 @@ public class ManualDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //double power = Helpers.DeadbandJoystick( _robot.DrvStick.getY(), _robot.robotMap);
+    //double power = Helpers.DeadbandJoystick( _robot.DrvStick.getY(), _robot.robotMap); // DOUBLE DEADBAND DONT USE
     //double twist = Helpers.DeadbandJoystick( _robot.DrvStick.getTwist(), _robot.robotMap);
     float powerReduction = ShiftSpeedButton.get() ? 0.8F : 1;
     double power = _robot.driveTrain.manageDeadband(_robot.DrvStick.getY() * powerReduction);

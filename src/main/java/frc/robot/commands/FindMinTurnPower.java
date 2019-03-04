@@ -7,15 +7,15 @@
 
 package frc.robot.commands;
 
-import java.util.Stack;
-import java.util.logging.Logger;
+// import java.util.Stack;
+// import java.util.logging.Logger;
 
-import edu.wpi.first.wpilibj.DriverStation;
+// import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Helpers;
+// import frc.robot.Helpers;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
+// import frc.robot.RobotMap;
 
 /**
  * An example command.  You can replace me with your own command.
@@ -27,7 +27,7 @@ public class FindMinTurnPower extends Command {
     private double minRightTurn;
     private double avgTurnPower;
     private Integer testPowerLevel;
-    private Integer powerCounter;
+    // private Integer powerCounter;
     private Integer powerLevelTimer;
     private Integer PowerLevelTimeout;
     private boolean secondTurn = false;
@@ -47,7 +47,7 @@ public class FindMinTurnPower extends Command {
     SmartDashboard.putString("Instructions", "The Robot will determine the min motor power to turn, press button 1 to end");
     SmartDashboard.putString("Status", "Running FindMinTurnPower");
     testPowerLevel = 2;
-    powerCounter = 0;
+    // powerCounter = 0;
     powerLevelTimer = 0;
     PowerLevelTimeout = 50;
     secondTurn = false;
