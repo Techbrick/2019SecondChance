@@ -10,6 +10,5 @@ public class DogLegLeft extends CommandGroup{
         addSequential(new DriveDistanceAndDirection(robot, 12,315));
         addSequential(new TurnInPlace(robot, 0));
         addSequential(new DriveDistanceAndDirection(robot, 12,0));
-        
     }
 }

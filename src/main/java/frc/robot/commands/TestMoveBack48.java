@@ -16,7 +16,7 @@ import frc.robot.DistancePid;
 import frc.robot.Robot;
 
 /**
- * An example command.  You can replace me with your own command.
+ * Moves the robot backwards 48 inches
  */
 public class TestMoveBack48 extends Command {
     
@@ -26,7 +26,6 @@ public class TestMoveBack48 extends Command {
     private DistancePid _distancePid;
     Timer _timer;
     double _startTime;
-
 
   public TestMoveBack48(Robot robot) {
     // Use requires() here to declare subsystem dependencies
@@ -74,7 +73,6 @@ public class TestMoveBack48 extends Command {
     else{
         _robot.driveTrain.Move(0, 0); 
     }
-  
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -84,7 +82,7 @@ public class TestMoveBack48 extends Command {
     boolean done = _robot.DrvStick.getRawButton(2) || testCompleted;
     if(done){
          _robot.driveTrain.Move(0, 0); 
-        SmartDashboard.putString("Status", "Completed move back 24 inches");
+        SmartDashboard.putString("Status", "Completed move back 48 inches");
         return true;
     }
     return false;

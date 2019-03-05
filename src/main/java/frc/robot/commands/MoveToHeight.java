@@ -43,7 +43,6 @@ public class MoveToHeight extends Command {
   @Override
   protected void execute() {
     arm.moveToHeightPreset(position + (arm.getToggly() && position != 0 ? 4 : 0));
-    //level.SetTargetAngle(arm.heights[1][position + (arm.getToggly() ? 4 : 0)] + arm.wristStartAngle);
     level.SetTargetAngle(arm.heights[1][position + (arm.getToggly() && position != 0 ? 4 : 0)]);
     turnpower = level.GetAnglePidOutput(level.getCurrentAngle());
     arm.moveToHeightWrist(turnpower);
@@ -52,7 +51,7 @@ public class MoveToHeight extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    //return arm.isTurnComplete(Math.asin(position / RobotMap.armLength)) && testCompleted;
+    // Keep holding the button in case the belt slips
     return false;
   }
 

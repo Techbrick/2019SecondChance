@@ -87,7 +87,6 @@ public class FindMinDrivePower extends Command {
             testCompleted = true;
         }
         moving = true;
-
     }  
     if(moving && !secondTurn){
         powerLevelTimer = 0;
@@ -95,11 +94,9 @@ public class FindMinDrivePower extends Command {
         secondTurn = true;
 
     }else if(!moving){
-
         powerLevelTimer ++;
         if(powerLevelTimer > PowerLevelTimeout){
             testPowerLevel = testPowerLevel + 2;
-            
             powerLevelTimer = 0;
         }
     }      

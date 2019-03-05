@@ -81,7 +81,6 @@ public class TuneDistancePid extends Command {
   protected void execute() {
     if(_robot.DrvStick.getRawButton(1)){
         double target = 0;
-        boolean moving = false;  
         secondTurn = false;
         if(iterationCounter % 2 == 0){
             target = 24;

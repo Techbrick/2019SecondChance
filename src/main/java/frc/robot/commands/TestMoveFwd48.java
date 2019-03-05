@@ -15,7 +15,7 @@ import frc.robot.DistancePid;
 import frc.robot.Robot;
 
 /**
- * An example command.  You can replace me with your own command.
+ * Moves the robot forward 48 inches
  */
 public class TestMoveFwd48 extends Command {
     

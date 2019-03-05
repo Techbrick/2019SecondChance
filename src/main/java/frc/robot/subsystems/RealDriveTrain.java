@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
@@ -48,12 +49,12 @@ public class RealDriveTrain extends Subsystem {
 
   public RealDriveTrain(Robot robot) {
     _robot = robot;
-    _leftMaster = new TalonSRX(robot.robotMap.leftMaster);
-    _leftFollower1 = new VictorSPX(robot.robotMap.leftFollower1);
-    _leftFollower2 = new VictorSPX(robot.robotMap.leftFollower2);
-    _rightMaster = new TalonSRX(robot.robotMap.rightMaster);
-    _rightFollower1 = new VictorSPX(robot.robotMap.rightFollower1);
-    _rightFollower2 = new VictorSPX(robot.robotMap.rightFollower2);
+    _leftMaster = new TalonSRX(RobotMap.leftMaster);
+    _leftFollower1 = new VictorSPX(RobotMap.leftFollower1);
+    _leftFollower2 = new VictorSPX(RobotMap.leftFollower2);
+    _rightMaster = new TalonSRX(RobotMap.rightMaster);
+    _rightFollower1 = new VictorSPX(RobotMap.rightFollower1);
+    _rightFollower2 = new VictorSPX(RobotMap.rightFollower2);
     _leftFollower1.setInverted(false);
     _leftFollower2.setInverted(false);
     _leftMaster.setInverted(false);
@@ -64,7 +65,7 @@ public class RealDriveTrain extends Subsystem {
     _leftFollower2.follow(_leftMaster);
     _rightFollower1.follow(_rightMaster);
     _rightFollower2.follow(_rightMaster);
-    encoderConstant = (1 / robot.robotMap.driveEncoderTicksPerInch);
+    encoderConstant = (1 / RobotMap.driveEncoderTicksPerInch);
     _leftMaster.clearStickyFaults(30);
     _rightMaster.clearStickyFaults(30);
     _leftMaster.setNeutralMode(NeutralMode.Brake);

@@ -72,10 +72,10 @@ public class OI {
     autoToggle.whenPressed(cmd);
 
     autoToggle.whenPressed(new SetToggle(robot));
-    posZero.whileHeld(new MoveToHeight(robot, 1)); // hatch pickup
-    posOne.whileHeld(new MoveToHeight(robot,2)); // hatch level 1
-    posTwo.whileHeld(new MoveToHeight(robot,3)); // hatch level 2
-    posThree.whileHeld(new MoveToHeight(robot,4)); // hatch level 3
+    posZero.whileHeld(new MoveToHeight(robot, 1)); // pickup
+    posOne.whileHeld(new MoveToHeight(robot,2)); // level 1
+    posTwo.whileHeld(new MoveToHeight(robot,3)); // level 2
+    posThree.whileHeld(new MoveToHeight(robot,4)); // level 3
     stow.whileHeld(new MoveToHeight(robot,0));
     
     
