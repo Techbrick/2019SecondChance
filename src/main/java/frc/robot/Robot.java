@@ -106,7 +106,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("Status", "");
     DrvStick = new Joystick(0);
     operatorStick= new Joystick(1);
-    robotMap.verbose = true;
+    robotMap.verbose = false;
     navX = new AHRS(SPI.Port.kMXP);
     wristnavX = new AHRS(Port.kUSB);
 
@@ -279,7 +279,6 @@ public class Robot extends TimedRobot {
     Logger();
   }
   //   this function is needed for commands to read position;
-
   
   private void Logger(){
     if(robotMap.verbose){
@@ -291,7 +290,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("navX Angle", Math.round(navX.getRawMagX()));
       SmartDashboard.putNumber("avgEncoderRate", driveTrain.GetAverageEncoderRate());
       SmartDashboard.putNumber("Arm Encoder Ticks", arm_subsystem.getArmEncoderTicks()); //Ticks * bleh turns ticks into angles, / 25 to get past the reduction. 
-      SmartDashboard.putNumber("Arm Encoder Angle", arm_subsystem.getArmEncoderTicks() * 360 / (4096 * 25));
+      SmartDashboard.putNumber("Arm Angle", arm_subsystem.getArmEncoderAngle());
       SmartDashboard.putNumber("Wrist Encoder Ticks", arm_subsystem.getWristEncoderTicks());
       SmartDashboard.putNumber("Wrist Encoder Angle", arm_subsystem.getWristEncoderTicks() * 360 / (4096 * 25));
       SmartDashboard.putBoolean("navXConnected", navX.isConnected());
@@ -302,16 +301,14 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("QuaternionZ", wristnavX.getQuaternionZ());
       SmartDashboard.putNumber("Quaternion Angle", Math.toDegrees(Math.atan2(wristnavX.getQuaternionY(), wristnavX.getQuaternionW())) - arm_subsystem.wristStartAngle);
       SmartDashboard.putNumber("WristStartAngle", arm_subsystem.wristStartAngle);
+      SmartDashboard.putNumber("Drivetrain encoder rate", driveTrain.GetAverageEncoderRate()*12);
     }
     
-    double fps = driveTrain.GetAverageEncoderRate()*12;
-    SmartDashboard.putNumber("Drivetrain encoder rate", fps);
     // SmartDashboard.putBoolean("bit1", pet.getbit1());
     // SmartDashboard.putBoolean("bit2", pet.getbit2());
     // SmartDashboard.putBoolean("bit3", pet.getbit3());
     // SmartDashboard.putBoolean("bit4", pet.getbit4());
     
-    SmartDashboard.putNumber("Arm Angle", arm_subsystem.getArmEncoderAngle());
     // double[] pidgeyXYZ = new double[3];
     // pidgey.getYawPitchRoll(pidgeyXYZ);
     // SmartDashboard.putNumberArray("Pidgey YawPitchRoll", pidgeyXYZ);
@@ -324,5 +321,4 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("HatchEjector", arm_subsystem.getHatchEjectorValue());
     SmartDashboard.putBoolean("Ball in", DI.get());
   }
-
 }

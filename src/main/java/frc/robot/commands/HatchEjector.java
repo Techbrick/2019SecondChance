@@ -11,12 +11,13 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 
 public class HatchEjector extends InstantCommand {
-
+  
   private boolean shouldEject;
   private Robot robot;
 
   public HatchEjector(Robot parRobot, Boolean parEject) {
     // Use requires() here to declare subsystem dependencies
+    super();
     robot = parRobot;
     requires(robot.arm_subsystem);
     shouldEject = parEject;
@@ -25,29 +26,29 @@ public class HatchEjector extends InstantCommand {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-  }
-
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
     robot.arm_subsystem.setHatchEjector(shouldEject);
-    //shouldEject = !shouldEject;
   }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return true;
-  }
+  // // Called repeatedly when this Command is scheduled to run
+  // @Override
+  // protected void execute() {
+  //   //shouldEject = !shouldEject;
+  // }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
+  // // Make this return true when this Command no longer needs to run execute()
+  // @Override
+  // protected boolean isFinished() {
+  //   return true;
+  // }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
+  // // Called once after isFinished returns true
+  // @Override
+  // protected void end() {
+  // }
+
+  // // Called when another command which requires one or more of the same
+  // // subsystems is scheduled to run
+  // @Override
+  // protected void interrupted() {
+  // }
 }

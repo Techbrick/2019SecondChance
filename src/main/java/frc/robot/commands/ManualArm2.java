@@ -26,7 +26,7 @@ public class ManualArm2 extends Command {
   public ManualArm2(Robot r) {
     _robot = r;
     requires(_robot.arm_subsystem);
-    wristy = new WristPid(.02, 0,0,.1, .02, 1, 1.0);
+    wristy = new WristPid(0.02, 0, 0, 0.1, 0.02, 1, 1.0);
   }
 
   // Called just before this Command runs the first time
@@ -37,7 +37,7 @@ public class ManualArm2 extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double wristCurrentPosition = Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
+    double wristCurrentPosition = wristy.getCurrentAngle();
     float armMultiplier = 1;
     int armCurrentPosition = _robot.arm_subsystem.getArmEncoderTicks();
     boolean armOrange = armCurrentPosition > ArmLowerOrangeLimit && armCurrentPosition < ArmUpperOrangeLimit;
@@ -60,7 +60,6 @@ public class ManualArm2 extends Command {
     {
       _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(1));
     }
-
     _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5) * armMultiplier);
   }
   

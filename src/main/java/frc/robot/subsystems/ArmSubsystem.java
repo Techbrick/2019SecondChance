@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 // import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Gains;
 import frc.robot.Helpers;
 import frc.robot.Robot;
 import frc.robot.RobotMap;

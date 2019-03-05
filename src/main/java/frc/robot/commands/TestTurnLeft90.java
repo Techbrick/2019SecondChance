@@ -12,10 +12,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.DistancePid;
-import frc.robot.Helpers;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 import frc.robot.TurnPid;
 
 /**
@@ -36,15 +33,11 @@ public class TestTurnLeft90 extends Command {
     _robot = robot;
     requires(_robot.driveTrain);
     stoppedCounter = 0;
-    
-
-
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    
     // _robot.leftMaster.setSelectedSensorPosition(0, 0, 10);
     // _robot.rightMaster.setSelectedSensorPosition(0, 0, 10);
     SmartDashboard.putString("Instructions", "The Robot will turn left 90 degrees, you can press button 2 to stop");
@@ -76,7 +69,6 @@ public class TestTurnLeft90 extends Command {
       if (power == 0){
           stoppedCounter ++;
           if(stoppedCounter == 1){
-
             SmartDashboard.putNumber("test time", _timer.get());
           }
       }else{
@@ -86,21 +78,17 @@ public class TestTurnLeft90 extends Command {
       if (stoppedCounter > 25){
           testCompleted = true;
       }
-
     }
     else{
       _robot.driveTrain.Move(0, 0); 
-  }
-    
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    
     boolean done = _robot.DrvStick.getRawButton(2) || testCompleted;
     if(done){
-        
         SmartDashboard.putString("Status", "Completed turn left 90");
         return true;
     }
@@ -110,7 +98,6 @@ public class TestTurnLeft90 extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    
     _robot.driveTrain.Move(0, 0); 
   }
 

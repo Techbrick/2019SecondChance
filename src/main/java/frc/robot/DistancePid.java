@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DistancePid{
-
     private double _kp;
     private double _ki;
     private double _kd;
@@ -17,8 +16,6 @@ public class DistancePid{
     private Robot _robot;
     private boolean _verbose;
     private double _maxPidPower;
-
-    
 
     public DistancePid(double kp, double ki, double kd, double minDrivePower, double interval, double deadband, Robot robot){
         _kp = kp;
@@ -53,9 +50,7 @@ public class DistancePid{
     }
 
     public double GetDistancePidOutput() {
-
         if(start){
-
             SmartDashboard.putString("Pid D Status", "Started New PidDistance Class");
         }
         double distance_error = _targetDistance - _robot.driveTrain.GetAverageEncoderPosition(); //calculate error
@@ -93,8 +88,4 @@ public class DistancePid{
         }
         return distancePowerOutput;
       }
-
-
-
-
 }
