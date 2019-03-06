@@ -68,16 +68,16 @@ public class RealDriveTrain extends Subsystem {
     encoderConstant = (1 / RobotMap.driveEncoderTicksPerInch);
     _leftMaster.clearStickyFaults(30);
     _rightMaster.clearStickyFaults(30);
-    _leftMaster.setNeutralMode(NeutralMode.Brake);
-    _rightMaster.setNeutralMode(NeutralMode.Brake);
+    _leftMaster.setNeutralMode(NeutralMode.Coast);
+    _rightMaster.setNeutralMode(NeutralMode.Coast);
     _leftFollower1.clearStickyFaults(30);
     _leftFollower2.clearStickyFaults(30);
     _rightFollower1.clearStickyFaults(30);
     _rightFollower2.clearStickyFaults(30);
-    _leftFollower1.setNeutralMode(NeutralMode.Brake);
-    _leftFollower2.setNeutralMode(NeutralMode.Brake);
-    _rightFollower1.setNeutralMode(NeutralMode.Brake);
-    _rightFollower2.setNeutralMode(NeutralMode.Brake);
+    _leftFollower1.setNeutralMode(NeutralMode.Coast);
+    _leftFollower2.setNeutralMode(NeutralMode.Coast);
+    _rightFollower1.setNeutralMode(NeutralMode.Coast);
+    _rightFollower2.setNeutralMode(NeutralMode.Coast);
     _leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,0, 10);
     _leftMaster.setSelectedSensorPosition(0, 0, 10);
     _leftMaster.setSensorPhase(true);
@@ -195,6 +195,25 @@ public class RealDriveTrain extends Subsystem {
   public void setLifterSolenoid(boolean isOpen)
   {
     lifterSolenoid.set(isOpen ? Value.kForward : Value.kReverse);
+  }
+
+  public void setBrakeMode(boolean brake){
+    if(brake){
+      _leftMaster.setNeutralMode(NeutralMode.Brake);
+      _rightMaster.setNeutralMode(NeutralMode.Brake);
+      _leftFollower1.setNeutralMode(NeutralMode.Brake);
+      _leftFollower2.setNeutralMode(NeutralMode.Brake);
+      _rightFollower1.setNeutralMode(NeutralMode.Brake);
+      _rightFollower2.setNeutralMode(NeutralMode.Brake);
+    }
+    else{
+      _leftMaster.setNeutralMode(NeutralMode.Coast);
+      _rightMaster.setNeutralMode(NeutralMode.Coast);
+      _leftFollower1.setNeutralMode(NeutralMode.Coast);
+      _leftFollower2.setNeutralMode(NeutralMode.Coast);
+      _rightFollower1.setNeutralMode(NeutralMode.Coast);
+      _rightFollower2.setNeutralMode(NeutralMode.Coast);
+    }
   }
 
   public void Update_Limelight_Tracking()

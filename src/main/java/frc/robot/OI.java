@@ -12,12 +12,8 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commands.HatchEjector;
-// import frc.robot.commands.HatchEjectorToggle;
 import frc.robot.commands.IntakeBall;
 import frc.robot.commands.LiftRobot;
-// import frc.robot.commands.ShiftGear;
-// import frc.robot.commands.VisionDrive;
-// import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.commands.ManualDriveDirection;
 import frc.robot.commands.MoveToHeight;
 import frc.robot.commands.SetToggle;
@@ -52,6 +48,7 @@ public class OI {
   POVButton posTwo = new POVButton(opStick,270);
   POVButton posThree = new POVButton(opStick,0);
   Button stow = new JoystickButton(opStick, 13);
+  Button BrakeButton = new JoystickButton(DrvStick, 8);
   // Button vision = new JoystickButton(DrvStick, 1);
   // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
@@ -67,6 +64,8 @@ public class OI {
     southeast.whileHeld(new ManualDriveDirection(robot, 135));
     southwest.whileHeld(new ManualDriveDirection(robot, 225));
     northwest.whileHeld(new ManualDriveDirection(robot, 315));
+    BrakeButton.whenPressed(new Brake(true));
+    BrakeButton.whenReleased(new Brake(false));
     
     SetToggle cmd = new SetToggle(robot);
     autoToggle.whenPressed(cmd);
@@ -105,6 +104,4 @@ public class OI {
   // Start the command when the button is released and let it run the command
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
-
-  
 }
