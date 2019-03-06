@@ -7,28 +7,19 @@
 
 package frc.robot;
 
-// import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
-// import edu.wpi.first.wpilibj.GenericHID;
-// import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-// import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
-// import edu.wpi.first.wpilibj.Spark;
-// import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-// import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
-// import frc.robot.subsystems.AccelerometerSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
-// import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.RealDriveTrain;
+import frc.robot.subsystems.DriveSubsystem;
 // import frc.robot.subsystems.SensorPet;
 
 // import java.util.function.Supplier;
@@ -39,10 +30,7 @@ import frc.robot.subsystems.RealDriveTrain;
 // import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 // import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-// import com.ctre.phoenix.sensors.PigeonIMU;
-// import com.ctre.phoenix.sensors.PigeonIMUConfiguration;
 import com.kauailabs.navx.frc.AHRS;
-// import com.kauailabs.navx.frc.Quaternion;
 
 //import org.omg.CORBA.PRIVATE_MEMBER;
 // import org.opencv.core.Mat;
@@ -68,7 +56,6 @@ public class Robot extends TimedRobot {
   public RobotMap robotMap = new RobotMap();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-  // public SensorPet pet = new SensorPet();
   
   public NetworkTableEntry autoSpeedEntry = NetworkTableInstance.getDefault().getEntry("/robot/autospeed");
   public NetworkTableEntry telemetryEntry = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
@@ -77,12 +64,7 @@ public class Robot extends TimedRobot {
   public Joystick operatorStick;
 	public double encoderConstant;
 	
-  // public TalonSRX leftMaster;
-  // private TalonSRX leftFollower;
-  // public TalonSRX rightMaster;
-  // private TalonSRX rightFollower;
-  // public  DriveSubsystem driveTrain;
-  public RealDriveTrain driveTrain;
+  public DriveSubsystem driveTrain;
   public ArmSubsystem arm_subsystem;
   public CompressorSubsystem comp_subsystem;
   public AHRS navX;
@@ -90,9 +72,8 @@ public class Robot extends TimedRobot {
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
   public DigitalInput DI = new DigitalInput(1);
+  // public SensorPet pet = new SensorPet();
 
-  // PigeonIMU pidgey = new PigeonIMU(robotMap.pigeonID); // Pigeon threw nullpointer exceptions
-  // private Helpers helper;
   // public Spark MC_LEDS = new Spark(0);
 
   /**
@@ -110,14 +91,12 @@ public class Robot extends TimedRobot {
     navX = new AHRS(SPI.Port.kMXP);
     wristnavX = new AHRS(Port.kUSB);
 
-    driveTrain = new RealDriveTrain(this);
+    driveTrain = new DriveSubsystem(this);
     arm_subsystem = new ArmSubsystem(this);
     comp_subsystem = new CompressorSubsystem(this);
-    // helper = new Helpers();
 
     // MC_LEDS.setSafetyEnabled(false);
     // MC_LEDS.setSpeed(-0.29);
-    // accelerometer_subsystem = new AccelerometerSubsystem(this);
     
     SmartDashboard.putData(driveTrain);
     SmartDashboard.putData(arm_subsystem);
@@ -309,9 +288,6 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putBoolean("bit3", pet.getbit3());
     // SmartDashboard.putBoolean("bit4", pet.getbit4());
     
-    // double[] pidgeyXYZ = new double[3];
-    // pidgey.getYawPitchRoll(pidgeyXYZ);
-    // SmartDashboard.putNumberArray("Pidgey YawPitchRoll", pidgeyXYZ);
     SmartDashboard.putNumber("Navx Roll", navX.getRoll());
     SmartDashboard.putNumber("Navx Pitch", navX.getPitch());
     SmartDashboard.putNumber("Navx Yaw", navX.getYaw());

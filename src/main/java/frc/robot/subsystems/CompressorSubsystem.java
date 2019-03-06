@@ -36,6 +36,5 @@ public class CompressorSubsystem extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-
     }
 }

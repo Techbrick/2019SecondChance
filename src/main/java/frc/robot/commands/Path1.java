@@ -1,7 +1,4 @@
-
-
 // package frc.robot.commands;
-
 
 // import edu.wpi.first.wpilibj.DriverStation;
 // import edu.wpi.first.wpilibj.Timer;
@@ -19,7 +16,6 @@
 // import jaci.pathfinder.followers.EncoderFollower;
 // import jaci.pathfinder.modifiers.TankModifier;
 
-
 // public class Path1 extends Command {
     
 //     private Robot _robot;
@@ -36,15 +32,11 @@
 //     private DistanceFollower _leftDistanceFollower;
 //     private DistanceFollower _rightDistanceFollower;
 
-//   public Path1(Robot robot, int pathNumber) {
-    
+//   public Path1(Robot robot, int pathNumber) {    
 //     _robot = robot;
 //     requires(_robot.driveTrain);
-    
 //     stoppedCounter = 0;
 //     trajectoryCounter = 0;
-
-
 //   }
 
 //   @Override
@@ -67,7 +59,6 @@
 // // Max Acceleration:    2.0 m/s/s
 // // Max Jerk:            60.0 m/s/s/s
 
-
 // Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_LOW, 0.02, Helpers.FeetToMeters(_robot.robotMap.maxVelocity), Helpers.FeetToMeters(_robot.robotMap.maxAccel), 60.0);
 // SmartDashboard.putString("Status", "Running Path1 "  );
 
@@ -76,7 +67,6 @@
 //     SmartDashboard.putString("Status", "Running Path1: trjectory calculated"  );
 //     testCompleted = false;
 //     stoppedCounter = 0;
-   
 //     _turnPid = new TurnPid(_robot);
 //     TankModifier mod = new TankModifier(trajectory).modify(Helpers.InchesToMeters(_robot.robotMap.trackWidth));
 //     _leftTrajectory = mod.getLeftTrajectory();
@@ -88,7 +78,6 @@
 //     _rightDistanceFollower.configurePIDVA(_robot.robotMap.KpDistanceFollower, 0.0, 0.0, Helpers.FeetToMeters(_robot.robotMap.maxVelocity)/12.5, Helpers.FeetToMeters(_robot.robotMap.maxAccel)/12.5);
 //     _rightDistanceFollower.reset();
 //   }
-
  
 //   @Override
 //   protected void execute() {
@@ -105,25 +94,16 @@
 //         SmartDashboard.putNumber("Pathfollower leftPower", leftPower);
 //         SmartDashboard.putNumber("Pathfollower rightPower", rightPower);
 //         SmartDashboard.putNumber("Pathfollower targetHeading", targetHeading);
-
-
 //         _robot.driveTrain.Move(leftPower - turnPower, rightPower + turnPower); 
 //       }else{
 //         _robot.driveTrain.Move(0, 0); 
 //       }
-        
-
-        
-
 //   }
 
-  
 //   @Override
-//   protected boolean isFinished() {
-    
+//   protected boolean isFinished() {    
 //     boolean done = _leftDistanceFollower.isFinished();
 //     if(done || _robot.stick.getRawButton(2)){
-        
 //         SmartDashboard.putString("Status", "Completed driving path 1");
 //         _robot.driveTrain.Move(0, 0); 
 //         return true;
@@ -134,13 +114,10 @@
   
 //   @Override
 //   protected void end() {
-    
 //     _robot.driveTrain.Move(0, 0); 
 //   }
-
   
 //   @Override
 //   protected void interrupted() {
-    
 //   }
 // }
