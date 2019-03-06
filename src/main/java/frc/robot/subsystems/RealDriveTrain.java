@@ -68,12 +68,12 @@ public class RealDriveTrain extends Subsystem {
     encoderConstant = (1 / RobotMap.driveEncoderTicksPerInch);
     _leftMaster.clearStickyFaults(30);
     _rightMaster.clearStickyFaults(30);
-    _leftMaster.setNeutralMode(NeutralMode.Coast);
-    _rightMaster.setNeutralMode(NeutralMode.Coast);
     _leftFollower1.clearStickyFaults(30);
     _leftFollower2.clearStickyFaults(30);
     _rightFollower1.clearStickyFaults(30);
     _rightFollower2.clearStickyFaults(30);
+    _leftMaster.setNeutralMode(NeutralMode.Coast);
+    _rightMaster.setNeutralMode(NeutralMode.Coast);
     _leftFollower1.setNeutralMode(NeutralMode.Coast);
     _leftFollower2.setNeutralMode(NeutralMode.Coast);
     _rightFollower1.setNeutralMode(NeutralMode.Coast);
@@ -89,12 +89,18 @@ public class RealDriveTrain extends Subsystem {
 		rightEncoderPosition = () -> _rightMaster.getSelectedSensorPosition(0) * encoderConstant;
     rightEncoderRate = () -> _rightMaster.getSelectedSensorVelocity(0) * encoderConstant * 0.1;
     
+    _leftMaster.configMotionAcceleration(100);
+    _leftFollower1.configMotionAcceleration(100);
+    _leftFollower2.configMotionAcceleration(100);
+    _rightMaster.configMotionAcceleration(100);
+    _rightFollower1.configMotionAcceleration(100);
+    _rightFollower2.configMotionAcceleration(100);
+
     shifterSolenoid = new DoubleSolenoid(0,1);
     shifterSolenoid.set(Value.kOff);
 
     lifterSolenoid = new DoubleSolenoid(6,7);
     lifterSolenoid.set(Value.kOff);
-
   }
 
   public void Move(double leftpower, double rightpower){
