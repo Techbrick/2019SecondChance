@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
+import frc.robot.commands.Brake;
 import frc.robot.commands.HatchEjector;
 import frc.robot.commands.IntakeBall;
 import frc.robot.commands.LiftRobot;
@@ -64,8 +65,8 @@ public class OI {
     southeast.whileHeld(new ManualDriveDirection(robot, 135));
     southwest.whileHeld(new ManualDriveDirection(robot, 225));
     northwest.whileHeld(new ManualDriveDirection(robot, 315));
-    BrakeButton.whenPressed(new Brake(true));
-    BrakeButton.whenReleased(new Brake(false));
+    BrakeButton.whenPressed(new Brake(robot, true));
+    BrakeButton.whenReleased(new Brake(robot, false));
     
     SetToggle cmd = new SetToggle(robot);
     autoToggle.whenPressed(cmd);
