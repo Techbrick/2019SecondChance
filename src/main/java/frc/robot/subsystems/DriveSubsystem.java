@@ -126,7 +126,6 @@ public class DriveSubsystem extends Subsystem {
     double r = (v + w) / 2.0;
     double l = (v-w) / 2.0;
 
-    //Yo dudes theres a double deadband
     _leftMaster.set(ControlMode.PercentOutput, l);
     _rightMaster.set(ControlMode.PercentOutput, r);
     SmartDashboard.putNumber("Left Input", l);
