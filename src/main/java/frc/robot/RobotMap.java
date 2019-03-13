@@ -40,7 +40,7 @@ public class RobotMap {
 
   //PID
   public double kAngleSetpoint = 0.0;
-  public double kp_Angle = 0.02;
+  public double kp_Angle = 0.1;
   public double ki_Angle = 0.00;
   public double kd_Angle = 0.00;
   public double kp_Angle_Wrist = 0.04;

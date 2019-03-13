@@ -17,12 +17,11 @@ public class LiftRobot extends InstantCommand {
   public LiftRobot(Robot r, boolean parShouldOpen) {
     super();
     robot = r;
-    requires(robot.driveTrain);
     shouldOpen = parShouldOpen;
   }
 
   @Override
-  protected void initialize() {
+  protected void execute() {
     robot.driveTrain.setLifterSolenoid(shouldOpen);
   }
 }

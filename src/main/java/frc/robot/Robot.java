@@ -91,7 +91,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("Status", "");
     DrvStick = new Joystick(0);
     operatorStick= new Joystick(1);
-    robotMap.verbose = false;
     navX = new AHRS(SPI.Port.kMXP);
     wristnavX = new AHRS(Port.kUSB);
 
