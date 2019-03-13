@@ -71,7 +71,7 @@ public class ArmSubsystem extends Subsystem {
     mc_arm.setSelectedSensorPosition(0, 0, 10);
     mc_arm.setSensorPhase(true);
     mc_arm.setInverted(true);
-    mc_armFollower.setInverted(false);
+    mc_armFollower.setInverted(true);
     mc_armFollower.follow(mc_arm);
 
     ejectorSolenoidIn = new Solenoid(4);

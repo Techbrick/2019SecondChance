@@ -17,7 +17,7 @@ public class RobotMap {
   public final int driveStick = 0;
   public final int opStick = 1;
   public double timingInterval = .02;
-  public boolean verbose = false;
+  public boolean verbose = true;
 
   // CAN IDs
   public static final int leftMaster = 4;
