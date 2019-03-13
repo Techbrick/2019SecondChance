@@ -32,6 +32,8 @@ import frc.robot.subsystems.DriveSubsystem;
 // import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.networktables.NetworkTable;
+
 //import org.omg.CORBA.PRIVATE_MEMBER;
 // import org.opencv.core.Mat;
 // import org.opencv.imgproc.Imgproc;
@@ -59,7 +61,9 @@ public class Robot extends TimedRobot {
   
   public NetworkTableEntry autoSpeedEntry = NetworkTableInstance.getDefault().getEntry("/robot/autospeed");
   public NetworkTableEntry telemetryEntry = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
-  
+    
+  public NetworkTableEntry ledMode =NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode");
+  public NetworkTableEntry camMode =NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode");  
   public Joystick DrvStick;
   public Joystick operatorStick;
 	public double encoderConstant;
@@ -145,6 +149,11 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("intYaw", navX.getYaw());
     navX.zeroYaw();
 
+        //turn camera LED off
+        ledMode.setNumber(1);
+        //turn camera into driver mode
+        camMode.setNumber(1);
+
     // new Thread(() -> {
     //   UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
     //   camera.setResolution(640, 480);
@@ -158,6 +167,9 @@ public class Robot extends TimedRobot {
     //       outputStream.putFrame(output);
     //   }
     // }).start();
+
+
+
    }
 
   /**
