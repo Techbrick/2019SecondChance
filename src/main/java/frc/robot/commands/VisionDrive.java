@@ -43,6 +43,10 @@ public class VisionDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+        //turn camera LED off
+        _robot.ledMode.setNumber(3);
+        //turn camera into driver mode
+        _robot.camMode.setNumber(0);
     //Difference between absolute angle and target angle, then steer to it with difference * 1.5
     // double steer = m_Controller.getX(Hand.kRight);
     // double drive = -m_Controller.getY(Hand.kLeft);
@@ -88,12 +92,21 @@ public class VisionDrive extends Command {
   @Override
   protected void end() {
     _robot.driveTrain.Move(0,0);
+        //turn camera LED off
+        _robot.ledMode.setNumber(1);
+        //turn camera into driver mode
+        _robot.camMode.setNumber(1);
   }
 
 // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+
+        //turn camera LED off
+        _robot.ledMode.setNumber(1);
+        //turn camera into driver mode
+        _robot.camMode.setNumber(1);
     _robot.driveTrain.Move(0,0);
   }
 }
