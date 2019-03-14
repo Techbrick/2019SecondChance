@@ -1,7 +1,5 @@
 package frc.robot;
 
-import javax.lang.model.util.ElementScanner6;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class WristPid {
@@ -59,12 +57,16 @@ public class WristPid {
         //Dans dumb not degree angleydo.
         double dansAngle = Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
         //if in normal mode, do nothing special.
-        if(_robot.arm_subsystem.wristStartAngle < 0)
-            dansAngle -= _robot.arm_subsystem.wristStartAngle;
-        //Otherwise, it's in flippidydoodah mode.  Do something speshal.
-        else
-            dansAngle -= _robot.arm_subsystem.wristStartAngle * (dansAngle < 0 ? 1 : -1);
-
+            //dansAngle -= _robot.arm_subsystem.wristStartAngle;
+            if(_robot.arm_subsystem.wristStartAngle < 0)
+            {
+                dansAngle -= _robot.arm_subsystem.wristStartAngle * ( dansAngle < 0 ? 1 : -1);
+            }
+            else
+            {
+                dansAngle -= _robot.arm_subsystem.wristStartAngle;
+            }
+            SmartDashboard.putNumber("The pipes are calling", dansAngle);
         return dansAngle;
     }
 
@@ -73,10 +75,10 @@ public class WristPid {
         if(start){
             SmartDashboard.putString("WPid t Status", "Started New PidWrist Class");
         }
-        double angle_error = _targetAngle - currentAngle ; //calculate error
+        double angle_error = getTargetAngle() - currentAngle; //calculate error
         if(angle_error > 180){
             angle_error = 360-angle_error;
-        }else if(angle_error < -180){
+        } else if(angle_error < -180){
             angle_error = angle_error + 360;
         }
         //angle_error = Math.abs(angle_error) > 180 ? 180 - angle_error : angle_error; //scale error to take shortest path

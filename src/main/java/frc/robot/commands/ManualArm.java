@@ -54,7 +54,7 @@ public class ManualArm extends Command {
     
     //TJ Declared unDeprecated
     _robot.arm_subsystem.setWristSpeed(_robot.operatorStick.getRawAxis(1));//2
-    _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5));//0
+    _robot.arm_subsystem.setArmSpeed(-_robot.operatorStick.getRawAxis(5) + 0.01);//0
 
     
     /*if(_robot.arm_subsystem.getToggly()){

@@ -23,7 +23,6 @@ public class IntakeBall extends Command {
     _robot = robot;
     pullIn = willIntake;
     // Use requires() here to declare subsystem dependencies
-    requires(_robot.arm_subsystem);
   }
 
   // Called just before this Command runs the first time

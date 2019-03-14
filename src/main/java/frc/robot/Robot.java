@@ -182,6 +182,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     // Logger();
+    ledMode.setNumber(1);
+    //turn camera into driver mode
+    camMode.setNumber(1);
   }
 
   /**
@@ -251,6 +254,7 @@ public class Robot extends TimedRobot {
     // double twist = DrvStick.getX();
     //driveTrain.ArcadeDrive(power, twist);
     Logger();
+    
   }
 
   /**
@@ -289,7 +293,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("QuaternionX", wristnavX.getQuaternionX());
       SmartDashboard.putNumber("QuaternionY", wristnavX.getQuaternionY());
       SmartDashboard.putNumber("QuaternionZ", wristnavX.getQuaternionZ());
-      SmartDashboard.putNumber("Quaternion Angle", Math.toDegrees(Math.atan2(wristnavX.getQuaternionY(), wristnavX.getQuaternionW())) - arm_subsystem.wristStartAngle);
+      SmartDashboard.putNumber("Quaternion Angle", Math.toDegrees(Math.atan2(wristnavX.getQuaternionY(), wristnavX.getQuaternionW())));
       SmartDashboard.putNumber("WristStartAngle", arm_subsystem.wristStartAngle);
       SmartDashboard.putNumber("Drivetrain encoder rate", driveTrain.GetAverageEncoderRate()*12);
     }
