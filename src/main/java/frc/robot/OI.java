@@ -18,6 +18,7 @@ import frc.robot.commands.LiftRobot;
 import frc.robot.commands.ManualDriveDirection;
 import frc.robot.commands.MoveToHeight;
 import frc.robot.commands.SetToggle;
+import frc.robot.commands.VisionDrive;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -35,6 +36,7 @@ public class OI {
   Button hatchEjectButtonIn = new JoystickButton(DrvStick, 1);
   Button hatchEjectButtonOut = new JoystickButton(DrvStick, 3);
   Button lifterDoButton = new JoystickButton(DrvStick, 5);
+  Button visionDrive = new JoystickButton(DrvStick, 6);
   POVButton forwards = new POVButton(DrvStick,0);
   POVButton leftwards = new POVButton(DrvStick,270); 
   POVButton backwards = new POVButton(DrvStick,180);
@@ -65,6 +67,8 @@ public class OI {
     southeast.whileHeld(new ManualDriveDirection(robot, 135));
     southwest.whileHeld(new ManualDriveDirection(robot, 225));
     northwest.whileHeld(new ManualDriveDirection(robot, 315));
+    northwest.whileHeld(new VisionDrive(robot));
+
     BrakeButton.whenPressed(new Brake(robot, true));
     BrakeButton.whenReleased(new Brake(robot, false));
     
@@ -79,7 +83,7 @@ public class OI {
     stow.whileHeld(new MoveToHeight(robot,0));
     
     
-    //vision.whileHeld(new VisionDrive(robot,0));
+    visionDrive.whileHeld(new VisionDrive(robot));
     lifterDoButton.whenPressed(new LiftRobot(robot, true));
     lifterDoButton.whenReleased(new LiftRobot(robot, false));
     // hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot,true),new HatchEjector(robot,false),robot));
