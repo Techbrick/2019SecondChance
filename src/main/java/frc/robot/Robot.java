@@ -76,6 +76,8 @@ public class Robot extends TimedRobot {
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
   public DigitalInput DI = new DigitalInput(1);
+
+  public static boolean activateLimelight;
   // public SensorPet pet = new SensorPet();
 
   // public Spark MC_LEDS = new Spark(0);
@@ -97,6 +99,8 @@ public class Robot extends TimedRobot {
     driveTrain = new DriveSubsystem(this);
     arm_subsystem = new ArmSubsystem(this);
     comp_subsystem = new CompressorSubsystem(this);
+
+    activateLimelight = false;
 
     // MC_LEDS.setSafetyEnabled(false);
     // MC_LEDS.setSpeed(-0.29);
@@ -130,11 +134,11 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putData("Height 8", new MoveToHeight(this, 8));
     // SmartDashboard.putData("Stowreset", new ResetAutoArm(this));
 
-    SmartDashboard.putData("RocketAngle", new VisionDrive(this,-60)); // You realize that there are 2 rockets?
-    SmartDashboard.putData("Straight", new VisionDrive(this,0));
-    SmartDashboard.putData("RocketAngleBackSide", new VisionDrive(this,30));
-    SmartDashboard.putData("Left", new VisionDrive(this,-90));
-    SmartDashboard.putData("Right", new VisionDrive(this,90));
+    SmartDashboard.putData("RocketAngle", new VisionDrive(this)); // You realize that there are 2 rockets?
+    SmartDashboard.putData("Straight", new VisionDrive(this));
+    SmartDashboard.putData("RocketAngleBackSide", new VisionDrive(this));
+    SmartDashboard.putData("Left", new VisionDrive(this));
+    SmartDashboard.putData("Right", new VisionDrive(this));
 
     // Shuffleboard.getTab("Camera").add("Compression slider", );
     // m_chooser.addObject("Drive Fwd 24 inches", new DriveDistanceAndDirection(this, 24, 0));
@@ -149,9 +153,9 @@ public class Robot extends TimedRobot {
     navX.zeroYaw();
 
         //turn camera LED off
-        ledMode.setNumber(1);
+        /*ledMode.setNumber(1);
         //turn camera into driver mode
-        camMode.setNumber(1);
+        camMode.setNumber(1);*/
 
     // new Thread(() -> {
     //   UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
@@ -182,9 +186,10 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     // Logger();
-    ledMode.setNumber(1);
+    /*ledMode.setNumber(activateLimelight ? 3 : 1);
     //turn camera into driver mode
-    camMode.setNumber(1);
+    camMode.setNumber(activateLimelight ? 0 : 1);
+    */
   }
 
   /**

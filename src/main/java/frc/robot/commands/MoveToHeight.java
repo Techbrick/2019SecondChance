@@ -24,6 +24,7 @@ public class MoveToHeight extends Command {
   private int position;
   private double turnpower;
   private WristPid level;
+  private int oldPosition;
 
   public MoveToHeight(Robot r, int pos) {
     robot = r;
@@ -42,7 +43,11 @@ public class MoveToHeight extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    arm.moveToHeightPreset(position + (arm.getToggly() && position != 0 ? 4 : 0));
+    int pos = position + (arm.getToggly() && position != 0 ? 4 : 0);
+    if(pos != oldPosition){
+      arm.moveToHeightPreset(pos);
+      oldPosition = pos;
+    }
     level.SetTargetAngle(-arm.heights[1][position + (arm.getToggly() && position != 0 ? 4 : 0)]);
     turnpower = level.GetAnglePidOutput(level.getCurrentAngle());
     arm.moveToHeightWrist(turnpower);
@@ -58,11 +63,13 @@ public class MoveToHeight extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    oldPosition = -1;
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+      oldPosition = -1;
   }
 }

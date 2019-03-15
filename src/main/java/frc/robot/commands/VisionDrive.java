@@ -24,7 +24,7 @@ public class VisionDrive extends Command {
   private boolean drive = true;
   private TurnPid turny;
   private double absCurrentAngle;
-  public VisionDrive(Robot robot, int angle) {
+  public VisionDrive(Robot robot) {
     _robot = robot;
     requires(robot.driveTrain);
     // targetAngle = angle;
@@ -44,15 +44,12 @@ public class VisionDrive extends Command {
   @Override
   protected void execute() {
         //turn camera LED off
-        _robot.ledMode.setNumber(3);
-        //turn camera into driver mode
-        _robot.camMode.setNumber(0);
+        _robot.activateLimelight = true;
     //Difference between absolute angle and target angle, then steer to it with difference * 1.5
     // double steer = m_Controller.getX(Hand.kRight);
     // double drive = -m_Controller.getY(Hand.kLeft);
     // boolean auto = m_Controller.getAButton();
     // steer *= 0.70;
-    // drive *= 0.70;
     tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     absTargetAngle = Helpers.ConvertYawToHeading(tx + _robot.navX.getYaw());
     absCurrentAngle = Helpers.ConvertYawToHeading(_robot.navX.getYaw());
@@ -93,9 +90,7 @@ public class VisionDrive extends Command {
   protected void end() {
     _robot.driveTrain.Move(0,0);
         //turn camera LED off
-        _robot.ledMode.setNumber(1);
-        //turn camera into driver mode
-        _robot.camMode.setNumber(1);
+        _robot.activateLimelight = false;
   }
 
 // Called when another command which requires one or more of the same
@@ -104,9 +99,7 @@ public class VisionDrive extends Command {
   protected void interrupted() {
 
         //turn camera LED off
-        _robot.ledMode.setNumber(1);
-        //turn camera into driver mode
-        _robot.camMode.setNumber(1);
+        _robot.activateLimelight = false;
     _robot.driveTrain.Move(0,0);
   }
 }

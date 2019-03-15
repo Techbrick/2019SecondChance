@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 // import edu.wpi.first.wpilibj.DoubleSolenoid;
 // import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -24,6 +25,7 @@ import frc.robot.RobotMap;
 import frc.robot.commands.ManualArm1;
 import frc.robot.commands.ManualArm2;
 import frc.robot.commands.ManualArm;
+
 
 /**
  * Add your docs here.
@@ -40,6 +42,7 @@ public class ArmSubsystem extends Subsystem {
   private TalonSRX mc_wrist;
   private Solenoid ejectorSolenoidIn;
   private Solenoid ejectorSolenoidOut;
+  private int oldAngle;
   public static boolean toggly = true;
   public int wristStartAngle;
   public int [][] heights;
@@ -47,7 +50,7 @@ public class ArmSubsystem extends Subsystem {
   // Constants
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
-  private static final Gains kGains = new Gains(0.1, 0.0, 0.0, 0.0, 0, 1.0);
+  private static final Gains kGains = new Gains(0.05, 0.0, 0.0, 0.01, 0, 0.25);
   private static final Gains kGainsWrist = new Gains(0.04, 0.0, 0.0, 0.0, 0, 1.0);
   private static final int length = 5;
 
@@ -71,8 +74,10 @@ public class ArmSubsystem extends Subsystem {
     mc_arm.setSelectedSensorPosition(0, 0, 10);
     mc_arm.setSensorPhase(true);
     mc_arm.setInverted(true);
+    mc_arm.setNeutralMode(NeutralMode.Brake);
     mc_armFollower.setInverted(true);
     mc_armFollower.follow(mc_arm);
+    mc_armFollower.setNeutralMode(NeutralMode.Brake);
 
     ejectorSolenoidIn = new Solenoid(4);
     ejectorSolenoidOut = new Solenoid(5);
@@ -174,11 +179,13 @@ public class ArmSubsystem extends Subsystem {
     turns(Math.asin(height / RobotMap.armLength));
   }
 
+
+
   public void moveToHeightPreset(int pos) {
-    mc_arm.set(ControlMode.Position, heights[0][pos]);
+      mc_arm.set(ControlMode.Position, heights[0][pos]);
+    }
     // mc_wrist.set(ControlMode.Position, RobotMap.heights[1][pos]);
     // SmartDashboard.putNumber("Wrist Error", mc_wrist.getClosedLoopError(0));
-  }
 
   public void moveToHeightWrist(double turnpower){
     mc_wrist.set(ControlMode.PercentOutput, turnpower);
