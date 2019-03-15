@@ -53,23 +53,6 @@ public class WristPid {
         return _targetAngle;
     }
 
-    public double getCurrentAngle(){
-        //Dans dumb not degree angleydo.
-        double dansAngle = Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
-        //if in normal mode, do nothing special.
-            //dansAngle -= _robot.arm_subsystem.wristStartAngle;
-            if(_robot.arm_subsystem.wristStartAngle < 0)
-            {
-                dansAngle -= _robot.arm_subsystem.wristStartAngle * ( dansAngle < 0 ? 1 : -1);
-            }
-            else
-            {
-                dansAngle -= _robot.arm_subsystem.wristStartAngle;
-            }
-            SmartDashboard.putNumber("The pipes are calling", dansAngle);
-        return dansAngle;
-    }
-
     public double GetAnglePidOutput(double currentAngle) {
         //currentAngle = Helpers.ConvertYawToHeading(currentAngle);
         if(start){

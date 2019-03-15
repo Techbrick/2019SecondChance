@@ -231,6 +231,19 @@ public class ArmSubsystem extends Subsystem {
     // SmartDashboard.putNumber("Wrist Enc Pos", mc_wrist.getSelectedSensorPosition(0));
   }
 
+  public double getWistAngle(){
+    double quatY = _robot.wristnavX.getQuaternionY();
+    double quatW = _robot.wristnavX.getQuaternionW();
+    //if quatW is negative flippy do the signs;
+    if(quatW < 0)
+    {
+        quatY *= -1; 
+        quatW *= -1;            
+    }
+    double dansAngle = Math.toDegrees(Math.atan2(quatY, quatW));
+    return dansAngle;
+}
+
   public void setToggly(boolean bool){
     toggly = bool;
   }

@@ -37,7 +37,7 @@ public class ManualArm2 extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double wristCurrentPosition = wristy.getCurrentAngle();
+    double wristCurrentPosition = _robot.arm_subsystem.getArmSpeed();
     float armMultiplier = 1;
     int armCurrentPosition = _robot.arm_subsystem.getArmEncoderTicks();
     boolean armOrange = armCurrentPosition > ArmLowerOrangeLimit && armCurrentPosition < ArmUpperOrangeLimit;
@@ -54,7 +54,7 @@ public class ManualArm2 extends Command {
     {
       armMultiplier = armRed && !wristGreen ? 0 : 0.5F;
       wristy.SetTargetAngle(wristCloserToHatch ? WristHatchAngle : WristFlat);
-      _robot.arm_subsystem.setWristSpeed(wristy.GetAnglePidOutput(wristy.getCurrentAngle())); 
+      _robot.arm_subsystem.setWristSpeed(wristy.GetAnglePidOutput(_robot.arm_subsystem.getWistAngle())); 
     }
     else
     {

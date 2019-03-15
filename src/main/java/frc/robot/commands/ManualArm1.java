@@ -38,7 +38,7 @@ public class ManualArm1 extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double wristCurrentPosition = wristy.getCurrentAngle();
+    double wristCurrentPosition = _robot.arm_subsystem.getWistAngle();
 
     int armCurrentPosition = _robot.arm_subsystem.getArmEncoderTicks();
     boolean armOrange = armCurrentPosition > ArmLowerOrangeLimit && armCurrentPosition < ArmUpperOrangeLimit;

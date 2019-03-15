@@ -44,7 +44,7 @@ public class MoveToHeight extends Command {
   protected void execute() {
     arm.moveToHeightPreset(position + (arm.getToggly() && position != 0 ? 4 : 0));
     level.SetTargetAngle(-arm.heights[1][position + (arm.getToggly() && position != 0 ? 4 : 0)]);
-    turnpower = level.GetAnglePidOutput(level.getCurrentAngle());
+    turnpower = level.GetAnglePidOutput(robot.arm_subsystem.getWistAngle());
     arm.moveToHeightWrist(turnpower);
   }
 
