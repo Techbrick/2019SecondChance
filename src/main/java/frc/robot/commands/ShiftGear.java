@@ -16,7 +16,6 @@ public class ShiftGear extends InstantCommand {
   public boolean shifty;
   public ShiftGear(Robot robot, boolean shift) {
     _robot = robot;
-    requires(_robot.driveTrain);
     shifty = shift;
   }
 

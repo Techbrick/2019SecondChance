@@ -42,7 +42,6 @@ public class ArmSubsystem extends Subsystem {
   private TalonSRX mc_wrist;
   private Solenoid ejectorSolenoidIn;
   private Solenoid ejectorSolenoidOut;
-  private int oldAngle;
   public static boolean toggly = true;
   public int wristStartAngle;
   public int [][] heights;
@@ -50,8 +49,8 @@ public class ArmSubsystem extends Subsystem {
   // Constants
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
-  private static final Gains kGains = new Gains(0.05, 0.0, 0.0, 0.01, 0, 0.25);
-  private static final Gains kGainsWrist = new Gains(0.04, 0.0, 0.0, 0.0, 0, 1.0);
+  private static final Gains kGains = new Gains(0.03, 0.0, 0.0, 0.01, 0, 0.25);
+  private static final Gains kGainsWrist = new Gains(0.02, 0.0, 0.0, 0.0, 0, 1);
   private static final int length = 5;
 
   public ArmSubsystem(Robot r) {  // Initialize the motion magic constants
@@ -204,6 +203,9 @@ public class ArmSubsystem extends Subsystem {
   {
     //double angle = -wristStartAngle + Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
     //if(!((getArmEncoderTicks() > 12000 && getArmEncoderTicks() < 20000) && !(Math.abs(angle + 75) < 7 || Math.abs(angle + 30) < 7)))
+    if(getArmEncoderTicks() > 5000)  
+      mc_arm.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap) + 0.04);
+    else
       mc_arm.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
     //else
       //mc_arm.set(ControlMode.PercentOutput, 0);
@@ -247,7 +249,8 @@ public class ArmSubsystem extends Subsystem {
         quatY *= -1; 
         quatW *= -1;            
     }
-    double dansAngle = Math.toDegrees(Math.atan2(quatY, quatW));
+    //-1 to zero
+    double dansAngle = Math.toDegrees(Math.atan2(quatY, quatW)) - 1;
     return dansAngle;
 }
 
@@ -260,7 +263,7 @@ public class ArmSubsystem extends Subsystem {
   }
 
   public void setHeights(){// stow, hpu,  h1,    h2,    h3,    cpu,   c1,    c2,    c3
-    heights =       new int[][]{{0,   0,   0, 14500, 26600,   8000,  11800, 21600, 29400},
-                                {0, 70, 30,   30,   30,   105,    70,   65,   60}};
+    heights = new int[][]{{      0, 100,   0, 12500, 25600,   8000,11800, 21600, 29000},
+                                {-0, -65, -30,   -30,   -30,  -105,    -70,   -65,   -58}};
   }
 }

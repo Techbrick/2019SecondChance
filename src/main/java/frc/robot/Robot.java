@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,6 +22,7 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 // import frc.robot.subsystems.SensorPet;
+import frc.robot.subsystems.SensorSubsystem;
 
 // import java.util.function.Supplier;
 // import com.ctre.phoenix.*;
@@ -32,15 +34,14 @@ import frc.robot.subsystems.DriveSubsystem;
 // import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.networktables.NetworkTable;
-
-//import org.omg.CORBA.PRIVATE_MEMBER;
+// import org.omg.CORBA.PRIVATE_MEMBER;
 // import org.opencv.core.Mat;
 // import org.opencv.imgproc.Imgproc;
 
 // import edu.wpi.cscore.CvSink;
 // import edu.wpi.cscore.CvSource;
 // import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
@@ -61,9 +62,7 @@ public class Robot extends TimedRobot {
   
   public NetworkTableEntry autoSpeedEntry = NetworkTableInstance.getDefault().getEntry("/robot/autospeed");
   public NetworkTableEntry telemetryEntry = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
-    
-  public NetworkTableEntry ledMode =NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode");
-  public NetworkTableEntry camMode =NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode");  
+
   public Joystick DrvStick;
   public Joystick operatorStick;
 	public double encoderConstant;
@@ -71,16 +70,15 @@ public class Robot extends TimedRobot {
   public DriveSubsystem driveTrain;
   public ArmSubsystem arm_subsystem;
   public CompressorSubsystem comp_subsystem;
+  public SensorSubsystem sensor_subsystem;
   public AHRS navX;
   public AHRS wristnavX;
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
   public DigitalInput DI = new DigitalInput(1);
-
-  public static boolean activateLimelight;
   // public SensorPet pet = new SensorPet();
 
-  // public Spark MC_LEDS = new Spark(0);
+  public Spark MC_LEDS = new Spark(0);
 
   /**
    * This function is run when the robot is first started up and should be
@@ -99,11 +97,10 @@ public class Robot extends TimedRobot {
     driveTrain = new DriveSubsystem(this);
     arm_subsystem = new ArmSubsystem(this);
     comp_subsystem = new CompressorSubsystem(this);
-
-    activateLimelight = false;
-
-    // MC_LEDS.setSafetyEnabled(false);
-    // MC_LEDS.setSpeed(-0.29);
+    sensor_subsystem = new SensorSubsystem(this);
+    
+    MC_LEDS.setSafetyEnabled(false);
+    MC_LEDS.setSpeed(-0.99);
     
     SmartDashboard.putData(driveTrain);
     SmartDashboard.putData(arm_subsystem);
@@ -121,7 +118,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Dog Left", new DogLegLeft(this) );
     SmartDashboard.putData("Rotate 1", new Turn(this, 1));
     SmartDashboard.putData("LIDAR assisted auto-place", new VisionDriveWithLimelight(this));
-    //SmartDashboard.putData("DriveAlign", new DriveAlign(this));
 
     // SmartDashboard.putData("Height 0", new MoveToHeight(this, 0));
     // SmartDashboard.putData("Height 1", new MoveToHeight(this, 1));
@@ -140,7 +136,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Left", new VisionDrive(this));
     SmartDashboard.putData("Right", new VisionDrive(this));
 
-    // Shuffleboard.getTab("Camera").add("Compression slider", );
     // m_chooser.addObject("Drive Fwd 24 inches", new DriveDistanceAndDirection(this, 24, 0));
     // m_chooser.addObject("Drive dog leg right", new DogLegRight(this));
     // m_chooser.addObject("Drive dog leg left", new DogLegLeft(this));
@@ -149,30 +144,8 @@ public class Robot extends TimedRobot {
     NetworkTableInstance.getDefault().setUpdateRate(0.020);
     
     m_oi = new OI(this);
-    SmartDashboard.putNumber("intYaw", navX.getYaw());
     navX.zeroYaw();
-
-        //turn camera LED off
-        /*ledMode.setNumber(1);
-        //turn camera into driver mode
-        camMode.setNumber(1);*/
-
-    // new Thread(() -> {
-    //   UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-    //   camera.setResolution(640, 480);
-    //   CvSink cvSink = CameraServer.getInstance().getVideo();
-    //   CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
-    //   Mat source = new Mat();
-    //   Mat output = new Mat();
-    //   while(!Thread.interrupted()) {
-    //       cvSink.grabFrame(source);
-    //       Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-    //       outputStream.putFrame(output);
-    //   }
-    // }).start();
-
-
-
+    CameraServer.getInstance().startAutomaticCapture();
    }
 
   /**
@@ -186,10 +159,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     // Logger();
-    /*ledMode.setNumber(activateLimelight ? 3 : 1);
-    //turn camera into driver mode
-    camMode.setNumber(activateLimelight ? 0 : 1);
-    */
+    sensor_subsystem.checkLimelight();
   }
 
   /**
@@ -287,6 +257,7 @@ public class Robot extends TimedRobot {
       // SmartDashboard.putNumber("r_encoder_rate", Math.round(rightEncoderRate.get()));
       SmartDashboard.putNumber("navX Heading", navX.getCompassHeading());
       SmartDashboard.putNumber("navX Angle", Math.round(navX.getRawMagX()));
+      SmartDashboard.putNumber("navX yaw", navX.getYaw());
       SmartDashboard.putNumber("avgEncoderRate", driveTrain.GetAverageEncoderRate());
       SmartDashboard.putNumber("Arm Encoder Ticks", arm_subsystem.getArmEncoderTicks()); //Ticks * bleh turns ticks into angles, / 25 to get past the reduction. 
       SmartDashboard.putNumber("Arm Angle", arm_subsystem.getArmEncoderAngle());
@@ -298,7 +269,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("QuaternionX", wristnavX.getQuaternionX());
       SmartDashboard.putNumber("QuaternionY", wristnavX.getQuaternionY());
       SmartDashboard.putNumber("QuaternionZ", wristnavX.getQuaternionZ());
-      SmartDashboard.putNumber("Quaternion Angle", Math.toDegrees(Math.atan2(wristnavX.getQuaternionY(), wristnavX.getQuaternionW())));
+      SmartDashboard.putNumber("Wisty Angle", arm_subsystem.getWistAngle());
       SmartDashboard.putNumber("WristStartAngle", arm_subsystem.wristStartAngle);
       SmartDashboard.putNumber("Drivetrain encoder rate", driveTrain.GetAverageEncoderRate()*12);
     }

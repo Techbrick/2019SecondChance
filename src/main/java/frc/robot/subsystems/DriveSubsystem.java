@@ -32,7 +32,7 @@ public class DriveSubsystem extends Subsystem {
   private Robot _robot;
   private TalonSRX _leftMaster;
   private TalonSRX _rightMaster;
-  private VictorSPX _leftFollower1;
+  private TalonSRX _leftFollower1;
   private VictorSPX _leftFollower2;
   private VictorSPX _rightFollower1;
   private VictorSPX _rightFollower2;
@@ -50,7 +50,7 @@ public class DriveSubsystem extends Subsystem {
   public DriveSubsystem(Robot robot) {
     _robot = robot;
     _leftMaster = new TalonSRX(RobotMap.leftMaster);
-    _leftFollower1 = new VictorSPX(RobotMap.leftFollower1);
+    _leftFollower1 = new TalonSRX(RobotMap.leftFollower1);
     _leftFollower2 = new VictorSPX(RobotMap.leftFollower2);
     _rightMaster = new TalonSRX(RobotMap.rightMaster);
     _rightFollower1 = new VictorSPX(RobotMap.rightFollower1);
@@ -199,7 +199,7 @@ public class DriveSubsystem extends Subsystem {
 
   public void setLifterSolenoid(boolean isOpen)
   {
-    lifterSolenoid.set(isOpen ? Value.kForward : Value.kReverse);
+    lifterSolenoid.set(!isOpen ? Value.kForward : Value.kReverse);
   }
 
   public void setBrakeMode(boolean brake){

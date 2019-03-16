@@ -17,6 +17,7 @@ import frc.robot.commands.IntakeBall;
 import frc.robot.commands.LiftRobot;
 import frc.robot.commands.ManualDriveDirection;
 import frc.robot.commands.MoveToHeight;
+import frc.robot.commands.MoveToHeight1;
 import frc.robot.commands.SetToggle;
 import frc.robot.commands.VisionDrive;
 /**
@@ -33,10 +34,10 @@ public class OI {
   Joystick DrvStick = new Joystick(0);
   Button intakeButton = new JoystickButton(opStick, 6);
   Button ejectButton = new JoystickButton(opStick, 5);
-  Button hatchEjectButtonIn = new JoystickButton(DrvStick, 1);
-  Button hatchEjectButtonOut = new JoystickButton(DrvStick, 3);
+  Button hatchEjectButtonIn = new JoystickButton(DrvStick, 3);
+  Button hatchEjectButtonOut = new JoystickButton(DrvStick, 2);
   Button lifterDoButton = new JoystickButton(DrvStick, 5);
-  Button visionDrive = new JoystickButton(DrvStick, 6);
+  Button visionDrive = new JoystickButton(DrvStick, 1);
   POVButton forwards = new POVButton(DrvStick,0);
   POVButton leftwards = new POVButton(DrvStick,270); 
   POVButton backwards = new POVButton(DrvStick,180);
@@ -51,7 +52,8 @@ public class OI {
   POVButton posTwo = new POVButton(opStick,270);
   POVButton posThree = new POVButton(opStick,0);
   Button stow = new JoystickButton(opStick, 13);
-  Button BrakeButton = new JoystickButton(DrvStick, 8);
+  Button BrakeButton = new JoystickButton(DrvStick, 6);
+  private boolean TubbyTest = false;
   // Button vision = new JoystickButton(DrvStick, 1);
   // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
@@ -76,16 +78,16 @@ public class OI {
     autoToggle.whenPressed(cmd);
 
     autoToggle.whenPressed(new SetToggle(robot));
-    posZero.whileHeld(new MoveToHeight(robot, 1)); // pickup
-    posOne.whileHeld(new MoveToHeight(robot,2)); // level 1
-    posTwo.whileHeld(new MoveToHeight(robot,3)); // level 2
-    posThree.whileHeld(new MoveToHeight(robot,4)); // level 3
-    stow.whileHeld(new MoveToHeight(robot,0));
+    posZero.whileHeld(TubbyTest ? new MoveToHeight1(robot, 1) : new MoveToHeight(robot, 1)); // pickup
+    posOne.whileHeld(TubbyTest ? new MoveToHeight1(robot, 2) : new MoveToHeight(robot, 2)); // level 1
+    posTwo.whileHeld(TubbyTest ? new MoveToHeight1(robot, 3) : new MoveToHeight(robot, 3)); // level 2
+    posThree.whileHeld(TubbyTest ? new MoveToHeight1(robot, 4) : new MoveToHeight(robot, 4)); // level 3
+    stow.whileHeld(TubbyTest ? new MoveToHeight1(robot, 0) : new MoveToHeight(robot, 0));
     
     
     visionDrive.whileHeld(new VisionDrive(robot));
-    lifterDoButton.whenPressed(new LiftRobot(robot, true));
-    lifterDoButton.whenReleased(new LiftRobot(robot, false));
+    lifterDoButton.whenPressed(new LiftRobot(robot, false));
+    lifterDoButton.whenReleased(new LiftRobot(robot, true));
     // hatchEjectButton.whenPressed(new HatchEjectorToggle(new HatchEjector(robot,true),new HatchEjector(robot,false),robot));
     
     

@@ -59,10 +59,10 @@ public class WristPid {
             SmartDashboard.putString("WPid t Status", "Started New PidWrist Class");
         }
         double angle_error = getTargetAngle() - currentAngle; //calculate error
-        if(angle_error > 180){
-            angle_error = 360-angle_error;
-        } else if(angle_error < -180){
-            angle_error = angle_error + 360;
+        if(angle_error > 90){
+            angle_error = 180 - angle_error;
+        } else if(angle_error < -90){
+            angle_error = angle_error + 180;
         }
         //angle_error = Math.abs(angle_error) > 180 ? 180 - angle_error : angle_error; //scale error to take shortest path
         // if (_targetAngle == 0 && currentAngle > 180) {

@@ -23,13 +23,12 @@ public class Brake extends InstantCommand {
   public Brake(Robot r, boolean brake) {
     super();
     _robot = r;
-    requires(_robot.driveTrain);
     this.brake = brake;
   }
 
   // Called once when the command executes
   @Override
-  protected void initialize() {
+  protected void execute() {
     _robot.driveTrain.setBrakeMode(brake);
   }
 }

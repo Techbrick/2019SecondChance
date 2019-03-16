@@ -43,10 +43,10 @@ public class RobotMap {
   public double kp_Angle = 0.1;
   public double ki_Angle = 0.00;
   public double kd_Angle = 0.00;
-  public double kp_Angle_Wrist = 0.05;
+  public double kp_Angle_Wrist = 0.02;
   public double ki_Angle_Wrist = 0.0;
   public double kd_Angle_Wrist = 0.0;
-  public double minWristPower = 0.05;
+  public double minWristPower = 0.01;
   public double maxWristPower = 1;
   public double joystickDeadband = 0.05;
   public double pidTurnDeadband = 1;

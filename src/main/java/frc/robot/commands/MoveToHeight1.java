@@ -17,7 +17,7 @@ import frc.robot.Robot;
 import frc.robot.WristPid;
 import frc.robot.subsystems.*;
 
-public class MoveToHeight extends Command {
+public class MoveToHeight1 extends Command {
 
   private ArmSubsystem arm;
   private Robot robot;
@@ -27,7 +27,7 @@ public class MoveToHeight extends Command {
   private int oldPosition;
   private int state;
 
-  public MoveToHeight(Robot r, int pos) {
+  public MoveToHeight1(Robot r, int pos) {
     robot = r;
     requires(robot.arm_subsystem);
     arm = robot.arm_subsystem;
@@ -50,14 +50,39 @@ public class MoveToHeight extends Command {
     float wristThresh = 2.5F;
     int armThresh = 500;
     double wistAngle = robot.arm_subsystem.getWistAngle();
+
+    switch(state){
+      case 0:
+      {
+        if(wistAngle > level.getTargetAngle() - wristThresh && wistAngle < level.getTargetAngle() + wristThresh)
+        {
+          state = 1;
+        }
+        level.SetTargetAngle(arm.heights[1][level.getTargetAngle() < -45 ? 1 : 2]);
+        
+      }
+      case 1:
+      {
+        if(arm.getArmEncoderTicks()  >  arm.heights[0][pos] - armThresh && arm.getArmEncoderTicks()  <  arm.heights[0][pos] + armThresh)
+        {
+          state = 2;
+        }
         if(pos != oldPosition){
           arm.moveToHeightPreset(pos);
           oldPosition = pos;
         }
+      }
+      default:
+      {
           level.SetTargetAngle(arm.heights[1][position + (arm.getToggly() && position != 0 ? 4 : 0)]);
-          turnpower = level.GetAnglePidOutput(robot.arm_subsystem.getWistAngle());
-
-          arm.moveToHeightWrist(turnpower);
+      }
+    }
+    // level.SetTargetAngle(arm.heights[1][position + (arm.getToggly() && position != 0 ? 4 : 0)]);
+    // if(pos == 5)
+       turnpower = level.GetAnglePidOutput(robot.arm_subsystem.getWistAngle());
+    // else
+    //   turnpower = level.GetAnglePidOutput(robot.arm_subsystem.getWistAngle());
+    arm.moveToHeightWrist(turnpower);
   }
 
   // Make this return true when this Command no longer needs to run execute()

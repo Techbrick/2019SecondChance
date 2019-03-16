@@ -9,6 +9,9 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.Trigger;
+
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -25,12 +28,13 @@ public class ManualDrive extends Command {
   private int avgAccellCounter = 0;
   private double avgVelPV = 0;
   private double avgAccellPV = 0;
-  private Button ShiftGearButton;
+  private Trigger ShiftGearButton;
+  private Trigger SlowdownMode;
   
   public ManualDrive(Robot robot) {
     // Use requires() here to declare subsystem dependencies
     _robot = robot;
-    ShiftGearButton = new JoystickButton(robot.DrvStick, 7);
+    //ShiftGearButton = new Trigger(robot.DrvStick, 7);
     requires(_robot.driveTrain);
   }
 
@@ -44,14 +48,14 @@ public class ManualDrive extends Command {
   @Override
   protected void execute() {
     double power = _robot.driveTrain.manageDeadband(_robot.DrvStick.getY());
-    double twist = _robot.driveTrain.manageDeadband(_robot.DrvStick.getTwist());
-    if(ShiftGearButton.get()){
+    double twist = _robot.driveTrain.manageDeadband(_robot.DrvStick.getRawAxis(4));
+    if(_robot.DrvStick.getRawAxis(2) > 0){
         _robot.driveTrain.setShifterSolenoid(true);
     }
     else{
         _robot.driveTrain.setShifterSolenoid(false);
     }
-    _robot.driveTrain.ArcadeDrive(power, twist);   
+    _robot.driveTrain.ArcadeDrive(power * (_robot.DrvStick.getRawAxis(3) > 0 ? 0.5 : 1), twist);   
     if(_robot.robotMap.verbose){
         
         double leftDrivePower = _robot.driveTrain.GetLeftOutputVoltage();
