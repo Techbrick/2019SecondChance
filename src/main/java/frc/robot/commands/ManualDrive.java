@@ -28,8 +28,6 @@ public class ManualDrive extends Command {
   private int avgAccellCounter = 0;
   private double avgVelPV = 0;
   private double avgAccellPV = 0;
-  private Trigger ShiftGearButton;
-  private Trigger SlowdownMode;
   
   public ManualDrive(Robot robot) {
     // Use requires() here to declare subsystem dependencies
@@ -82,8 +80,6 @@ public class ManualDrive extends Command {
                 _robot.robotMap.fpsPerVolt = newAvg;
                 SmartDashboard.putNumber("Avg FPS/V", newAvg);
             if(accel > 0){
-                
-
                 double newAvgA = (avgAccellPV * avgAccellCounter + accel/avgInput)/(double)(_robot.robotMap.averageCounterAccel + 1);
                 avgAccellCounter ++;
                 _robot.robotMap.accelPerVolt = newAvgA;
