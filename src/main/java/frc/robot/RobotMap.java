@@ -40,11 +40,14 @@ public class RobotMap {
 
   //PID
   public double kAngleSetpoint = 0.0;
-  public double kp_Angle = 0.1;
-  public double ki_Angle = 0.00;
-  public double kd_Angle = 0.00;
-  public double kp_Angle_Wrist = 0.02;
-  public double ki_Angle_Wrist = 0.0;
+  public double kp_Angle_Arm = 0.05;
+  public double ki_Angle_Arm = 0.00;
+  public double kd_Angle_Arm = 0.00;
+  public double kp_Turn = 0.1;
+  public double ki_Turn = 0.00;
+  public double kd_Turn = 0.00;
+  public double kp_Angle_Wrist = 0.03;
+  public double ki_Angle_Wrist = 0.01;
   public double kd_Angle_Wrist = 0.0;
   public double minWristPower = 0.01;
   public double maxWristPower = 1;
@@ -78,14 +81,4 @@ public class RobotMap {
   public static final double trackWidth = 24;
   public static final int armLength = 26; //real one is 38, 26 is for testbot
   public static final double ArmTicksToDeg = 360.0 / ENCODER_PULSE_PER_REV / 25.0;
-
-  // DEPRECATED
-  // public static final int wristHatchSolenoidID = 9;
-  // public static final int mc_arm_CANID = 2;
-  // public final int maxWristAngle = 130;
-  // public final int minWristAngle = 0;
-  // public boolean twoSpeedDrive = false;
-  // public boolean hasCompressor = false;
-  // public int leftShiftChannel = 0;
-  // public int rightShiftChannel = 0;
 }

@@ -32,9 +32,9 @@ public class TurnPid{
     }
     public TurnPid(Robot robot){
         _robot = robot;
-        _kp = _robot.robotMap.kp_Angle;
-        _ki = _robot.robotMap.ki_Angle;
-        _kd = _robot.robotMap.kd_Angle;
+        _kp = _robot.robotMap.kp_Turn;
+        _ki = _robot.robotMap.ki_Turn;
+        _kd = _robot.robotMap.kd_Turn;
         _minTurnPower = _robot.robotMap.minTurnPower;
         _interval = _robot.robotMap.timingInterval;
         _accumulatedI = 0;

@@ -53,7 +53,6 @@ public class OI {
   POVButton posThree = new POVButton(opStick,0);
   Button stow = new JoystickButton(opStick, 13);
   Button BrakeButton = new JoystickButton(DrvStick, 6);
-  private boolean TubbyTest = false;
   // Button vision = new JoystickButton(DrvStick, 1);
   // Button ShiftGearButton = new JoystickButton(stick, 2);
   public OI(Robot robot){
@@ -78,11 +77,11 @@ public class OI {
     autoToggle.whenPressed(cmd);
 
     autoToggle.whenPressed(new SetToggle(robot));
-    posZero.whileHeld(TubbyTest ? new MoveToHeight1(robot, 1) : new MoveToHeight(robot, 1)); // pickup
-    posOne.whileHeld(TubbyTest ? new MoveToHeight1(robot, 2) : new MoveToHeight(robot, 2)); // level 1
-    posTwo.whileHeld(TubbyTest ? new MoveToHeight1(robot, 3) : new MoveToHeight(robot, 3)); // level 2
-    posThree.whileHeld(TubbyTest ? new MoveToHeight1(robot, 4) : new MoveToHeight(robot, 4)); // level 3
-    stow.whileHeld(TubbyTest ? new MoveToHeight1(robot, 0) : new MoveToHeight(robot, 0));
+    posZero.whileHeld(new MoveToHeight(robot, 1)); // pickup
+    posOne.whileHeld(new MoveToHeight(robot, 2)); // level 1
+    posTwo.whileHeld(new MoveToHeight(robot, 3)); // level 2
+    posThree.whileHeld(new MoveToHeight(robot, 4)); // level 3
+    stow.whileHeld(new MoveToHeight(robot, 0));
     
     
     visionDrive.whileHeld(new VisionDrive(robot));

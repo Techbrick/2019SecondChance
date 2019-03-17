@@ -24,8 +24,6 @@ public class MoveToHeight extends Command {
   private int position;
   private double turnpower;
   private WristPid level;
-  private int oldPosition;
-  private int state;
 
   public MoveToHeight(Robot r, int pos) {
     robot = r;
@@ -33,8 +31,6 @@ public class MoveToHeight extends Command {
     arm = robot.arm_subsystem;
     position = pos;
     level = new WristPid(robot);
-    state = 0;
-    oldPosition = -1;
   }
 
   // Called just before this Command runs the first time
@@ -47,17 +43,10 @@ public class MoveToHeight extends Command {
   @Override
   protected void execute() {
     int pos = position + (arm.getToggly() && position != 0 ? 4 : 0);
-    float wristThresh = 2.5F;
-    int armThresh = 500;
-    double wistAngle = robot.arm_subsystem.getWistAngle();
-        if(pos != oldPosition){
-          arm.moveToHeightPreset(pos);
-          oldPosition = pos;
-        }
-          level.SetTargetAngle(arm.heights[1][position + (arm.getToggly() && position != 0 ? 4 : 0)]);
-          turnpower = level.GetAnglePidOutput(robot.arm_subsystem.getWistAngle());
-
-          arm.moveToHeightWrist(turnpower);
+    arm.moveToHeightPreset(pos);
+    level.SetTargetAngle(arm.heights[1][position + (arm.getToggly() && position != 0 ? 4 : 0)]);
+    turnpower = level.GetAnglePidOutput(robot.arm_subsystem.getWistAngle());
+    arm.moveToHeightWrist(turnpower);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -70,15 +59,11 @@ public class MoveToHeight extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    state = 0;
-    oldPosition = -1;
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-      state = 0;
-      oldPosition = -1;
   }
 }

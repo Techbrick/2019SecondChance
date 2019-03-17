@@ -12,10 +12,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-// import edu.wpi.first.wpilibj.DoubleSolenoid;
-// import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
-// import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Gains;
@@ -49,8 +46,8 @@ public class ArmSubsystem extends Subsystem {
   // Constants
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
-  private static final Gains kGains = new Gains(0.03, 0.0, 0.0, 0.01, 0, 0.25);
-  private static final Gains kGainsWrist = new Gains(0.02, 0.0, 0.0, 0.0, 0, 1);
+  private static final Gains kGains = new Gains(0.05, 0.0, 0.0, 0.01, 0, 0.25);
+  private static final Gains kGainsWrist = new Gains(0.03, 0.01, 0.0, 0.0, 0, 1);
   private static final int length = 5;
 
   public ArmSubsystem(Robot r) {  // Initialize the motion magic constants
@@ -251,6 +248,8 @@ public class ArmSubsystem extends Subsystem {
     }
     //-1 to zero
     double dansAngle = Math.toDegrees(Math.atan2(quatY, quatW)) - 1;
+    if(dansAngle > 45)
+      dansAngle -= 180;
     return dansAngle;
 }
 
@@ -262,8 +261,8 @@ public class ArmSubsystem extends Subsystem {
     return toggly;
   }
 
-  public void setHeights(){// stow, hpu,  h1,    h2,    h3,    cpu,   c1,    c2,    c3
-    heights = new int[][]{{      0, 100,   0, 12500, 25600,   8000,11800, 21600, 29000},
-                                {-0, -65, -30,   -30,   -30,  -105,    -70,   -65,   -58}};
+  public void setHeights(){// stow, hpu,  h1,    h2,    h3,  cpu,    c1,    c2,    c3
+    heights = new int[][]{{      0, 100,   0, 12500, 25600, 8000, 11800, 21600, 29000},
+                                {-0,-65, -30,   -30,   -30, -105,   -70,   -65,   -58}};
   }
 }

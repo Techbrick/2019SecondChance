@@ -7,11 +7,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.buttons.Trigger;
-
-
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -85,12 +80,9 @@ public class ManualDrive extends Command {
                 _robot.robotMap.accelPerVolt = newAvgA;
                 SmartDashboard.putNumber("Max FPS/V/s", newAvgA);
             }
-            
         }
         _lastAvgVel = absVel;
-        
     } 
-
   }
 
   // Make this return true when this Command no longer needs to run execute()

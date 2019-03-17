@@ -54,7 +54,7 @@ public class TestMoveBack48 extends Command {
   @Override
   protected void execute() {
     //if(_robot.stick.getRawButton(1)){
-    if(true){
+    if(_robot.DrvStick.getRawButton(1)){
         double power = _distancePid.GetDistancePidOutput();
         _robot.driveTrain.Move(power, power); 
         if (power == 0){
