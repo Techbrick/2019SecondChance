@@ -100,7 +100,7 @@ public class Robot extends TimedRobot {
     sensor_subsystem = new SensorSubsystem(this);
     
     MC_LEDS.setSafetyEnabled(false);
-    MC_LEDS.setSpeed(-0.99);
+    MC_LEDS.setSpeed(0.73);
     
     SmartDashboard.putData(driveTrain);
     SmartDashboard.putData(arm_subsystem);
