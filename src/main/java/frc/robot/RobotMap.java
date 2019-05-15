@@ -43,10 +43,10 @@ public class RobotMap {
   public double kp_Angle_Arm = 0.05;
   public double ki_Angle_Arm = 0.00;
   public double kd_Angle_Arm = 0.00;
-  public double kp_Turn = 0.1;
+  public double kp_Turn = 0.02;
   public double ki_Turn = 0.00;
   public double kd_Turn = 0.00;
-  public double kp_Angle_Wrist = 0.03;
+  public double kp_Angle_Wrist = 0.04;
   public double ki_Angle_Wrist = 0.01;
   public double kd_Angle_Wrist = 0.0;
   public double minWristPower = 0.01;
@@ -63,7 +63,7 @@ public class RobotMap {
 
   public double encoderMovementThreshold = 200;
 
-  public double minTurnPower = .1; //WAS .24
+  public double minTurnPower = .05; //WAS .24
   public double minDrivePower = .12;
   public double maxPidPower = .5;
   public double maxVelocity = 10;

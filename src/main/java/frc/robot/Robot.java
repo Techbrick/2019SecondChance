@@ -76,6 +76,8 @@ public class Robot extends TimedRobot {
   double priorAutospeed = 0;
 	Number[] numberArray = new Number[9];
   public DigitalInput DI = new DigitalInput(1);
+  public int status;
+  private static double[] statusColors;
   // public SensorPet pet = new SensorPet();
 
   public Spark MC_LEDS = new Spark(0);
@@ -99,8 +101,11 @@ public class Robot extends TimedRobot {
     comp_subsystem = new CompressorSubsystem(this);
     sensor_subsystem = new SensorSubsystem(this);
     
+    status = 0;
+    statusColors = new double[]{.73,-.25, 0.85};
+
     MC_LEDS.setSafetyEnabled(false);
-    MC_LEDS.setSpeed(-0.99);
+    MC_LEDS.setSpeed(statusColors[status]);
     
     SmartDashboard.putData(driveTrain);
     SmartDashboard.putData(arm_subsystem);
@@ -160,6 +165,12 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     // Logger();
     sensor_subsystem.checkLimelight();
+
+    if(MC_LEDS.getSpeed() != statusColors[status])
+    {
+      MC_LEDS.setSpeed(statusColors[status]);
+    }
+
   }
 
   /**
@@ -287,5 +298,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Hatch/Ball toggle", arm_subsystem.getToggly());
     SmartDashboard.putBoolean("HatchEjector", arm_subsystem.getHatchEjectorValue());
     SmartDashboard.putBoolean("Ball in", DI.get());
+  }
+
+  public void setNormieLED()
+  {
+    status = arm_subsystem.getToggly() ? 2 : 0;
   }
 }

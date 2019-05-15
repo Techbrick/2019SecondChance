@@ -97,10 +97,9 @@ public class DriveSubsystem extends Subsystem {
     _rightFollower2.configMotionAcceleration(100);
 
     shifterSolenoid = new DoubleSolenoid(0,1);
-    shifterSolenoid.set(Value.kOff);
-
     lifterSolenoid = new DoubleSolenoid(6,7);
-    lifterSolenoid.set(Value.kOff);
+    setShifterSolenoid(false);
+    setLifterSolenoid(true);
   }
 
   public void Move(double leftpower, double rightpower){

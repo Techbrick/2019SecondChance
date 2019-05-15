@@ -2,7 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class TurnPid{
+public class ArmPid {
 
     private double _kp;
     private double _ki;
@@ -18,7 +18,7 @@ public class TurnPid{
     private Robot _robot;
     private double _maxPidPower;
 
-    public TurnPid(double kp, double ki, double kd, double minTurnPower, double interval, double deadband){
+    public ArmPid(double kp, double ki, double kd, double minTurnPower, double interval, double deadband, double maxTurnPower){
         _kp = kp;
         _ki = ki;
         _kd = kd;
@@ -26,19 +26,20 @@ public class TurnPid{
         _interval = interval;
         _accumulatedI = 0;
         _deadband = deadband;
-        _maxPidPower = .75;
-        _verbose = true;
+        _maxPidPower = maxTurnPower;
+        _verbose = false;
         start = true;
     }
-    public TurnPid(Robot robot){
+
+    public ArmPid(Robot robot){
         _robot = robot;
-        _kp = _robot.robotMap.kp_Turn;
-        _ki = _robot.robotMap.ki_Turn;
-        _kd = _robot.robotMap.kd_Turn;
-        _minTurnPower = _robot.robotMap.minTurnPower;
+        _kp = _robot.robotMap.kp_Angle_Wrist;
+        _ki = _robot.robotMap.ki_Angle_Wrist;
+        _kd = _robot.robotMap.kd_Angle_Wrist;
+        _minTurnPower = _robot.robotMap.minWristPower;
         _interval = _robot.robotMap.timingInterval;
         _accumulatedI = 0;
-        _deadband = _robot.robotMap.pidTurnDeadband;
+        _deadband = _robot.robotMap.pidWristDeadband;
         _verbose = _robot.robotMap.verbose;
         _maxPidPower = _robot.robotMap.maxPidPower;
         start = true;
@@ -47,30 +48,26 @@ public class TurnPid{
     public void SetTargetAngle(double targetAngle){
         _targetAngle = targetAngle;
     }
-    public double GetAnglePidOutput(double currentAngle) {
-        currentAngle = Helpers.ConvertYawToHeading(currentAngle);
-        SmartDashboard.putNumber("target", _targetAngle);
-        SmartDashboard.putNumber("current angle", currentAngle);
-        if(start){
 
-            SmartDashboard.putString("Pid t Status", "Started New PidTurn Class");
+    public double getTargetAngle(){
+        return _targetAngle;
+    }
+
+    public double GetAnglePidOutput(double currentAngle) {
+        //currentAngle = Helpers.ConvertYawToHeading(currentAngle);
+        if(start){
+            SmartDashboard.putString("WPid t Status", "Started New PidWrist Class");
         }
-        double angle_error = _targetAngle - currentAngle ; //calculate error
-        if(_verbose){
-            SmartDashboard.putNumber("TEST angle error", angle_error);
-        }
-        if(angle_error > 180){
-            angle_error = 360-angle_error;
-        }else if(angle_error < -180){
-            angle_error = angle_error + 360;
-        }
+        double angle_error = currentAngle - getTargetAngle(); //calculate error
+        // if(angle_error > 90){
+        //     angle_error = 180 - angle_error;
+        // } else if(angle_error < -90){
+        //     angle_error = angle_error + 180;
+        // }
         //angle_error = Math.abs(angle_error) > 180 ? 180 - angle_error : angle_error; //scale error to take shortest path
         // if (_targetAngle == 0 && currentAngle > 180) {
         //         angle_error = currentAngle - 360;
         // }
-        if(_verbose){
-            SmartDashboard.putNumber("TEST angle error corr", angle_error);
-        }
         double p_Angle = _kp * angle_error; //calculate p
         _accumulatedI += _ki * (angle_error * _interval); //calculate i
         double i_Angle = _ki*_accumulatedI;
@@ -82,9 +79,6 @@ public class TurnPid{
         
         double angleOutput = p_Angle + i_Angle + d_Angle; //calculate output
         _lastError = angle_error; //set last angle error for d value
-        if(_verbose){
-            SmartDashboard.putNumber("TEST angle pwr Raw", angleOutput);
-        }
       
         angleOutput = Math.abs(angleOutput) < _minTurnPower ? Math.copySign(_minTurnPower, angleOutput) : angleOutput; //if angleOutput is below min, set to min
         angleOutput = Math.abs(angleOutput) > _maxPidPower ? Math.copySign(_maxPidPower, angleOutput) : angleOutput; //if angleOutput is above max, set to max
@@ -97,12 +91,13 @@ public class TurnPid{
         //angleOutput = -angleOutput;
         if(_verbose){
             SmartDashboard.putNumber("TEST angle pwr ", angleOutput);
+            SmartDashboard.putNumber("WTEST angle error", angle_error);
+            SmartDashboard.putNumber("WTEST angle error corr", angle_error);
+            SmartDashboard.putNumber("TEST angle pwr Raw", angleOutput);
+            SmartDashboard.putNumber("Wtarget", _targetAngle);
+            SmartDashboard.putNumber("Wrist error", angle_error);
         }
       
         return -angleOutput;
       }
-
-
-
-
 }

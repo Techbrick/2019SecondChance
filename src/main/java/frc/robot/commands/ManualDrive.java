@@ -41,14 +41,14 @@ public class ManualDrive extends Command {
   @Override
   protected void execute() {
     double power = _robot.driveTrain.manageDeadband(_robot.DrvStick.getY());
-    double twist = _robot.driveTrain.manageDeadband(_robot.DrvStick.getRawAxis(4));
+    double twist = _robot.driveTrain.manageDeadband(_robot.DrvStick.getZ());
     if(_robot.DrvStick.getRawAxis(2) > 0){
         _robot.driveTrain.setShifterSolenoid(true);
     }
     else{
         _robot.driveTrain.setShifterSolenoid(false);
     }
-    _robot.driveTrain.ArcadeDrive(power * (_robot.DrvStick.getRawAxis(3) > 0 ? 0.5 : 1), twist);   
+    _robot.driveTrain.ArcadeDrive(power * (_robot.DrvStick.getRawAxis(4)), twist);   
     if(_robot.robotMap.verbose){
         
         double leftDrivePower = _robot.driveTrain.GetLeftOutputVoltage();

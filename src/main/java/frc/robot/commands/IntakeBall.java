@@ -42,12 +42,15 @@ public class IntakeBall extends Command {
       } 
       else{
         isFinished = true;
-        _robot.MC_LEDS.setSpeed(-0.25);
+        _robot.status = 1;
       }
     }
-    else
+    else{
       arm.setIntakeSpeed(intakeSpeed);
-      _robot.MC_LEDS.setSpeed(-0.99);
+      if(!_robot.DI.get())
+      _robot.setNormieLED();
+    }
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

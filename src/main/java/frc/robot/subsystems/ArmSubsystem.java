@@ -39,14 +39,14 @@ public class ArmSubsystem extends Subsystem {
   private TalonSRX mc_wrist;
   private Solenoid ejectorSolenoidIn;
   private Solenoid ejectorSolenoidOut;
-  public static boolean toggly = true;
+  private boolean toggly;
   public int wristStartAngle;
   public int [][] heights;
   
   // Constants
   private static final int kSlotIdx = 0;
   private static final int kPIDLoopIdx = 0;
-  private static final Gains kGains = new Gains(0.05, 0.0, 0.0, 0.01, 0, 0.25);
+  private static final Gains kGains = new Gains(0.05, 0.0, 0.0, 0.0, 0, 0.25);
   private static final Gains kGainsWrist = new Gains(0.03, 0.01, 0.0, 0.0, 0, 1);
   private static final int length = 5;
 
@@ -108,7 +108,7 @@ public class ArmSubsystem extends Subsystem {
 
 		/* Set acceleration and vcruise velocity - see documentation */
 		mc_arm.configMotionCruiseVelocity(/*15000*/ 350, 0);
-		mc_arm.configMotionAcceleration(/*6000*/ 400, 0);
+		mc_arm.configMotionAcceleration(/*6000*/ 300, 0);
     mc_arm.configAllowableClosedloopError(0, 50, 0);
     
 		mc_wrist.configMotionCruiseVelocity(/*15000*/ 350, 0);
@@ -122,6 +122,7 @@ public class ArmSubsystem extends Subsystem {
     // zeros = new double[2];
     // zeros[0] = getArmEncoderTicks() - RobotMap.heights[0][0];
     // zeros[1] = getArmEncoderTicks() - RobotMap.heights[1][0];
+    setToggly(false);
   }
 
   @Override
@@ -139,8 +140,10 @@ public class ArmSubsystem extends Subsystem {
     return mc_arm.getSensorCollection().getQuadraturePosition();
   }
 
-  public int getArmEncoderAngle() {  // Returns the ticks on the encoder
-    return mc_arm.getSensorCollection().getQuadraturePosition() * 360 / (4096 * 25 * 35);
+  public double getArmEncoderAngle() {  // Returns the ticks on the encoder  * 25 * 35
+    double tick = getArmEncoderTicks();
+    //30 is default angle
+    return 30 + (double)(tick * 360.0 / (4096.0 * 25));
   }
 
   public int getWristEncoderTicks(){
@@ -151,14 +154,9 @@ public class ArmSubsystem extends Subsystem {
     mc_arm.set(ControlMode.MotionMagic, 4096 * 25 * (-currAngle+Math.acos(dPos / -length - Math.cos(currAngle))) / 360);
   }
 
-  public void rotate(int dir) {
-    if(dir < 0) {
-      mc_arm.set(ControlMode.PercentOutput, 0.30 * dir); // WAS .15
-    }
-    else {  
-      mc_arm.set(ControlMode.PercentOutput, 0.15 * dir); // WAS .15
-    }
-    // SmartDashboard.putNumber("Arm Enc Pos", mc_arm.getSelectedSensorPosition(0));
+  public void rotate(double power) {
+
+      mc_arm.set(ControlMode.PercentOutput, power);
   }
 
   public void turns(double degrees) { // Turns a certain number of degrees
@@ -201,7 +199,7 @@ public class ArmSubsystem extends Subsystem {
     //double angle = -wristStartAngle + Math.toDegrees(Math.atan2(_robot.wristnavX.getQuaternionY(), _robot.wristnavX.getQuaternionW()));
     //if(!((getArmEncoderTicks() > 12000 && getArmEncoderTicks() < 20000) && !(Math.abs(angle + 75) < 7 || Math.abs(angle + 30) < 7)))
     if(getArmEncoderTicks() > 5000)  
-      mc_arm.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap) + 0.04);
+      mc_arm.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap) + 0.05);
     else
       mc_arm.set(ControlMode.PercentOutput, Helpers.DeadbandJoystick(percentSpeed, robotMap));
     //else
@@ -262,7 +260,7 @@ public class ArmSubsystem extends Subsystem {
   }
 
   public void setHeights(){// stow, hpu,  h1,    h2,    h3,  cpu,    c1,    c2,    c3
-    heights = new int[][]{{      0, 100,   0, 12500, 25600, 8000, 11800, 21600, 29000},
+    heights = new int[][]{{      0, 100,   0, 14500, 27600, 8000, 11800, 21600, 29000},
                                 {-0,-65, -30,   -30,   -30, -105,   -70,   -65,   -58}};
   }
 }

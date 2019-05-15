@@ -73,9 +73,6 @@ public class OI {
     BrakeButton.whenPressed(new Brake(robot, true));
     BrakeButton.whenReleased(new Brake(robot, false));
     
-    SetToggle cmd = new SetToggle(robot);
-    autoToggle.whenPressed(cmd);
-
     autoToggle.whenPressed(new SetToggle(robot));
     posZero.whileHeld(new MoveToHeight(robot, 1)); // pickup
     posOne.whileHeld(new MoveToHeight(robot, 2)); // level 1

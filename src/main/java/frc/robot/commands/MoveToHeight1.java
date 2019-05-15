@@ -27,6 +27,17 @@ public class MoveToHeight1 extends Command {
   private int oldPosition;
   private int state;
 
+  private boolean shouldInit;  
+  private boolean wristDelay;
+
+  private int pos;
+  private float wristThresh;
+  private int armThresh;
+  private double wistAngle;
+  private double targetAngle;
+  private int targetEncoder;
+  private int armEncoder;
+
   public MoveToHeight1(Robot r, int pos) {
     robot = r;
     requires(robot.arm_subsystem);
@@ -35,54 +46,55 @@ public class MoveToHeight1 extends Command {
     level = new WristPid(robot);
     state = 0;
     oldPosition = -1;
+    wristDelay = false;
+    shouldInit = true;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    
+    shouldInit = false;
+    pos = position + (arm.getToggly() && position != 0 ? 4 : 0);
+    wristThresh = 2.5F;
+    armThresh = 1000;
+    targetAngle = arm.heights[1][pos];
+    targetEncoder = arm.heights[0][pos];
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     int pos = position + (arm.getToggly() && position != 0 ? 4 : 0);
-    float wristThresh = 2.5F;
-    int armThresh = 500;
-    double wistAngle = robot.arm_subsystem.getWistAngle();
+    armEncoder = robot.arm_subsystem.getArmEncoderTicks();
+    wistAngle = robot.arm_subsystem.getWistAngle();
+    turnpower = 0;
 
-    switch(state){
-      case 0:
+    if(shouldInit || oldPosition != pos)
+      initialize();
+
+    if(Math.abs(armEncoder - 16000) < armThresh && Math.abs(wistAngle - targetAngle) > wristThresh)
+    {
+      wristDelay = true;
+      if(Math.abs(armEncoder - targetEncoder) < 1000)
       {
-        if(wistAngle > level.getTargetAngle() - wristThresh && wistAngle < level.getTargetAngle() + wristThresh)
-        {
-          state = 1;
-        }
-        level.SetTargetAngle(arm.heights[1][level.getTargetAngle() < -45 ? 1 : 2]);
-        
-      }
-      case 1:
-      {
-        if(arm.getArmEncoderTicks()  >  arm.heights[0][pos] - armThresh && arm.getArmEncoderTicks()  <  arm.heights[0][pos] + armThresh)
-        {
-          state = 2;
-        }
-        if(pos != oldPosition){
-          arm.moveToHeightPreset(pos);
-          oldPosition = pos;
-        }
-      }
-      default:
-      {
-          level.SetTargetAngle(arm.heights[1][position + (arm.getToggly() && position != 0 ? 4 : 0)]);
+        pos = 3;
+        oldPosition = -1;
       }
     }
-    // level.SetTargetAngle(arm.heights[1][position + (arm.getToggly() && position != 0 ? 4 : 0)]);
-    // if(pos == 5)
-       turnpower = level.GetAnglePidOutput(robot.arm_subsystem.getWistAngle());
-    // else
-    //   turnpower = level.GetAnglePidOutput(robot.arm_subsystem.getWistAngle());
+    if(!wristDelay)
+    {
+      turnpower = level.GetAnglePidOutput(targetAngle);
+    }
     arm.moveToHeightWrist(turnpower);
+
+    if(Math.abs(armEncoder - targetEncoder) < 500)
+      wristDelay = false;
+
+    if(wristDelay || Math.abs(wistAngle - targetAngle) < wristThresh)
+    {
+      arm.moveToHeightPreset(pos);
+    }
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
