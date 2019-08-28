@@ -71,7 +71,7 @@ public class ArmSubsystem extends Subsystem {
     mc_arm.setSensorPhase(true);
     mc_arm.setInverted(true);
     mc_arm.setNeutralMode(NeutralMode.Brake);
-    mc_armFollower.setInverted(true);
+    mc_armFollower.setInverted(false);
     mc_armFollower.follow(mc_arm);
     mc_armFollower.setNeutralMode(NeutralMode.Brake);
 
