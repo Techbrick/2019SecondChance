@@ -70,10 +70,10 @@ public class ArmSubsystem extends Subsystem {
     mc_arm.setSelectedSensorPosition(0, 0, 10);
     mc_arm.setSensorPhase(true);
     mc_arm.setInverted(true);
-    mc_arm.setNeutralMode(NeutralMode.Brake);
+    
     mc_armFollower.setInverted(false);
     mc_armFollower.follow(mc_arm);
-    mc_armFollower.setNeutralMode(NeutralMode.Brake);
+    
 
     ejectorSolenoidIn = new Solenoid(4);
     ejectorSolenoidOut = new Solenoid(5);
@@ -83,6 +83,12 @@ public class ArmSubsystem extends Subsystem {
 		// mc_arm.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 20);
 		// mc_arm.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 20);
     
+    mc_intake.setNeutralMode(NeutralMode.Coast);
+    mc_arm.setNeutralMode(NeutralMode.Coast);
+    mc_armFollower.setNeutralMode(NeutralMode.Coast);
+    mc_wrist.setNeutralMode(NeutralMode.Coast);
+
+
     /* Set the peak and nominal outputs */
 		mc_arm.configNominalOutputForward(0, 0);
 		mc_arm.configNominalOutputReverse(0, 0);

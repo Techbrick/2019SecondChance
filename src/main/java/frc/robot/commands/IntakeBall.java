@@ -42,6 +42,7 @@ public class IntakeBall extends Command {
       } 
       else{
         isFinished = true;
+        arm.setIntakeSpeed(0);
         _robot.status = 1;
       }
     }
@@ -62,7 +63,7 @@ public class IntakeBall extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    _robot.arm_subsystem.setIntakeSpeed(-0.5D);
+    //_robot.arm_subsystem.setIntakeSpeed(-0.5D);
   }
 
   // Called when another command which requires one or more of the same
